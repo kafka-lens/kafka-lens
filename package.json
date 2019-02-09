@@ -1,0 +1,26 @@
+{
+  "name": "kafka-lens",
+  "version": "0.0.1",
+  "description": "A tool for visualizing a Kafka cluster's brokers, topics, partitions, and message flow.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teampandawhale/kafka-lens.git"
+  },
+  "keywords": [
+    "kafka"
+  ],
+  "author": "TEAM PANDA WHALE",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/teampandawhale/kafka-lens/issues"
+  },
+  "homepage": "https://github.com/teampandawhale/kafka-lens#readme",
+  "dependencies": {
+    "electron": "^4.0.4",
+    "kafka-node": "^4.0.1"
+  }
+}
