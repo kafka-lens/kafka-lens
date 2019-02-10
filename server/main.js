@@ -16,7 +16,7 @@ function getCurrentOffset(topic, client) {
   );
 }
 
-const getTopicData = (event, args) => {
+const getTopicData = args => {
   const client = new kafka.KafkaClient({ kafkaHost: args });
   const admin = new kafka.Admin(client);
   admin.listTopics((err, topics) => {
