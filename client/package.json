@@ -1,0 +1,35 @@
+{
+  "name": "kafka-lens-client",
+  "version": "1.0.0",
+  "description": "kafka lens with electron/react/webpack",
+  "main": "dist/electron.js",
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ]
+  },
+  "scripts": {
+    "start": "electron .",
+    "start:dev": "webpack-dev-server --open",
+    "webpack": "webpack"
+  },
+  "author": "hn",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "css-loader": "^2.1.0",
+    "electron": "^4.0.4",
+    "electron-builder": "^20.38.5",
+    "html-webpack-plugin": "^3.2.0",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14"
+  }
+}
