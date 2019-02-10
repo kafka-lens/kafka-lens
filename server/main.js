@@ -1,4 +1,3 @@
-const { ipcMain } = require('electron');
 const kafka = require('kafka-node');
 
 function buildTopicObj(topic, partition, offset) {
