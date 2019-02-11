@@ -37,10 +37,6 @@ app.on('activate', () => {
   }
 });
 
-ipcMain.on('topic:getTopics', (e, uri) => {
-  adminApi.getTopicData(uri, mainWindow);
-});
-
 const addDevToolsToMenu = [
   {
     label: ''
@@ -61,3 +57,13 @@ const addDevToolsToMenu = [
     ]
   }
 ];
+
+/*
+ *
+ * EVENT LISTENERS ARE HERE
+ *
+ *
+ */
+ipcMain.on('topic:getTopics', (e, uri) => {
+  adminApi.getTopicData(uri, mainWindow);
+});
