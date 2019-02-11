@@ -1,9 +1,4 @@
-const electron = require('electron');
-
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
-const { Menu } = electron;
-
+const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url');
 
@@ -38,6 +33,11 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
+});
+
+ipcMain.on('topic:getTopics', (e, uri) => {
+  console.log('event ', e);
+  console.log('uri ', uri);
 });
 
 const addDevToolsToMenu = [
