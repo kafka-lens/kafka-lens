@@ -1,4 +1,5 @@
-const { ipcRenderer } = require('electron');
+// const { ipcRenderer } = require('electron');
+import { ipcRenderer } from 'electron';
 
 // import components here
 import ConnectionPage from './ConnectionPage.jsx';
@@ -7,8 +8,6 @@ import TopicPage from './TopicPage.jsx';
 import '../css/index.css';
 
 const React = require('react');
-
-
 
 class Main extends React.Component {
   constructor(props) {
@@ -33,7 +32,7 @@ class Main extends React.Component {
   validConnectionChecker(event) {
     event.preventDefault();
 
-    ipcRenderer.send('topic:getTopics', this.state.uri_input)
+    ipcRenderer.send('topic:getTopics', this.state.uri_input);
 
     if (this.state.validString === this.state.uri_input) {
       return this.setState({
