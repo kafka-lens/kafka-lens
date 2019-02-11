@@ -26,9 +26,9 @@ const getTopicData = (uri, mainWindow) => {
     topics = topics[1].metadata;
     Object.keys(topics).forEach(topic => {
       const topicPartitions = Object.keys(topics[topic]).length;
-      resultTopic.push(buildTopicObj(topic, topicPartitions, 'offset'));
+      resultTopic.push(buildTopicObj(topic, topicPartitions, getTopicData(topic, client)));
     });
-    console.log('result topic arrrrrrr: ', resultTopic);
+    // console.log('result topic arrrrrrr: ', resultTopic);
     mainWindow.webContents.send('topic:getTopics', resultTopic);
   });
 };
