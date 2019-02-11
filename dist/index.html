@@ -1,0 +1,83 @@
+Html Webpack Plugin:
+<pre>
+  Error: Child compilation failed:
+  Entry module not found: Error: Can't resolve '/Users/hhuynh/Projects/kafka-lens/index.html' in '/Users/hhuynh/Projects/kafka-lens':
+  Error: Can't resolve '/Users/hhuynh/Projects/kafka-lens/index.html' in '/Users/hhuynh/Projects/kafka-lens'
+  
+  - compiler.js:79 childCompiler.runAsChild
+    [kafka-lens]/[html-webpack-plugin]/lib/compiler.js:79:16
+  
+  - Compiler.js:306 compile
+    [kafka-lens]/[webpack]/lib/Compiler.js:306:11
+  
+  - Compiler.js:630 hooks.afterCompile.callAsync.err
+    [kafka-lens]/[webpack]/lib/Compiler.js:630:14
+  
+  
+  - Hook.js:154 AsyncSeriesHook.lazyCompileHook
+    [kafka-lens]/[tapable]/lib/Hook.js:154:20
+  
+  - Compiler.js:627 compilation.seal.err
+    [kafka-lens]/[webpack]/lib/Compiler.js:627:30
+  
+  
+  - Hook.js:154 AsyncSeriesHook.lazyCompileHook
+    [kafka-lens]/[tapable]/lib/Hook.js:154:20
+  
+  - Compilation.js:1325 hooks.optimizeAssets.callAsync.err
+    [kafka-lens]/[webpack]/lib/Compilation.js:1325:35
+  
+  
+  - Hook.js:154 AsyncSeriesHook.lazyCompileHook
+    [kafka-lens]/[tapable]/lib/Hook.js:154:20
+  
+  - Compilation.js:1316 hooks.optimizeChunkAssets.callAsync.err
+    [kafka-lens]/[webpack]/lib/Compilation.js:1316:32
+  
+  
+  - Hook.js:154 AsyncSeriesHook.lazyCompileHook
+    [kafka-lens]/[tapable]/lib/Hook.js:154:20
+  
+  - Compilation.js:1311 hooks.additionalAssets.callAsync.err
+    [kafka-lens]/[webpack]/lib/Compilation.js:1311:36
+  
+  
+  - Hook.js:154 AsyncSeriesHook.lazyCompileHook
+    [kafka-lens]/[tapable]/lib/Hook.js:154:20
+  
+  - Compilation.js:1307 hooks.optimizeTree.callAsync.err
+    [kafka-lens]/[webpack]/lib/Compilation.js:1307:32
+  
+  
+  - Hook.js:154 AsyncSeriesHook.lazyCompileHook
+    [kafka-lens]/[tapable]/lib/Hook.js:154:20
+  
+  - Compilation.js:1244 Compilation.seal
+    [kafka-lens]/[webpack]/lib/Compilation.js:1244:27
+  
+  - Compiler.js:624 hooks.make.callAsync.err
+    [kafka-lens]/[webpack]/lib/Compiler.js:624:17
+  
+  
+  - Compilation.js:1095 _addModuleChain
+    [kafka-lens]/[webpack]/lib/Compilation.js:1095:12
+  
+  - Compilation.js:947 errorAndCallback.bail.err
+    [kafka-lens]/[webpack]/lib/Compilation.js:947:6
+  
+  - Compilation.js:980 moduleFactory.create
+    [kafka-lens]/[webpack]/lib/Compilation.js:980:14
+  
+  - NormalModuleFactory.js:397 factory
+    [kafka-lens]/[webpack]/lib/NormalModuleFactory.js:397:22
+  
+  - NormalModuleFactory.js:130 resolver
+    [kafka-lens]/[webpack]/lib/NormalModuleFactory.js:130:21
+  
+  - NormalModuleFactory.js:224 asyncLib.parallel
+    [kafka-lens]/[webpack]/lib/NormalModuleFactory.js:224:22
+  
+  - async.js:2825 
+    [kafka-lens]/[neo-async]/async.js:2825:7
+  
+</pre><script type="text/javascript" src="index_bundle.js"></script>
