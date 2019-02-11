@@ -1,6 +1,7 @@
 const kafka = require('kafka-node');
 
 function buildTopicObj(topic, partition, offset) {
+  // console.log({ topic, partition, offset });
   return {
     topic,
     partition,
@@ -16,18 +17,19 @@ function getCurrentOffset(topic, client) {
   );
 }
 
-const getTopicData = args => {
-  const client = new kafka.KafkaClient({ kafkaHost: args });
+const getTopicData = (uri, mainWindow) => {
+  const client = new kafka.KafkaClient({ kafkaHost: uri });
   const admin = new kafka.Admin(client);
+  const resultTopic = [];
   admin.listTopics((err, topics) => {
     if (err) console.error(err);
     topics = topics[1].metadata;
-    const resultTopic = [];
     Object.keys(topics).forEach(topic => {
       const topicPartitions = Object.keys(topics[topic]).length;
-      resultTopic.push(buildTopicObj(topic, topicPartitions, getCurrentOffset(topic, client)));
+      resultTopic.push(buildTopicObj(topic, topicPartitions, 'offset'));
     });
-    return resultTopic;
+    console.log('result topic arrrrrrr: ', resultTopic);
+    mainWindow.webContents.send('topic:getTopics', resultTopic);
   });
 };
 

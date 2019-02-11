@@ -2,6 +2,8 @@ const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url');
 
+const adminApi = require('./kafka/adminApi');
+
 let mainWindow;
 
 function createWindow() {
@@ -36,8 +38,7 @@ app.on('activate', () => {
 });
 
 ipcMain.on('topic:getTopics', (e, uri) => {
-  console.log('event ', e);
-  console.log('uri ', uri);
+  adminApi.getTopicData(uri, mainWindow);
 });
 
 const addDevToolsToMenu = [
