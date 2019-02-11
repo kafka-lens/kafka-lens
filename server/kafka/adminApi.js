@@ -12,9 +12,18 @@ function buildTopicObj(topic, partition, offset) {
 function getCurrentOffset(topic, client) {
   console.log('Doing getCurrentOffset');
   const offset = new kafka.Offset(client);
-  return offset.fetchLatestOffsets([topic], (err, result) =>
-    Object.values(result[topic]).reduce((total, curr) => total + curr)
-  );
+  // return offset.fetchLatestOffsets([topic], (err, result) =>
+  //   Object.values(result[topic]).reduce((total, curr) => total + curr)
+  // );
+  return new Promise((resolve, reject) => {
+    offset.fetchLatestOffsets([topic], (err, result) => {
+      if (err) reject(err);
+      else {
+        console.log(result);
+        resolve(Object.values(result[topic]).reduce((total, curr) => total + curr));
+      }
+    });
+  });
 }
 
 const getTopicData = (uri, mainWindow) => {
@@ -24,11 +33,13 @@ const getTopicData = (uri, mainWindow) => {
   admin.listTopics((err, topics) => {
     if (err) console.error(err);
     topics = topics[1].metadata;
-    Object.keys(topics).forEach(topic => {
+    Object.keys(topics).forEach(async topic => {
       const topicPartitions = Object.keys(topics[topic]).length;
-      resultTopic.push(buildTopicObj(topic, topicPartitions, getTopicData(topic, client)));
+      const offsets = getTopicData(topic, client);
+      console.log('offsets', offsets);
+      resultTopic.push(buildTopicObj(topic, topicPartitions, offsets));
     });
-    // console.log('result topic arrrrrrr: ', resultTopic);
+    console.log('result topic arrrrrrr: ', resultTopic);
     mainWindow.webContents.send('topic:getTopics', resultTopic);
   });
 };
