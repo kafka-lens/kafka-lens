@@ -1,59 +1,29 @@
-const React = require('react');
+import React from 'react';
 
-//import components here
-import ConnectionPage from './ConnectionPage';
-import TopicPage from './TopicPage';
-import '../css/index.css';
+import Main from './Main';
+import Navigation from '../components/Navigation';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      connected: false,
-      uri_input: '',
-      validString: 'Hello'
-    };
+    this.state = {};
 
     // bind methods here
-    this.validConnectionChecker = this.validConnectionChecker.bind(this);
-    this.updateURI = this.updateURI.bind(this);
   }
   // Lifecycle methods
   componentDidMount() {
     //code here
   }
   // Methods
-  validConnectionChecker(event) {
+  exampleMethod(event) {
     //code here
-    event.preventDefault();
-    if (this.state.validString === this.state.uri_input) {
-      return this.setState({
-        connected: true
-      });
-    }
   }
-
-  updateURI(event) {
-    const input = event.target.value;
-    this.setState(state => {
-      return { uri_input: input };
-    });
-  }
-
   render() {
     return (
-      <div>
         <div>
-          {this.state.connected === true ? (
-            <TopicPage />
-          ) : (
-            <ConnectionPage
-              validConnectionChecker={this.validConnectionChecker}
-              updateURI={this.updateURI}
-            />
-          )}
+            <Navigation />
+            <Main />
         </div>
-      </div>
     );
   }
 }
