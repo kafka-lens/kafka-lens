@@ -29,6 +29,7 @@ class ConnectionPage extends React.Component {
         </div>
         <button
           id="connect-button"
+          className="btn waves-effect waves-light"
           type="submit"
           onClick={this.props.validConnectionChecker}
         >
