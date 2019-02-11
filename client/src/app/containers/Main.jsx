@@ -1,9 +1,10 @@
-const React = require('react');
+// import components here
+import ConnectionPage from './ConnectionPage.jsx';
+import TopicPage from './TopicPage.jsx';
 
-//import components here
-import ConnectionPage from './ConnectionPage';
-import TopicPage from './TopicPage';
 import '../css/index.css';
+
+const React = require('react');
 
 class Main extends React.Component {
   constructor(props) {
@@ -18,13 +19,15 @@ class Main extends React.Component {
     this.validConnectionChecker = this.validConnectionChecker.bind(this);
     this.updateURI = this.updateURI.bind(this);
   }
+
   // Lifecycle methods
   componentDidMount() {
-    //code here
+    // code here
   }
+
   // Methods
   validConnectionChecker(event) {
-    //code here
+    // code here
     event.preventDefault();
     if (this.state.validString === this.state.uri_input) {
       return this.setState({
@@ -35,9 +38,7 @@ class Main extends React.Component {
 
   updateURI(event) {
     const input = event.target.value;
-    this.setState(state => {
-      return { uri_input: input };
-    });
+    this.setState(state => ({ uri_input: input }));
   }
 
   render() {
