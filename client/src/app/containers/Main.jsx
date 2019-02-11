@@ -23,21 +23,29 @@ class Main extends React.Component {
   }
 
   // Lifecycle methods
-  componentDidMount() {
+  componentWillMount() {
     // code here
+    ipcRenderer.on('topic:getTopics', (e, data) => {
+      console.log('receiving data in componentWillMount: ', data);
+    });
   }
 
   // Methods
   validConnectionChecker(event) {
     event.preventDefault();
 
-    ipcRenderer.send('topic:getTopics', this.state.uri_input);
-
-    if (this.state.validString === this.state.uri_input) {
-      return this.setState({
-        connected: true
-      });
+    if (this.state.uri_input === 'a') {
+      const uri = '157.230.166.35:9092';
+      ipcRenderer.send('topic:getTopics', uri);
     }
+
+    // ipcRenderer.send('topic:getTopics', this.state.uri_input);
+
+    // if (this.state.validString === this.state.uri_input) {
+    //   return this.setState({
+    //     connected: true
+    //   });
+    // }
   }
 
   updateURI(event) {
