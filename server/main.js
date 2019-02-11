@@ -1,34 +1,62 @@
-const kafka = require('kafka-node');
+const electron = require('electron');
 
-function buildTopicObj(topic, partition, offset) {
-  return {
-    topic,
-    partition,
-    offset
-  };
-}
+const app = electron.app;
+const BrowserWindow = electron.BrowserWindow;
+const { Menu } = electron;
 
-function getCurrentOffset(topic, client) {
-  console.log('Doing getCurrentOffset');
-  const offset = new kafka.Offset(client);
-  return offset.fetchLatestOffsets([topic], (err, result) =>
-    Object.values(result[topic]).reduce((total, curr) => total + curr)
+const path = require('path');
+const url = require('url');
+
+let mainWindow;
+
+function createWindow() {
+  mainWindow = new BrowserWindow({ width: 900, height: 680 });
+  mainWindow.loadURL(
+    url.format({
+      pathname: path.join(__dirname, '../client/dist/index.html'),
+      protocol: 'file',
+      slashes: true
+    })
   );
+  mainWindow.on('closed', () => (mainWindow = null));
+
+  // Building menu
+  const mainMenu = Menu.buildFromTemplate(addDevToolsToMenu);
+  // Insert menu
+  Menu.setApplicationMenu(mainMenu);
 }
 
-const getTopicData = args => {
-  const client = new kafka.KafkaClient({ kafkaHost: args });
-  const admin = new kafka.Admin(client);
-  admin.listTopics((err, topics) => {
-    if (err) console.error(err);
-    topics = topics[1].metadata;
-    const resultTopic = [];
-    Object.keys(topics).forEach(topic => {
-      const topicPartitions = Object.keys(topics[topic]).length;
-      resultTopic.push(buildTopicObj(topic, topicPartitions, getCurrentOffset(topic, client)));
-    });
-    return resultTopic;
-  });
-};
+app.on('ready', createWindow);
 
-module.exports = { getTopicData };
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
+
+app.on('activate', () => {
+  if (mainWindow === null) {
+    createWindow();
+  }
+});
+
+const addDevToolsToMenu = [
+  {
+    label: ''
+  },
+  {
+    label: 'Developer Tools',
+    submenu: [
+      {
+        label: 'Toggle DevTools',
+        accelerator: process.platform == 'darwin' ? 'Command+I' : 'Ctrl+I',
+        click(item, focusedWindow) {
+          focusedWindow.toggleDevTools();
+        }
+      },
+      {
+        role: 'reload'
+      }
+    ]
+  }
+];

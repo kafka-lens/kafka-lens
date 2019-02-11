@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Main from './Main';
-import Navigation from '../components/Navigation';
+import Main from './Main.jsx';
+import Navigation from '../components/Navigation.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -10,20 +10,23 @@ class App extends React.Component {
 
     // bind methods here
   }
+
   // Lifecycle methods
   componentDidMount() {
-    //code here
+    // code here
   }
+
   // Methods
   exampleMethod(event) {
-    //code here
+    // code here
   }
+
   render() {
     return (
-        <div>
-            <Navigation />
-            <Main />
-        </div>
+      <div>
+        <Navigation />
+        <Main />
+      </div>
     );
   }
 }
