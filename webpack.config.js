@@ -7,6 +7,7 @@ module.exports = {
     path: path.resolve(__dirname, './client/dist'),
     filename: 'index_bundle.js'
   },
+  target: 'electron-main',
   module: {
     rules: [
       { test: /\.(js|jsx)$/, use: 'babel-loader' },
