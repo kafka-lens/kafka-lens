@@ -1,4 +1,3 @@
-// const { ipcRenderer } = require('electron');
 import { ipcRenderer } from 'electron';
 
 // import components here
