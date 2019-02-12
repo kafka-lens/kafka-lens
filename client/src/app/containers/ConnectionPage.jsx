@@ -1,4 +1,5 @@
 import React from 'react';
+import '../css/ConnectionPage.css';
 
 class ConnectionPage extends React.Component {
   constructor() {
@@ -15,7 +16,18 @@ class ConnectionPage extends React.Component {
   exampleMethod(event) {
     //code here
   }
+
   render() {
+    let loading;
+    if (this.props.isFetching === true) {
+      loading = (
+        <div class="cssload-loader">
+          <div class="cssload-dot" />
+          <div class="cssload-dot" />
+          <div class="cssload-dot" />
+        </div>
+      );
+    }
     return (
       <div>
         <form>
@@ -37,8 +49,14 @@ class ConnectionPage extends React.Component {
             Connect
           </button>
         </form>
-        <div>{this.props.isFetching === true ? <span>Loading ... standby</span> : ''}</div>
-        <div>{this.props.connected === false ? <span>Invalid URI</span> : ''}</div>
+        {loading}
+        <div>
+          {this.props.connected === false ? (
+            <span>Connection timed out, please check your connection URI.</span>
+          ) : (
+            ''
+          )}
+        </div>
       </div>
     );
   }
