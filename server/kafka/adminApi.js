@@ -48,4 +48,16 @@ const getTopicData = (uri, mainWindow) => {
   }, 2000);
 };
 
-module.exports = { getTopicData };
+const getPartitionData = (uri, topic, mainWindow) => {
+  const client = new kafka.KafkaClient({ kafkaHost: uri });
+  const admin = new kafka.Admin(client);
+  const partitions = [];
+  const testData = [
+    { partition: 1, broker: 'test.data:9092', currentOffset: 99999, msgCount: 99999 },
+    { partition: 2, broker: 'test.data:9092', currentOffset: 99999, msgCount: 99999 },
+    { partition: 3, broker: 'test.data:9092', currentOffset: 99999, msgCount: 99999 },
+  ];
+  if (topic === 'asdf') return testData;
+};
+
+module.exports = { getTopicData, getPartitionData };
