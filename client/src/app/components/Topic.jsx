@@ -40,14 +40,15 @@ class Topic extends React.Component {
   //   // console.log('firing showPartitions function')
   // }
   render() {
-
     return (
       <div className="topic">
         <div>
           <span>Topic Name: {this.props.topicInfo.topic}</span> <br />
           <span>Partitions: {this.props.topicInfo.partition}</span>
         </div>
-          <button id={this.props.id} onClick={this.props.showPartitions}>View</button>
+        <button id={this.props.id} onClick={this.props.showPartitions}>
+          View
+        </button>
         <br />
       </div>
     );
@@ -55,4 +56,3 @@ class Topic extends React.Component {
 }
 
 export default Topic;
-
