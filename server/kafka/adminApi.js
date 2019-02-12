@@ -22,10 +22,12 @@ function getCurrentMsgCount(topic, client) {
   });
 }
 
-const getTopicData = async (uri, mainWindow) => {
+const getTopicData = (uri, mainWindow) => {
   const client = new kafka.KafkaClient({ kafkaHost: uri });
   const admin = new kafka.Admin(client);
   const resultTopic = [];
+  let isRunning = false;
+
   admin.listTopics((err, topics) => {
     if (err) console.error(err);
     topics = topics[1].metadata;
@@ -39,6 +41,11 @@ const getTopicData = async (uri, mainWindow) => {
       mainWindow.webContents.send('topic:getTopics', resultTopic);
     });
   });
+  setTimeout(() => {
+    if (!isRunning) {
+      mainWindow.webContents.send('topic:getTopics', 'Error');
+    }
+  }, 2000);
 };
 
 module.exports = { getTopicData };
