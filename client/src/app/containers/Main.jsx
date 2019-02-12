@@ -38,9 +38,9 @@ class Main extends React.Component {
     if (this.state.uri_input === 'a') {
       const uri = '157.230.166.35:9092';
       ipcRenderer.send('topic:getTopics', uri);
+    } else {
+      ipcRenderer.send('topic:getTopics', this.state.uri_input);
     }
-
-    // ipcRenderer.send('topic:getTopics', this.state.uri_input);
 
     // if (this.state.validString === this.state.uri_input) {
     //   return this.setState({
