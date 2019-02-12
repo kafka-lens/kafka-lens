@@ -3,6 +3,7 @@ const path = require('path');
 const url = require('url');
 
 const adminApi = require('./kafka/adminApi');
+const consumerApi = require('./kafka/consumerApi');
 
 let mainWindow;
 
@@ -12,7 +13,7 @@ function createWindow() {
     url.format({
       pathname: path.join(__dirname, '../client/dist/index.html'),
       protocol: 'file',
-      slashes: true
+      slashes: true,
     })
   );
   mainWindow.on('closed', () => (mainWindow = null));
@@ -39,7 +40,7 @@ app.on('activate', () => {
 
 const addDevToolsToMenu = [
   {
-    label: ''
+    label: '',
   },
   {
     label: 'Developer Tools',
@@ -49,13 +50,13 @@ const addDevToolsToMenu = [
         accelerator: process.platform == 'darwin' ? 'Command+I' : 'Ctrl+I',
         click(item, focusedWindow) {
           focusedWindow.toggleDevTools();
-        }
+        },
       },
       {
-        role: 'reload'
-      }
-    ]
-  }
+        role: 'reload',
+      },
+    ],
+  },
 ];
 
 /*
@@ -66,4 +67,12 @@ const addDevToolsToMenu = [
  */
 ipcMain.on('topic:getTopics', (e, uri) => {
   adminApi.getTopicData(uri, mainWindow);
+});
+
+ipcMain.on('topic:getPartitions', (e, args) => {
+  adminApi.getPartitionData(args.uri, 'asdf', mainWindow);
+});
+
+ipcMain.on('partition:getMessages', (e, args) => {
+  consumerApi.getMessagesFromTopic('asdf', 'test1', mainWindow);
 });
