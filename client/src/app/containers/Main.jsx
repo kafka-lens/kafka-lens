@@ -12,9 +12,9 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      connected: false,
+      connected: null,
       uri_input: '',
-      validString: 'Hello'
+      topics: []
     };
 
     // bind methods here
@@ -26,7 +26,17 @@ class Main extends React.Component {
   componentWillMount() {
     // code here
     ipcRenderer.on('topic:getTopics', (e, data) => {
-      console.log('receiving data in componentWillMount: ', data);
+      if (data === 'Error') {
+        this.setState({
+          connected: false
+        });
+      } else {
+        this.setState({
+          topics: data,
+          connected: true
+        });
+      }
+      console.log('logging state', this.state);
     });
   }
 
@@ -40,12 +50,6 @@ class Main extends React.Component {
     } else {
       ipcRenderer.send('topic:getTopics', this.state.uri_input);
     }
-
-    // if (this.state.validString === this.state.uri_input) {
-    //   return this.setState({
-    //     connected: true
-    //   });
-    // }
   }
 
   updateURI(event) {
@@ -58,11 +62,12 @@ class Main extends React.Component {
       <div>
         <div>
           {this.state.connected === true ? (
-            <TopicPage />
+            <TopicPage topicList={this.state.topics} />
           ) : (
             <ConnectionPage
               validConnectionChecker={this.validConnectionChecker}
               updateURI={this.updateURI}
+              connected={this.state.connected}
             />
           )}
         </div>

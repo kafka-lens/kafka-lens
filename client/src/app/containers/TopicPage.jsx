@@ -1,9 +1,12 @@
 import React from 'react';
+import Topic from '../components/Topic.jsx';
 
 class TopicPage extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      topics: []
+    };
 
     // bind methods here
   }
@@ -16,9 +19,15 @@ class TopicPage extends React.Component {
     //code here
   }
   render() {
+    const Topics = this.props.topicList.map((element, i) => {
+      console.log('im in loop');
+      return <Topic key={i} topicInfo={element} />;
+    });
+
     return (
       <div>
         <h1>Active Topics</h1>
+        <div>{Topics}</div>
       </div>
     );
   }
