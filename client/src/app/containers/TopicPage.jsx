@@ -9,8 +9,9 @@ class TopicPage extends React.Component {
     super(props);
     this.state = {
       topics: [],
+      topicInfo: {},
       showPartitions: false,
-      topicInfo: {}
+      buttonId: -1
     };
 
     this.showPartitions = this.showPartitions.bind(this);
@@ -23,9 +24,16 @@ class TopicPage extends React.Component {
   showPartitions(event) {
     const topicInfo = this.props.topicList
     const i = parseInt(event.target.id)
+    
+    if (this.state.showPartitions && this.state.buttonId === i) {
+      return this.setState({
+        showPartitions: false
+      })
+    }
 
     let newState = this.state
     newState.showPartitions = true;
+    newState.buttonId = i;
     newState.topicInfo = topicInfo[i];
 
     return this.setState(newState)
