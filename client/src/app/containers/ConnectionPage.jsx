@@ -37,6 +37,7 @@ class ConnectionPage extends React.Component {
             Connect
           </button>
         </form>
+        <div>{this.props.isFetching === true ? <span>Loading ... standby</span> : ''}</div>
         <div>{this.props.connected === false ? <span>Invalid URI</span> : ''}</div>
       </div>
     );
