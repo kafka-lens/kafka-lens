@@ -24,25 +24,20 @@ function getCurrentMsgCount(topic, client) {
 
 const getTopicData = async (uri, mainWindow) => {
   const client = new kafka.KafkaClient({ kafkaHost: uri });
-  const producerClient = new kafka.KafkaClient({ kafkaHost: uri });
-  setInterval(() => console.log('producer client:', JSON.stringify(producerClient)), 10000);
-  const producer = new kafka.Producer(producerClient);
-  producer.on('error', err => {
-    console.log('producer error', err);
-  });
-
   const admin = new kafka.Admin(client);
   const resultTopic = [];
   admin.listTopics((err, topics) => {
     if (err) console.error(err);
     topics = topics[1].metadata;
     Object.keys(topics).forEach(topic => {
+      isRunning = true;
       const topicPartitions = Object.keys(topics[topic]).length;
       resultTopic.push(buildTopicObj(topic, topicPartitions, getCurrentMsgCount(topic, client)));
     });
-    Promise.all(resultTopic.map(x => x.messages)).then(result =>
-      mainWindow.webContents.send('topic:getTopics', resultTopic)
-    );
+    Promise.all(resultTopic.map(x => x.messages)).then(result => {
+      console.log(resultTopic);
+      mainWindow.webContents.send('topic:getTopics', resultTopic);
+    });
   });
 };
 
