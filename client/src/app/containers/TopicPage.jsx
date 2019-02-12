@@ -1,33 +1,48 @@
 import React from 'react';
 import Topic from '../components/Topic.jsx';
+import PartitionList from '../components/PartitionList.jsx';
+
+import '../css/TopicPage.css'
 
 class TopicPage extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      topics: []
+      topics: [],
+      showPartitions: false,
+      topicInfo: {}
     };
 
-    // bind methods here
+    this.showPartitions = this.showPartitions.bind(this);
   }
   // Lifecycle methods
   componentDidMount() {
     //code here
   }
   // Methods
-  exampleMethod(event) {
-    //code here
+  showPartitions(event) {
+    const topicInfo = this.props.topicList
+    const i = parseInt(event.target.id)
+
+    let newState = this.state
+    newState.showPartitions = true;
+    newState.topicInfo = topicInfo[i];
+
+    return this.setState(newState)
+
   }
   render() {
     const Topics = this.props.topicList.map((element, i) => {
-      console.log('im in loop');
-      return <Topic key={i} topicInfo={element} />;
+      return <Topic key={i} id={i} topicInfo={element} showPartitions={this.showPartitions} />;
     });
 
     return (
       <div>
         <h1>Active Topics</h1>
         <div>{Topics}</div>
+        <div className="partition-list">
+          {this.state.showPartitions === true ? (<PartitionList topicInfo={this.state.topicInfo} />) : ''}
+        </div>
       </div>
     );
   }
