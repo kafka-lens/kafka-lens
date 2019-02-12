@@ -1,6 +1,4 @@
 {
-  "printWidth": 100,
-  "singleQuote": true,
   "comma-dangle": [
     "error",
     {
@@ -10,5 +8,7 @@
       "exports": "never",
       "functions": "ignore"
     }
-  ]
+  ],
+  "prettier.eslintIntegration": true,
+  "prettier.trailingComma": "es5"
 }
