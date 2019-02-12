@@ -17,25 +17,28 @@ class ConnectionPage extends React.Component {
   }
   render() {
     return (
-      <form>
-        <div>
-          <label>Enter Your Kafka Server URI</label>
-          <input
-            id="uri-input"
-            type="text"
-            placeholder="ex. http://0.0.0.0:9092"
-            onChange={this.props.updateURI}
-          />
-        </div>
-        <button
-          id="connect-button"
-          className="btn waves-effect waves-light"
-          type="submit"
-          onClick={this.props.validConnectionChecker}
-        >
-          Connect
-        </button>
-      </form>
+      <div>
+        <form>
+          <div>
+            <label>Enter Your Kafka Server URI</label>
+            <input
+              id="uri-input"
+              type="text"
+              placeholder="ex. http://0.0.0.0:9092"
+              onChange={this.props.updateURI}
+            />
+          </div>
+          <button
+            id="connect-button"
+            className="btn waves-effect waves-light"
+            type="submit"
+            onClick={this.props.validConnectionChecker}
+          >
+            Connect
+          </button>
+        </form>
+        <div>{this.props.connected === false ? <span>Invalid URI</span> : ''}</div>
+      </div>
     );
   }
 }
