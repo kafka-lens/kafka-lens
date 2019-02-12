@@ -15,7 +15,8 @@ class Main extends React.Component {
     this.state = {
       connected: null,
       uri_input: '',
-      topics: []
+      topics: [],
+      isFetching: false
     };
 
     // bind methods here
@@ -27,6 +28,7 @@ class Main extends React.Component {
   componentWillMount() {
     // code here
     ipcRenderer.on('topic:getTopics', (e, data) => {
+      this.setState({ isFetching: false });
       if (data === 'Error') {
         this.setState({
           connected: false
@@ -44,6 +46,9 @@ class Main extends React.Component {
   // Methods
   validConnectionChecker(event) {
     event.preventDefault();
+    this.setState({
+      isFetching: true
+    });
 
     if (this.state.uri_input === 'a') {
       const uri = '157.230.166.35:9092';
@@ -69,6 +74,7 @@ class Main extends React.Component {
               validConnectionChecker={this.validConnectionChecker}
               updateURI={this.updateURI}
               connected={this.state.connected}
+              isFetching={this.state.isFetching}
             />
           )}
         </div>
