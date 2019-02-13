@@ -78,7 +78,7 @@ class TopicPage extends React.Component {
         <div className="topic-list">{Topics}</div>
         <div className="partition-list">
           {this.state.showPartitions === true ? (
-            <PartitionList topicInfo={this.state.topicInfo} />
+            <PartitionList showMessages={this.showMessages} topicInfo={this.state.topicInfo} />
           ) : (
             ''
           )}
