@@ -4,21 +4,18 @@ const kafka = require('kafka-node');
 // const consumer = new kafka.Consumer(client, [{ topic: 'test1' }]);
 let testStream;
 
-const getLatestOffset = (kafkaHost, topic, partition) => {
-  const client = new kafka.KafkaClient({ kafkaHost });
-  const admin = new kafka.Admin(client);
-  const result = admin.getLatestOffset(client, topic, partition);
-  console.log('result from latest offset in consumer: ', result);
-  return result;
-};
+const getLatestOffset = (kafkaHost, topic, partition) =>
+  new Promise((resolve, reject) => {
+    const client = new kafka.KafkaClient({ kafkaHost });
+    const offset = new kafka.Offset(client);
+    offset.fetchLatestOffsets([{ topic, partition }], (err, data) => {
+      if (err) reject(err);
+      console.log('result from latest offset in consumer: ', data);
+      resolve(data);
+    });
+  });
 
-const getMessagesFromPartition = (
-  kafkaHost,
-  topic,
-  mainWindow,
-  offset = getLatestOffset(topic),
-  partition = 0
-) => {
+const getMessagesFromPartition = (kafkaHost, topic, mainWindow, offset = 0, partition = 0) => {
   // Send back test data
   if (topic === 'test1' && broker === 'asdf') {
     let testOffset = 45532;
@@ -38,14 +35,18 @@ const getMessagesFromPartition = (
   } else {
     const client = new kafka.KafkaClient({ kafkaHost });
     const payload = { topic, offset, partition };
+    if (offset === 'latest') {
+      payload.offset = await getLatestOffset(kafkaHost, topic, partition);
+    }
     const options = { encoding: 'utf8', keyEncoding: 'utf8' };
-    const consumerStream = new kafka.consumerStream(client, payload, options);
+    const consumer = new kafka.Consumer(client, payload, options);
 
-    consumerStream.on('error', err => {
+    consumer.on('error', err => {
       mainWindow.webContents.send('error:getMessage', {});
     });
 
-    consumerStream.on('message', message => {
+    consumer.on('message', message => {
+      console.log(message);
       mainWindow.webContents.send('partition:getMessages', message);
     });
   }
