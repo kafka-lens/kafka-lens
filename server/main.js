@@ -78,6 +78,7 @@ ipcMain.on('partition:getTestMessages', (e, args) => {
 });
 
 ipcMain.on('partition:getMessages', (e, args) => {
+  console.log('get msg request received', args);
   consumerApi.getMessagesFromPartition(
     args.host,
     args.topic,
