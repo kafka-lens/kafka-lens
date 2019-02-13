@@ -59,12 +59,18 @@ class TopicPage extends React.Component {
     const partitionNumber = parseInt(event.target.id);
     const partitionId = topicName + partitionNumber;
 
+    const uri = this.props.uri_input;
+
+    if (uri === 'a') {
+      uri = '157.230.166.35:9092'
+    }
+
     if (partitionId !== this.state.partitionId) {
       this.setState({
         messages: [],
         partitionId: partitionId
       });
-      ipcRenderer.send('partition:getMessages', {});
+      ipcRenderer.send('partition:getMessages', {host: uri, topic: topicName, partition: partitionNumber});
     }
   }
 
