@@ -73,6 +73,10 @@ ipcMain.on('topic:getPartitions', (e, args) => {
   adminApi.getPartitionData(args.uri, 'asdf', mainWindow);
 });
 
-ipcMain.on('partition:getMessages', (e, args) => {
-  consumerApi.getMessagesFromTopic('asdf', 'test1', mainWindow);
+ipcMain.on('partition:getTestMessages', (e, args) => {
+  consumerApi.getMessagesFromPartition('asdf', 'test1', mainWindow);
 });
+
+ipcMain.on('partition:getMessages', (e, args) => {
+  consumerApi.getMessagesFromPartition(args.host, args.topic, mainWindow);
+})
