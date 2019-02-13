@@ -1,4 +1,8 @@
 .partition {
-    border: 1px solid black;
-    width: 25%;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  margin-bottom: 5px;
+}
+
+.partition-button {
 }
