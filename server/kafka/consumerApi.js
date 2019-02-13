@@ -4,11 +4,22 @@ const kafka = require('kafka-node');
 // const consumer = new kafka.Consumer(client, [{ topic: 'test1' }]);
 let testStream;
 
-const getMessagesFromTopic = (broker, topic, mainWindow) => {
+const getLatestOffset = (kafkaHost, topic, partition) =>
+  new Promise((resolve, reject) => {
+    const client = new kafka.KafkaClient({ kafkaHost });
+    const offset = new kafka.Offset(client);
+    offset.fetchLatestOffsets([{ topic, partition }], (err, data) => {
+      if (err) reject(err);
+      console.log('result from latest offset in consumer: ', data);
+      resolve(data);
+    });
+  });
+
+const getMessagesFromPartition = async (kafkaHost, topic, mainWindow, offset = 0, partition = 0) => {
   // Send back test data
   if (topic === 'test1' && broker === 'asdf') {
-    let testOffset = 45532
-    let testHighwater = 45702
+    let testOffset = 45532;
+    let testHighwater = 45702;
     testStream = setInterval(() => {
       mainWindow.webContents.send('partition:getMessages', { topic: 'test1',
       value: `Current date: ${Date.now()}`,
@@ -19,11 +30,28 @@ const getMessagesFromTopic = (broker, topic, mainWindow) => {
     }, 1500)
     testOffset += 1;
     testHighwater += 1;
+  } else {
+    const client = new kafka.KafkaClient({ kafkaHost });
+    const payload = { topic, offset, partition };
+    if (offset === 'latest') {
+      payload.offset = await getLatestOffset(kafkaHost, topic, partition);
+    }
+    const options = { encoding: 'utf8', keyEncoding: 'utf8' };
+    const consumer = new kafka.Consumer(client, payload, options);
+
+    consumer.on('error', err => {
+      mainWindow.webContents.send('error:getMessage', {});
+    });
+
+    consumer.on('message', message => {
+      console.log(message);
+      mainWindow.webContents.send('partition:getMessages', message);
+    });
   }
-}
+};
 
 const stopDataFlow = () => {
   clearInterval(testStream);
-}
+};
 
-module.exports={getMessagesFromTopic, stopDataFlow}
+module.exports = { getMessagesFromTopic: getMessagesFromPartition, stopDataFlow };
