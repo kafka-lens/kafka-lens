@@ -1,7 +1,6 @@
 import React from 'react';
 import '../css/Topic.css';
 
-
 class Topic extends React.Component {
   constructor(props) {
     super(props);
@@ -16,7 +15,7 @@ class Topic extends React.Component {
     //code here
   }
   // Methods
- exampleMethod(event) {
+  exampleMethod(event) {
     //code here
   }
 
@@ -27,7 +26,7 @@ class Topic extends React.Component {
           <span>Topic Name: {this.props.topicInfo.topic}</span> <br />
           <span>Partitions: {this.props.topicInfo.partition}</span>
         </div>
-        <button id={this.props.id} onClick={this.props.showPartitions}>
+        <button className="topic-button" id={this.props.id} onClick={this.props.showPartitions}>
           View
         </button>
         <br />
