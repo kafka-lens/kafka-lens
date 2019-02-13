@@ -1,0 +1,56 @@
+#connection-form-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Source Sans Pro', sans-serif;
+  background: rgb(11, 170, 143);
+  height: 100%;
+}
+
+#error-message {
+  color: rgb(221, 47, 47);
+  text-align: center;
+}
+
+#uri-input {
+  width: 440px;
+  height: 25px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+#uri-input:hover {
+  border: 1px solid #005d6d;
+  transition: 0.3s;
+}
+
+#connection-form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  display: block;
+  font-size: 18px;
+  color: white;
+  text-align: center;
+}
+
+button {
+  background-color: #ddd;
+  border: none;
+  color: black;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #28b9d3;
+  color: white;
+  cursor: pointer;
+}

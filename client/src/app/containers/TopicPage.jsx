@@ -36,13 +36,13 @@ class TopicPage extends React.Component {
   }
   // Methods
   showPartitions(event) {
-    const topicInfo = this.props.topicList
-    const i = parseInt(event.target.id)
-    
+    const topicInfo = this.props.topicList;
+    const i = parseInt(event.target.id);
+
     if (this.state.showPartitions && this.state.buttonId === i) {
       return this.setState({
         showPartitions: false
-      })
+      });
     }
     let newState = this.state
     newState.showPartitions = true;
@@ -75,9 +75,13 @@ class TopicPage extends React.Component {
     return (
       <div>
         <h1>Active Topics</h1>
-        <div>{Topics}</div>
+        <div className="topic-list">{Topics}</div>
         <div className="partition-list">
-          {this.state.showPartitions === true ? (<PartitionList topicInfo={this.state.topicInfo} showMessages={this.showMessages}/>) : ''}
+          {this.state.showPartitions === true ? (
+            <PartitionList topicInfo={this.state.topicInfo} />
+          ) : (
+            ''
+          )}
         </div>
       </div>
     );

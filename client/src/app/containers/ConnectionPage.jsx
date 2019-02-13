@@ -1,4 +1,5 @@
 import React from 'react';
+import '../css/ConnectionPage.css';
 
 class ConnectionPage extends React.Component {
   constructor() {
@@ -15,10 +16,21 @@ class ConnectionPage extends React.Component {
   exampleMethod(event) {
     //code here
   }
+
   render() {
+    let loading;
+    if (this.props.isFetching === true) {
+      loading = (
+        <div class="cssload-loader">
+          <div class="cssload-dot" />
+          <div class="cssload-dot" />
+          <div class="cssload-dot" />
+        </div>
+      );
+    }
     return (
-      <div>
-        <form>
+      <div id="connection-form-div">
+        <form id="connection-form">
           <div>
             <label>Enter Your Kafka Server URI</label>
             <input
@@ -36,8 +48,13 @@ class ConnectionPage extends React.Component {
           >
             Connect
           </button>
+          {this.props.connected === false ? (
+            <p id="error-message">Connection timed out, please check your connection URI.</p>
+          ) : (
+            ''
+          )}
         </form>
-        <div>{this.props.connected === false ? <span>Invalid URI</span> : ''}</div>
+        {loading}
       </div>
     );
   }
