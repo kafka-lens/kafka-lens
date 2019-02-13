@@ -75,7 +75,7 @@ class TopicPage extends React.Component {
 
     return (
       <div>
-        <h1>Active Topics</h1>
+        <h3>Active Topics</h3>
         <div className="topic-list">{Topics}</div>
         <div className="bottom-container">
           <div className="partition-list">
@@ -85,16 +85,18 @@ class TopicPage extends React.Component {
               ''
             )}
           </div>
+          <div className="message-list">
+            {this.state.messages.length > 0 ? (
+              <MessageList messageArray={this.state.messages} />
+            ) : (
+              ''
+            )}
+          </div>
           <div />
-        </div>
-
-        <div>
-          {this.state.messages.length > 0 ? <MessageList messageArray={this.state.messages} /> : ''}
         </div>
       </div>
     );
   }
-  x;
 }
 
 export default TopicPage;
