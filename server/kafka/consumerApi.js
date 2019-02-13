@@ -4,7 +4,7 @@ const kafka = require('kafka-node');
 // const consumer = new kafka.Consumer(client, [{ topic: 'test1' }]);
 let testStream;
 
-const getMessagesFromTopic = (broker, topic, mainWindow) {
+const getMessagesFromTopic = (broker, topic, mainWindow) => {
   // Send back test data
   if (topic === 'test1' && broker === 'asdf') {
     let testOffset = 45532
@@ -16,7 +16,7 @@ const getMessagesFromTopic = (broker, topic, mainWindow) {
       partition: 0,
       highWaterOffset: testHighwater,
       key: null })
-    })
+    }, 1500)
     testOffset += 1;
     testHighwater += 1;
   }

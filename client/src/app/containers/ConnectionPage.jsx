@@ -21,10 +21,10 @@ class ConnectionPage extends React.Component {
     let loading;
     if (this.props.isFetching === true) {
       loading = (
-        <div class="cssload-loader">
-          <div class="cssload-dot" />
-          <div class="cssload-dot" />
-          <div class="cssload-dot" />
+        <div className="cssload-loader">
+          <div className="cssload-dot" />
+          <div className="cssload-dot" />
+          <div className="cssload-dot" />
         </div>
       );
     }

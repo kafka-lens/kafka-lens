@@ -6,7 +6,7 @@ const PartitionList = props => {
     const numberOfPartitions = props.topicInfo.partition;
 
     for (let i = 0; i < numberOfPartitions; i++) {
-        partitionsArray.push(<Partition key={i} id={i} />)
+        partitionsArray.push(<Partition key={i} id={i} showMessages={props.showMessages} topicName={props.topicInfo.topic} />)
     }
 
   return <div>{partitionsArray}</div>;
