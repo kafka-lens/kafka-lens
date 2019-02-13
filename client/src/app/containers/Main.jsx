@@ -63,9 +63,12 @@ class Main extends React.Component {
   }
 
   render() {
+    const divStyle = {
+      height: '100%'
+    };
     return (
-      <div>
-        <div>
+      <div style={divStyle}>
+        <div style={divStyle}>
           {this.state.connected === true ? (
             <TopicPage topicList={this.state.topics} />
           ) : (

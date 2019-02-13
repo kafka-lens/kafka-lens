@@ -1,374 +1,56 @@
-.cssload-loader * {
-  box-sizing: border-box;
-  -o-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+#connection-form-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Source Sans Pro', sans-serif;
+  background: rgb(11, 170, 143);
+  height: 100%;
 }
 
-.cssload-loader {
-  position: absolute;
-  left: 50%;
-  width: 195px;
-  height: 195px;
-  margin-top: -97px;
-  margin-left: -97px;
-  perspective: 195px;
-  -o-perspective: 195px;
-  -ms-perspective: 195px;
-  -webkit-perspective: 195px;
-  -moz-perspective: 195px;
-  transform-type: preserve-3d;
-  -o-transform-type: preserve-3d;
-  -ms-transform-type: preserve-3d;
-  -webkit-transform-type: preserve-3d;
-  -moz-transform-type: preserve-3d;
+#error-message {
+  color: rgb(221, 47, 47);
+  text-align: center;
 }
 
-.cssload-dot {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 117px;
-  height: 117px;
-  margin-top: -58px;
-  margin-left: -58px;
-  border-radius: 97px;
-  border: 39px outset rgb(30, 63, 87);
-  background-color: transparent;
-  transform-type: preserve-3d;
-  -o-transform-type: preserve-3d;
-  -ms-transform-type: preserve-3d;
-  -webkit-transform-type: preserve-3d;
-  -moz-transform-type: preserve-3d;
-  transform-origin: 50% 50%;
-  -o-transform-origin: 50% 50%;
-  -ms-transform-origin: 50% 50%;
-  -webkit-transform-origin: 50% 50%;
-  -moz-transform-origin: 50% 50%;
-  transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  -o-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  -ms-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  -webkit-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  -moz-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  animation: cssload-dot1 1150ms cubic-bezier(0.49, 0.06, 0.43, 0.85) infinite;
-  -o-animation: cssload-dot1 1150ms cubic-bezier(0.49, 0.06, 0.43, 0.85) infinite;
-  -ms-animation: cssload-dot1 1150ms cubic-bezier(0.49, 0.06, 0.43, 0.85) infinite;
-  -webkit-animation: cssload-dot1 1150ms cubic-bezier(0.49, 0.06, 0.43, 0.85) infinite;
-  -moz-animation: cssload-dot1 1150ms cubic-bezier(0.49, 0.06, 0.43, 0.85) infinite;
+#uri-input {
+  width: 440px;
+  height: 25px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
-.cssload-dot:nth-child(2) {
-  width: 136px;
-  height: 136px;
-  margin-top: -68px;
-  margin-left: -68px;
-  border-width: 29px;
-  border-color: rgb(68, 120, 145);
-  animation-name: cssload-dot2;
-  -o-animation-name: cssload-dot2;
-  -ms-animation-name: cssload-dot2;
-  -webkit-animation-name: cssload-dot2;
-  -moz-animation-name: cssload-dot2;
-  animation-delay: 86.25ms;
-  -o-animation-delay: 86.25ms;
-  -ms-animation-delay: 86.25ms;
-  -webkit-animation-delay: 86.25ms;
-  -moz-animation-delay: 86.25ms;
-  box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.1);
-  -o-box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.1);
-  -ms-box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.1);
-  transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  -o-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  -ms-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  -webkit-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  -moz-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
+#uri-input:hover {
+  border: 1px solid #005d6d;
+  transition: 0.3s;
 }
 
-.cssload-dot:nth-child(3) {
-  width: 156px;
-  height: 156px;
-  margin-top: -78px;
-  margin-left: -78px;
-  border-width: 19px;
-  border-color: rgb(107, 178, 205);
-  animation-name: cssload-dot3;
-  -o-animation-name: cssload-dot3;
-  -ms-animation-name: cssload-dot3;
-  -webkit-animation-name: cssload-dot3;
-  -moz-animation-name: cssload-dot3;
-  animation-delay: 172.5ms;
-  -o-animation-delay: 172.5ms;
-  -ms-animation-delay: 172.5ms;
-  -webkit-animation-delay: 172.5ms;
-  -moz-animation-delay: 172.5ms;
-  box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.1);
-  -o-box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.1);
-  -ms-box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.1);
-  transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  -o-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  -ms-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  -webkit-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  -moz-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
+#connection-form {
+  display: flex;
+  flex-direction: column;
 }
 
-@keyframes cssload-dot1 {
-  0% {
-    border-color: rgb(30, 63, 87);
-    transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-  50% {
-    border-color: rgb(160, 139, 245);
-    transform: rotateX(20deg) rotateY(20deg) rotateZ(50deg) translateZ(0px);
-  }
-  100% {
-    border-color: rgb(30, 63, 87);
-    transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
+label {
+  display: block;
+  font-size: 18px;
+  color: white;
+  text-align: center;
 }
 
-@-o-keyframes cssload-dot1 {
-  0% {
-    border-color: rgb(30, 63, 87);
-    -o-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-  50% {
-    border-color: rgb(160, 139, 245);
-    -o-transform: rotateX(20deg) rotateY(20deg) rotateZ(50deg) translateZ(0px);
-  }
-  100% {
-    border-color: rgb(30, 63, 87);
-    -o-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
+button {
+  background-color: #ddd;
+  border: none;
+  color: black;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition: 0.3s;
 }
 
-@-ms-keyframes cssload-dot1 {
-  0% {
-    border-color: rgb(30, 63, 87);
-    -ms-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-  50% {
-    border-color: rgb(160, 139, 245);
-    -ms-transform: rotateX(20deg) rotateY(20deg) rotateZ(50deg) translateZ(0px);
-  }
-  100% {
-    border-color: rgb(30, 63, 87);
-    -ms-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-}
-
-@-webkit-keyframes cssload-dot1 {
-  0% {
-    border-color: rgb(30, 63, 87);
-    -webkit-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-  50% {
-    border-color: rgb(160, 139, 245);
-    -webkit-transform: rotateX(20deg) rotateY(20deg) rotateZ(50deg) translateZ(0px);
-  }
-  100% {
-    border-color: rgb(30, 63, 87);
-    -webkit-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-}
-
-@-moz-keyframes cssload-dot1 {
-  0% {
-    border-color: rgb(30, 63, 87);
-    -moz-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-  50% {
-    border-color: rgb(160, 139, 245);
-    -moz-transform: rotateX(20deg) rotateY(20deg) rotateZ(50deg) translateZ(0px);
-  }
-  100% {
-    border-color: rgb(30, 63, 87);
-    -moz-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-}
-
-@keyframes cssload-dot2 {
-  0% {
-    border-color: rgb(68, 120, 145);
-    box-shadow: inset 0 0 15px 0 rgba(255, 255, 255, 0.2);
-    transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-  50% {
-    border-color: rgba(68, 145, 128, 0.69);
-    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.8);
-    transform: rotateX(20deg) rotateY(20deg) rotateZ(50deg) translateZ(0px);
-  }
-  100% {
-    border-color: rgb(68, 120, 145);
-    box-shadow: inset 0 0 15px 0 rgba(255, 255, 255, 0.2);
-    transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-}
-
-@-o-keyframes cssload-dot2 {
-  0% {
-    border-color: rgb(68, 120, 145);
-    box-shadow: inset 0 0 15px 0 rgba(255, 255, 255, 0.2);
-    -o-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-  50% {
-    border-color: rgba(68, 145, 128, 0.69);
-    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.8);
-    -o-transform: rotateX(20deg) rotateY(20deg) rotateZ(50deg) translateZ(0px);
-  }
-  100% {
-    border-color: rgb(68, 120, 145);
-    box-shadow: inset 0 0 15px 0 rgba(255, 255, 255, 0.2);
-    -o-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-}
-
-@-ms-keyframes cssload-dot2 {
-  0% {
-    border-color: rgb(68, 120, 145);
-    box-shadow: inset 0 0 15px 0 rgba(255, 255, 255, 0.2);
-    -ms-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-  50% {
-    border-color: rgba(68, 145, 128, 0.69);
-    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.8);
-    -ms-transform: rotateX(20deg) rotateY(20deg) rotateZ(50deg) translateZ(0px);
-  }
-  100% {
-    border-color: rgb(68, 120, 145);
-    box-shadow: inset 0 0 15px 0 rgba(255, 255, 255, 0.2);
-    -ms-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-}
-
-@-webkit-keyframes cssload-dot2 {
-  0% {
-    border-color: rgb(68, 120, 145);
-    box-shadow: inset 0 0 15px 0 rgba(255, 255, 255, 0.2);
-    -webkit-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-  50% {
-    border-color: rgba(68, 145, 128, 0.69);
-    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.8);
-    -webkit-transform: rotateX(20deg) rotateY(20deg) rotateZ(50deg) translateZ(0px);
-  }
-  100% {
-    border-color: rgb(68, 120, 145);
-    box-shadow: inset 0 0 15px 0 rgba(255, 255, 255, 0.2);
-    -webkit-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-}
-
-@-moz-keyframes cssload-dot2 {
-  0% {
-    border-color: rgb(68, 120, 145);
-    box-shadow: inset 0 0 15px 0 rgba(255, 255, 255, 0.2);
-    -moz-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-  50% {
-    border-color: rgba(68, 145, 128, 0.69);
-    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.8);
-    -moz-transform: rotateX(20deg) rotateY(20deg) rotateZ(50deg) translateZ(0px);
-  }
-  100% {
-    border-color: rgb(68, 120, 145);
-    box-shadow: inset 0 0 15px 0 rgba(255, 255, 255, 0.2);
-    -moz-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-}
-
-@keyframes cssload-dot3 {
-  0% {
-    border-color: rgb(107, 178, 205);
-    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.1);
-    transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-  50% {
-    border-color: #6bcdb2;
-    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.8);
-    transform: rotateX(20deg) rotateY(20deg) rotateZ(50deg) translateZ(0px);
-  }
-  100% {
-    border-color: #6bb2cd;
-    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.1);
-    transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-}
-
-@-o-keyframes cssload-dot3 {
-  0% {
-    border-color: rgb(107, 178, 205);
-    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.1);
-    -o-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-  50% {
-    border-color: #6bcdb2;
-    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.8);
-    -o-transform: rotateX(20deg) rotateY(20deg) rotateZ(50deg) translateZ(0px);
-  }
-  100% {
-    border-color: #6bb2cd;
-    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.1);
-    -o-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-}
-
-@-ms-keyframes cssload-dot3 {
-  0% {
-    border-color: rgb(107, 178, 205);
-    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.1);
-    -ms-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-  50% {
-    border-color: #6bcdb2;
-    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.8);
-    -ms-transform: rotateX(20deg) rotateY(20deg) rotateZ(50deg) translateZ(0px);
-  }
-  100% {
-    border-color: #6bb2cd;
-    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.1);
-    -ms-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-}
-
-@-webkit-keyframes cssload-dot3 {
-  0% {
-    border-color: rgb(107, 178, 205);
-    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.1);
-    -webkit-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-  50% {
-    border-color: #6bcdb2;
-    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.8);
-    -webkit-transform: rotateX(20deg) rotateY(20deg) rotateZ(50deg) translateZ(0px);
-  }
-  100% {
-    border-color: #6bb2cd;
-    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.1);
-    -webkit-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-}
-
-@-moz-keyframes cssload-dot3 {
-  0% {
-    border-color: rgb(107, 178, 205);
-    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.1);
-    -moz-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
-  50% {
-    border-color: #6bcdb2;
-    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.8);
-    -moz-transform: rotateX(20deg) rotateY(20deg) rotateZ(50deg) translateZ(0px);
-  }
-  100% {
-    border-color: #6bb2cd;
-    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.1);
-    -moz-transform: rotateX(24deg) rotateY(20deg) rotateZ(0deg) translateZ(-24px);
-  }
+button:hover {
+  background-color: #28b9d3;
+  color: white;
+  cursor: pointer;
 }

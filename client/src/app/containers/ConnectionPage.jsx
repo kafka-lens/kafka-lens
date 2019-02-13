@@ -29,8 +29,8 @@ class ConnectionPage extends React.Component {
       );
     }
     return (
-      <div>
-        <form>
+      <div id="connection-form-div">
+        <form id="connection-form">
           <div>
             <label>Enter Your Kafka Server URI</label>
             <input
@@ -48,15 +48,13 @@ class ConnectionPage extends React.Component {
           >
             Connect
           </button>
-        </form>
-        {loading}
-        <div>
           {this.props.connected === false ? (
-            <span>Connection timed out, please check your connection URI.</span>
+            <p id="error-message">Connection timed out, please check your connection URI.</p>
           ) : (
             ''
           )}
-        </div>
+        </form>
+        {loading}
       </div>
     );
   }
