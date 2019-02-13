@@ -1,6 +1,7 @@
 import React from 'react';
 import Topic from '../components/Topic.jsx';
 import PartitionList from '../components/PartitionList.jsx';
+import MessageList from '../components/MessageList.jsx';
 
 import { ipcRenderer } from 'electron';
 import '../css/TopicPage.css'
@@ -76,6 +77,7 @@ class TopicPage extends React.Component {
       <div>
         <h1>Active Topics</h1>
         <div className="topic-list">{Topics}</div>
+
         <div className="partition-list">
           {this.state.showPartitions === true ? (
             <PartitionList showMessages={this.showMessages} topicInfo={this.state.topicInfo} />
@@ -83,6 +85,15 @@ class TopicPage extends React.Component {
             ''
           )}
         </div>
+
+        <div>
+          {this.state.messages.length > 0 ? (
+            <MessageList messageArray={this.state.messages} />
+          ) : (
+            ''
+          )}
+        </div>
+
       </div>
     );
   }
