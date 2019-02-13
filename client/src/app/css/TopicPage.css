@@ -1,3 +1,9 @@
 .partition-list {
-    margin-top: 25px;
+  margin-top: 25px;
+}
+
+.topic-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
 }
