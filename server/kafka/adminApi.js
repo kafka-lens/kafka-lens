@@ -45,7 +45,7 @@ const getTopicData = (uri, mainWindow) => {
     if (!isRunning) {
       mainWindow.webContents.send('topic:getTopics', 'Error');
     }
-  }, 2000);
+  }, 3000);
 };
 
 const getPartitionData = (uri, topic, mainWindow) => {
