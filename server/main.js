@@ -78,5 +78,11 @@ ipcMain.on('partition:getTestMessages', (e, args) => {
 });
 
 ipcMain.on('partition:getMessages', (e, args) => {
-  consumerApi.getMessagesFromPartition(args.host, args.topic, mainWindow);
-})
+  consumerApi.getMessagesFromPartition(
+    args.host,
+    args.topic,
+    mainWindow,
+    args.offset || undefined,
+    args.partition || undefined
+  );
+});
