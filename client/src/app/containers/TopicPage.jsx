@@ -3,7 +3,7 @@ import Topic from '../components/Topic.jsx';
 import PartitionList from '../components/PartitionList.jsx';
 
 import { ipcRenderer } from 'electron';
-import '../css/TopicPage.css'
+import '../css/TopicPage.css';
 
 class TopicPage extends React.Component {
   constructor(props) {
@@ -13,7 +13,8 @@ class TopicPage extends React.Component {
       topicInfo: {},
       showPartitions: false,
       buttonId: -1,
-      messages: []
+      messages: [],
+      partitionId: ''
     };
 
     this.showPartitions = this.showPartitions.bind(this);
@@ -23,16 +24,16 @@ class TopicPage extends React.Component {
   componentDidMount() {
     //code here
     ipcRenderer.on('partition:getMessages', (e, message) => {
-      console.log('logging messages: ', message)
+      console.log('logging messages: ', message);
 
       //TEMPORARY
       let newMessage = this.state.messages;
-      newMessage.push(message)
+      newMessage.push(message);
       this.setState({
         messages: newMessage
-      })
+      });
       console.log('logging state messages: ', this.state.messages);
-    })
+    });
   }
   // Methods
   showPartitions(event) {
@@ -44,27 +45,26 @@ class TopicPage extends React.Component {
         showPartitions: false
       });
     }
-    let newState = this.state
+    let newState = this.state;
     newState.showPartitions = true;
     newState.buttonId = i;
     newState.topicInfo = topicInfo[i];
 
-    return this.setState(newState)
+    return this.setState(newState);
   }
 
   showMessages(event) {
     const topicName = event.target.getAttribute('topicname');
     const partitionNumber = parseInt(event.target.id);
+    const partitionId = topicName + partitionNumber;
 
-    //TEMPORARY
-    if (this.state.messages.length > 0) {
+    if (partitionId !== this.state.partitionId) {
       this.setState({
-        messages: []
-      })
+        messages: [],
+        partitionId: partitionId
+      });
+      ipcRenderer.send('partition:getMessages', {});
     }
-
-
-    ipcRenderer.send('partition:getMessages', {})
   }
 
   render() {
@@ -76,12 +76,15 @@ class TopicPage extends React.Component {
       <div>
         <h1>Active Topics</h1>
         <div className="topic-list">{Topics}</div>
-        <div className="partition-list">
-          {this.state.showPartitions === true ? (
-            <PartitionList showMessages={this.showMessages} topicInfo={this.state.topicInfo} />
-          ) : (
-            ''
-          )}
+        <div className="bottom-container">
+          <div className="partition-list">
+            {this.state.showPartitions === true ? (
+              <PartitionList showMessages={this.showMessages} topicInfo={this.state.topicInfo} />
+            ) : (
+              ''
+            )}
+          </div>
+          <div />
         </div>
       </div>
     );
