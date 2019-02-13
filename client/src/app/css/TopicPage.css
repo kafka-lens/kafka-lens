@@ -1,5 +1,9 @@
-.partition-list {
+/* .partition-list {
   margin-top: 25px;
+} */
+
+h3 {
+  text-align: center;
 }
 
 .topic-list {
@@ -11,4 +15,19 @@
 .bottom-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  margin-top: 25px;
+}
+
+.message-list {
+  justify-self: center;
+}
+
+.topic-button {
+  font-size: 16px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 7px;
+  padding-right: 7px;
+  border-radius: 5px;
+  outline: none;
 }
