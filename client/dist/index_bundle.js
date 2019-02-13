@@ -86,6 +86,30 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./client/src/app/components/Message.jsx":
+/*!***********************************************!*\
+  !*** ./client/src/app/components/Message.jsx ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n\n\nvar Message = function Message(props) {\n  console.log('logging props.message: ', props.message);\n  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", null, props.id + ': ', props.message);\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Message);\n\n//# sourceURL=webpack:///./client/src/app/components/Message.jsx?");
+
+/***/ }),
+
+/***/ "./client/src/app/components/MessageList.jsx":
+/*!***************************************************!*\
+  !*** ./client/src/app/components/MessageList.jsx ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _components_Message_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Message.jsx */ \"./client/src/app/components/Message.jsx\");\n\n\n\nvar MessageList = function MessageList(props) {\n  var messageArray = props.messageArray;\n  console.log('logging messageArray: ', messageArray);\n  var renderMessages = [];\n  messageArray.forEach(function (msg, i) {\n    //code here\n    renderMessages.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Message_jsx__WEBPACK_IMPORTED_MODULE_1__[\"default\"], {\n      key: i,\n      id: i,\n      message: messageArray[i].value\n    }));\n  });\n  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", null, renderMessages);\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (MessageList);\n\n//# sourceURL=webpack:///./client/src/app/components/MessageList.jsx?");
+
+/***/ }),
+
 /***/ "./client/src/app/components/Navigation.jsx":
 /*!**************************************************!*\
   !*** ./client/src/app/components/Navigation.jsx ***!
