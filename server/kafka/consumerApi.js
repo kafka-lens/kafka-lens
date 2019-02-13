@@ -4,6 +4,7 @@ const kafka = require('kafka-node');
 // const consumer = new kafka.Consumer(client, [{ topic: 'test1' }]);
 let testStream;
 
+<<<<<<< HEAD
 const getLatestOffset = (kafkaHost, topic, partition) =>
   new Promise((resolve, reject) => {
     const client = new kafka.KafkaClient({ kafkaHost });
@@ -16,11 +17,15 @@ const getLatestOffset = (kafkaHost, topic, partition) =>
   });
 
 const getMessagesFromPartition = (kafkaHost, topic, mainWindow, offset = 0, partition = 0) => {
+=======
+const getMessagesFromTopic = (broker, topic, mainWindow) => {
+>>>>>>> 36bcce80665a5b2ac82d9f353421fb3b7fd46237
   // Send back test data
   if (topic === 'test1' && broker === 'asdf') {
     let testOffset = 45532;
     let testHighwater = 45702;
     testStream = setInterval(() => {
+<<<<<<< HEAD
       mainWindow.webContents.send('partition:getMessages', {
         topic: 'test1',
         value: `Current date: ${Date.now()}`,
@@ -30,6 +35,15 @@ const getMessagesFromPartition = (kafkaHost, topic, mainWindow, offset = 0, part
         key: null,
       });
     });
+=======
+      mainWindow.webContents.send('partition:getMessages', { topic: 'test1',
+      value: `Current date: ${Date.now()}`,
+      offset: testOffset,
+      partition: 0,
+      highWaterOffset: testHighwater,
+      key: null })
+    }, 1500)
+>>>>>>> 36bcce80665a5b2ac82d9f353421fb3b7fd46237
     testOffset += 1;
     testHighwater += 1;
   } else {
