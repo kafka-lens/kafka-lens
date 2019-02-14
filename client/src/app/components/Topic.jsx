@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/Topic.css';
+import '../css/Topic.scss';
 
 class Topic extends React.Component {
   constructor(props) {
@@ -21,12 +21,12 @@ class Topic extends React.Component {
 
   render() {
     return (
-      <div className="topic">
+      <div>
         <div>
-          <span>Topic Name: {this.props.topicInfo.topic}</span> <br />
+          <span className="topic-name">{this.props.topicInfo.topic}</span> <br />
           <span>Partitions: {this.props.topicInfo.partition}</span>
         </div>
-        <button className="topic-button" id={this.props.id} onClick={this.props.showPartitions}>
+        <button className="view-button btn waves-effect waves-light" id={this.props.id} onClick={this.props.showPartitions}>
           View
         </button>
         <br />
