@@ -37,7 +37,9 @@ const getMessagesFromPartition = async (kafkaHost, topic, mainWindow, offset = 0
       payload.offset = await getLatestOffset(kafkaHost, topic, partition);
     }
     const options = { encoding: 'utf8', keyEncoding: 'utf8' };
-    const consumer = new kafka.Consumer(client, payload, options);
+    const consumer = new kafka.Consumer(client, [payload]);
+
+    console.log('MADE IT INTO CONSUMER API, THIS PAYLOAD: ', payload)
 
     consumer.on('error', err => {
       mainWindow.webContents.send('error:getMessage', {});
@@ -54,4 +56,4 @@ const stopDataFlow = () => {
   clearInterval(testStream);
 };
 
-module.exports = { getMessagesFromTopic: getMessagesFromPartition, stopDataFlow };
+module.exports = { getMessagesFromPartition, stopDataFlow };

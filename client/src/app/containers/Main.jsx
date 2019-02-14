@@ -70,7 +70,7 @@ class Main extends React.Component {
       <div style={divStyle}>
         <div style={divStyle}>
           {this.state.connected === true ? (
-            <TopicPage topicList={this.state.topics} />
+            <TopicPage uri={this.state.uri_input} topicList={this.state.topics} />
           ) : (
             <ConnectionPage
               validConnectionChecker={this.validConnectionChecker}
