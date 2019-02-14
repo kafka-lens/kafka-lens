@@ -1,5 +1,6 @@
 import React from 'react';
 import Message from '../components/Message.jsx';
+import '../css/MessageList.scss';
 
 const MessageList = props => {
 
@@ -16,7 +17,7 @@ const MessageList = props => {
 
 
   return (
-  <div>
+  <div className="message-list">
     {renderMessages}
   </div>
   );
