@@ -17,7 +17,8 @@ class TopicPage extends React.Component {
       buttonId: -1,
       messages: [],
       partitionId: '',
-      lastElement: ''
+      lastElement: '',
+      lastParentDiv: ''
     };
 
     this.showPartitions = this.showPartitions.bind(this);
@@ -42,6 +43,11 @@ class TopicPage extends React.Component {
   showPartitions(event) {
     const topicInfo = this.props.topicList;
     const i = parseInt(event.target.id);
+
+    //WORKING ON LOGIC HERE
+    // this is how you get parent div of the button clicked
+    let parentDiv = event.target.parentElement;
+    let lastParentDiv = this.state.lastParentDiv;
 
     if (this.state.showPartitions && this.state.buttonId === i) {
       return this.setState({
@@ -94,9 +100,18 @@ class TopicPage extends React.Component {
       return <Topic key={i} id={i} topicInfo={element} showPartitions={this.showPartitions} />;
     });
 
+    let loadingMessages = (
+      <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    )
+
     return (
       <div>
         <div className="topic-list container">{Topics}</div>
+        <div className="incoming-messages-indicator">{this.state.messages.length > 0 ? loadingMessages : ''}</div>
         <div className="bottom-container">
           <div>
             {this.state.showPartitions === true ? (
