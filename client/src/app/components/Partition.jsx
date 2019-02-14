@@ -1,18 +1,15 @@
 import React from 'react';
-import '../css/Partition.css';
+import '../css/Partition.scss';
 
 const Partition = props => {
   return (
-    <div className="partition">
-      Partition {props.id}
-      <button
-        className="partition-button"
-        id={props.id}
-        onClick={props.showMessages}
-        topicname={props.topicName}
-      >
-        Messages
-      </button>
+    <div 
+      className="single-partition"
+      id={props.id}
+      onClick={props.showMessages}
+      topicname={props.topicName}
+    >
+      Partition &nbsp; {props.id}
     </div>
   );
 };
