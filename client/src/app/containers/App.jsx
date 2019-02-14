@@ -11,21 +11,8 @@ class App extends React.Component {
     // bind methods here
   }
 
-  // Lifecycle methods
-  componentDidMount() {
-    // code here
-  }
-
-  // Methods
-  exampleMethod(event) {
-    // code here
-  }
-
   render() {
-
-    return (
-        <Main />
-    );
+    return <Main />;
   }
 }
 
