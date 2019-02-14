@@ -69,21 +69,21 @@ class TopicPage extends React.Component {
 
     let element = event.target;
     let lastElement = this.state.lastElement;
-    
+
     if (lastElement !== element) {
-      if (lastElement !== "") {
-        lastElement.classList.remove('highlight-this')
-      }  
+      if (lastElement !== '') {
+        lastElement.classList.remove('highlight-this');
+      }
       this.setState({
         lastElement: element
-      })
-      element.classList.add("highlight-this")
+      });
+      element.classList.add('highlight-this');
     }
 
     let uri = this.props.uri;
 
     if (uri === 'a') {
-      uri = '157.230.166.35:9092'
+      uri = '157.230.166.35:9092';
     }
 
     if (partitionId !== this.state.partitionId) {
@@ -91,7 +91,11 @@ class TopicPage extends React.Component {
         messages: [],
         partitionId: partitionId
       });
-      ipcRenderer.send('partition:getMessages', {host: uri, topic: topicName, partition: partitionNumber});
+      ipcRenderer.send('partition:getMessages', {
+        host: uri,
+        topic: topicName,
+        partition: partitionNumber
+      });
     }
   }
 
@@ -109,7 +113,7 @@ class TopicPage extends React.Component {
     )
 
     return (
-      <div>
+      <div className="topic-page-container">
         <div className="topic-list container">{Topics}</div>
         <div className="incoming-messages-indicator">{this.state.messages.length > 0 ? loadingMessages : ''}</div>
         <div className="bottom-container">
