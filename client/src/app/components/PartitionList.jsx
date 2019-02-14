@@ -16,7 +16,12 @@ const PartitionList = props => {
     );
   }
 
-  return <div className="partition-list">{partitionsArray}</div>;
+  return (
+    <div className="partition-list">
+      <h5>Partitions</h5>
+      {partitionsArray}
+    </div>
+  );
 };
 
 export default PartitionList;
