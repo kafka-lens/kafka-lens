@@ -29,8 +29,10 @@
   "homepage": "https://github.com/teampandawhale/kafka-lens#readme",
   "dependencies": {
     "kafka-node": "^4.0.1",
+    "node-sass": "^4.11.0",
     "react": "^16.8.1",
-    "react-dom": "^16.8.1"
+    "react-dom": "^16.8.1",
+    "sass-loader": "^7.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
