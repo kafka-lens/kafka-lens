@@ -1,10 +1,10 @@
 import React from 'react';
-import '../css/Message.css';
+import '../css/Message.scss';
 
 const Message = props => {
   console.log('logging props.message: ', props.message);
   return (
-    <div>
+    <div className="single-message">
       {props.id + ': '}
       {props.message}
     </div>

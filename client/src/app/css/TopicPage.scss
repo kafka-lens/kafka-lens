@@ -1,6 +1,4 @@
-/* .partition-list {
-  margin-top: 25px;
-} */
+@import 'theme';
 
 h3 {
   text-align: center;
@@ -10,24 +8,25 @@ h3 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr;
+  text-align: center;
+  margin-top: 67px;
+  padding-bottom: 81px;
+  border-bottom: 1px solid lightgray;
 }
 
 .bottom-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  margin-top: 25px;
+  margin-top: 90px;
 }
 
 .message-list {
   justify-self: center;
 }
 
-.topic-button {
-  font-size: 16px;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 7px;
-  padding-right: 7px;
-  border-radius: 5px;
-  outline: none;
+.highlight-this {
+  background-color: #f7ae4f;
+  color: white;
+  border: $border-highlight;
+
 }
