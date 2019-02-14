@@ -65,17 +65,17 @@ class Main extends React.Component {
 
   render() {
     return (
-      <div>
-          {this.state.connected === true ? (
-            <TopicPage uri={this.state.uri_input} topicList={this.state.topics} />
-          ) : (
-            <ConnectionPage
-              validConnectionChecker={this.validConnectionChecker}
-              updateURI={this.updateURI}
-              connected={this.state.connected}
-              isFetching={this.state.isFetching}
-            />
-          )}
+      <div className="main-div">
+        {this.state.connected === true ? (
+          <TopicPage uri={this.state.uri_input} topicList={this.state.topics} />
+        ) : (
+          <ConnectionPage
+            validConnectionChecker={this.validConnectionChecker}
+            updateURI={this.updateURI}
+            connected={this.state.connected}
+            isFetching={this.state.isFetching}
+          />
+        )}
       </div>
     );
   }
