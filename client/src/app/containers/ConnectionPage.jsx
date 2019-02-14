@@ -27,7 +27,7 @@ class ConnectionPage extends React.Component {
     }
     return (
       <div className="connection-box">
-        <div className="container">
+        <div className="connection-form container">
           <form>
             <div>
               <label>Enter Your Kafka Server URI</label>

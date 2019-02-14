@@ -13,7 +13,12 @@ const MessageList = props => {
     renderMessages.push(<Message key={i} id={i} message={messageArray[i].value} />);
   });
 
-  return <div className="message-list">{renderMessages}</div>;
+  return (
+    <div className="message-list">
+      <h5>Messages</h5>
+      {renderMessages}
+    </div>
+  );
 };
 
 export default MessageList;
