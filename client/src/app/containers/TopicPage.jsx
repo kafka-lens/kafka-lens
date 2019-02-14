@@ -31,7 +31,7 @@ class TopicPage extends React.Component {
 
       //TEMPORARY
       let newMessage = this.state.messages;
-      newMessage.push(message);
+      newMessage.unshift(message);
       this.setState({
         messages: newMessage
       });
@@ -105,7 +105,7 @@ class TopicPage extends React.Component {
               ''
             )}
           </div>
-          <div className="message-list">
+          <div>
             {this.state.messages.length > 0 ? (
               <MessageList messageArray={this.state.messages} />
             ) : (
