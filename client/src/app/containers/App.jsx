@@ -22,13 +22,9 @@ class App extends React.Component {
   }
 
   render() {
-    const divStyle = {
-      height: '100%'
-    };
+
     return (
-      <div style={divStyle}>
         <Main />
-      </div>
     );
   }
 }
