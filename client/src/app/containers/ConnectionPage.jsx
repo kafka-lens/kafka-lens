@@ -40,7 +40,8 @@ class ConnectionPage extends React.Component {
       <div className="container connection-box">
         <div></div>
 
-          <div>
+
+            <div>
               <form>
                 <div>
                   <label>Enter Your Kafka Server URI</label>
@@ -61,8 +62,7 @@ class ConnectionPage extends React.Component {
               </form>
               {errorMsg}
               <div className="loading-bars">{loading}</div>
-            </div>
-
+          </div>
         <div></div>
       </div>
     );
