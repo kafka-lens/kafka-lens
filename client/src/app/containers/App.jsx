@@ -11,25 +11,8 @@ class App extends React.Component {
     // bind methods here
   }
 
-  // Lifecycle methods
-  componentDidMount() {
-    // code here
-  }
-
-  // Methods
-  exampleMethod(event) {
-    // code here
-  }
-
   render() {
-    const divStyle = {
-      height: '100%'
-    };
-    return (
-      <div style={divStyle}>
-        <Main />
-      </div>
-    );
+    return <Main />;
   }
 }
 

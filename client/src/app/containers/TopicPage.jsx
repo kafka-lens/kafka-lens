@@ -4,7 +4,8 @@ import PartitionList from '../components/PartitionList.jsx';
 import MessageList from '../components/MessageList.jsx';
 
 import { ipcRenderer } from 'electron';
-import '../css/TopicPage.css';
+import '../css/TopicPage.scss';
+import '../css/PartitionList.scss';
 
 class TopicPage extends React.Component {
   constructor(props) {
@@ -15,7 +16,9 @@ class TopicPage extends React.Component {
       showPartitions: false,
       buttonId: -1,
       messages: [],
-      partitionId: ''
+      partitionId: '',
+      lastElement: '',
+      lastParentDiv: ''
     };
 
     this.showPartitions = this.showPartitions.bind(this);
@@ -29,7 +32,7 @@ class TopicPage extends React.Component {
 
       //TEMPORARY
       let newMessage = this.state.messages;
-      newMessage.push(message);
+      newMessage.unshift(message);
       this.setState({
         messages: newMessage
       });
@@ -40,6 +43,11 @@ class TopicPage extends React.Component {
   showPartitions(event) {
     const topicInfo = this.props.topicList;
     const i = parseInt(event.target.id);
+
+    //WORKING ON LOGIC HERE
+    // this is how you get parent div of the button clicked
+    let parentDiv = event.target.parentElement;
+    let lastParentDiv = this.state.lastParentDiv;
 
     if (this.state.showPartitions && this.state.buttonId === i) {
       return this.setState({
@@ -59,10 +67,23 @@ class TopicPage extends React.Component {
     const partitionNumber = parseInt(event.target.id);
     const partitionId = topicName + partitionNumber;
 
-    const uri = this.props.uri_input;
+    let element = event.target;
+    let lastElement = this.state.lastElement;
+
+    if (lastElement !== element) {
+      if (lastElement !== '') {
+        lastElement.classList.remove('highlight-this');
+      }
+      this.setState({
+        lastElement: element
+      });
+      element.classList.add('highlight-this');
+    }
+
+    let uri = this.props.uri;
 
     if (uri === 'a') {
-      uri = '157.230.166.35:9092'
+      uri = '157.230.166.35:9092';
     }
 
     if (partitionId !== this.state.partitionId) {
@@ -70,7 +91,11 @@ class TopicPage extends React.Component {
         messages: [],
         partitionId: partitionId
       });
-      ipcRenderer.send('partition:getMessages', {host: uri, topic: topicName, partition: partitionNumber});
+      ipcRenderer.send('partition:getMessages', {
+        host: uri,
+        topic: topicName,
+        partition: partitionNumber
+      });
     }
   }
 
@@ -79,19 +104,27 @@ class TopicPage extends React.Component {
       return <Topic key={i} id={i} topicInfo={element} showPartitions={this.showPartitions} />;
     });
 
+    let loadingMessages = (
+      <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    )
+
     return (
-      <div>
-        <h3>Active Topics</h3>
-        <div className="topic-list">{Topics}</div>
+      <div className="topic-page-container">
+        <div className="topic-list container">{Topics}</div>
+        <div className="incoming-messages-indicator">{this.state.messages.length > 0 ? loadingMessages : ''}</div>
         <div className="bottom-container">
-          <div className="partition-list">
+          <div>
             {this.state.showPartitions === true ? (
               <PartitionList showMessages={this.showMessages} topicInfo={this.state.topicInfo} />
             ) : (
               ''
             )}
           </div>
-          <div className="message-list">
+          <div>
             {this.state.messages.length > 0 ? (
               <MessageList messageArray={this.state.messages} />
             ) : (
