@@ -15,7 +15,7 @@ const MessageList = props => {
 
   return (
     <div className="message-list">
-      <h5>Messages</h5>
+      <h5 className="m-header">Messages</h5>
       {renderMessages}
     </div>
   );
