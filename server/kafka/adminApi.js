@@ -27,6 +27,8 @@ const getTopicData = (uri, mainWindow) => {
   const admin = new kafka.Admin(client);
   const resultTopic = [];
   let isRunning = false;
+  console.log(uri);
+
 
   admin.listTopics((err, topics) => {
     if (err) console.error(err);
