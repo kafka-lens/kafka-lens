@@ -32,12 +32,12 @@ const getMessagesFromPartition = async (kafkaHost, topic, mainWindow, offset = 0
     testHighwater += 1;
   } else {
     const client = new kafka.KafkaClient({ kafkaHost });
-    const payload = { topic, offset, partition };
+    const payload = [{ topic, partition }];
     if (offset === 'latest') {
       payload.offset = await getLatestOffset(kafkaHost, topic, partition);
     }
     const options = { encoding: 'utf8', keyEncoding: 'utf8' };
-    const consumer = new kafka.Consumer(client, [payload]);
+    const consumer = new kafka.Consumer(client, payload);
 
     console.log('MADE IT INTO CONSUMER API, THIS PAYLOAD: ', payload)
 

@@ -40,7 +40,16 @@ app.on('activate', () => {
 
 const addDevToolsToMenu = [
   {
-    label: '',
+    label: 'File',
+    submenu: [
+      {
+        label: 'Quit',
+        accelerator: process.platform === 'darwin' ? 'Command+Q' : 'Ctrl+Q',
+        click() {
+          app.quit();
+        }
+      }
+    ]
   },
   {
     label: 'Developer Tools',
