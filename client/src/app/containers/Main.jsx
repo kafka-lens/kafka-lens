@@ -4,7 +4,8 @@ import { ipcRenderer } from 'electron';
 import ConnectionPage from './ConnectionPage.jsx';
 import TopicPage from './TopicPage.jsx';
 
-import '../css/index.css';
+import '../css/index.scss';
+import '../css/Main.scss';
 
 const React = require('react');
 
@@ -63,23 +64,18 @@ class Main extends React.Component {
   }
 
   render() {
-    const divStyle = {
-      height: '100%'
-    };
     return (
-      <div style={divStyle}>
-        <div style={divStyle}>
-          {this.state.connected === true ? (
-            <TopicPage uri={this.state.uri_input} topicList={this.state.topics} />
-          ) : (
-            <ConnectionPage
-              validConnectionChecker={this.validConnectionChecker}
-              updateURI={this.updateURI}
-              connected={this.state.connected}
-              isFetching={this.state.isFetching}
-            />
-          )}
-        </div>
+      <div className="main-div">
+        {this.state.connected === true ? (
+          <TopicPage uri={this.state.uri_input} topicList={this.state.topics} />
+        ) : (
+          <ConnectionPage
+            validConnectionChecker={this.validConnectionChecker}
+            updateURI={this.updateURI}
+            connected={this.state.connected}
+            isFetching={this.state.isFetching}
+          />
+        )}
       </div>
     );
   }

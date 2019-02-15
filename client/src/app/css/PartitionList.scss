@@ -1,0 +1,15 @@
+@import 'theme';
+
+.partition-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 400px;
+    overflow: scroll;
+}
+
+.p-header {
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 17px;
+    color: $dark-font-primary;
+}
