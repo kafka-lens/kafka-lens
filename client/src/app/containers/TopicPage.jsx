@@ -31,7 +31,7 @@ class TopicPage extends React.Component {
 
   componentDidMount() {
     //code here
-
+  }
   // Methods
   showPartitions(event) {
     const topicInfo = this.props.topicList;
