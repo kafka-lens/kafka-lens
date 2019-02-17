@@ -100,16 +100,18 @@ class TopicPage extends React.Component {
 
     let loadingMessages = (
       <div class="spinner">
-        <div class="bounce1"></div>
-        <div class="bounce2"></div>
-        <div class="bounce3"></div>
+        <div class="bounce1" />
+        <div class="bounce2" />
+        <div class="bounce3" />
       </div>
-    )
+    );
 
     return (
       <div className="topic-page-container">
         <div className="topic-list container">{Topics}</div>
-        <div className="incoming-messages-indicator">{this.state.messages.length > 0 ? loadingMessages : ''}</div>
+        <div className="incoming-messages-indicator">
+          {this.state.messages.length > 0 ? loadingMessages : ''}
+        </div>
         <div className="bottom-container">
           <div>
             {this.state.showPartitions === true ? (
