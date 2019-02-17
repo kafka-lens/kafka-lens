@@ -1,3 +1,5 @@
+@import 'theme';
+
 .message-list {
   display: flex;
   flex-direction: column;
@@ -5,4 +7,10 @@
   height: 400px;
   overflow: scroll;
   direction: ltr;
+}
+
+.m-header {
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 17px;
+    color: $dark-font-primary;
 }
