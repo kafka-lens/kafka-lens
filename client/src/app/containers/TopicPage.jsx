@@ -2,6 +2,7 @@ import React from 'react';
 import Topic from '../components/Topic.jsx';
 import PartitionList from '../components/PartitionList.jsx';
 import MessageList from '../components/MessageList.jsx';
+import circularBuffer from 'circular-buffer';
 
 import { ipcRenderer } from 'electron';
 import '../css/TopicPage.scss';
@@ -10,12 +11,15 @@ import '../css/PartitionList.scss';
 class TopicPage extends React.Component {
   constructor(props) {
     super(props);
+    this.buffer = new circularBuffer(100);
+    this.messagesToDisplay = new circularBuffer(100);
     this.state = {
       topics: [],
       topicInfo: {},
       showPartitions: false,
       buttonId: -1,
       messages: [],
+      hover: false,
       partitionId: '',
       lastElement: ''
     };
@@ -24,20 +28,24 @@ class TopicPage extends React.Component {
     this.showMessages = this.showMessages.bind(this);
   }
   // Lifecycle methods
+
   componentDidMount() {
     //code here
     ipcRenderer.on('partition:getMessages', (e, message) => {
-      console.log('logging messages: ', message);
-
-      //TEMPORARY
-      let newMessage = this.state.messages;
-      newMessage.unshift(message);
-      this.setState({
-        messages: newMessage
-      });
-      console.log('logging state messages: ', this.state.messages);
+      this.buffer.enq(message);
+      setInterval(() => {
+        if (!this.state.hover) {
+          this.messagesToDisplay.enq(this.buffer.deq());
+          //this.messagesTodisplay.enq(this.buffer.get(0));
+          this.setState({
+            messages: this.messagesToDisplay.toarray()
+          });
+          console.log('MESSAGES!!!!!!!!!', this.state.messages);
+        }
+      }, 1000);
     });
   }
+
   // Methods
   showPartitions(event) {
     const topicInfo = this.props.topicList;
@@ -63,21 +71,21 @@ class TopicPage extends React.Component {
 
     let element = event.target;
     let lastElement = this.state.lastElement;
-    
+
     if (lastElement !== element) {
-      if (lastElement !== "") {
-        lastElement.classList.remove('highlight-this')
-      }  
+      if (lastElement !== '') {
+        lastElement.classList.remove('highlight-this');
+      }
       this.setState({
         lastElement: element
-      })
-      element.classList.add("highlight-this")
+      });
+      element.classList.add('highlight-this');
     }
 
     let uri = this.props.uri;
 
     if (uri === 'a') {
-      uri = '157.230.166.35:9092'
+      uri = '157.230.166.35:9092';
     }
 
     if (partitionId !== this.state.partitionId) {
@@ -85,7 +93,11 @@ class TopicPage extends React.Component {
         messages: [],
         partitionId: partitionId
       });
-      ipcRenderer.send('partition:getMessages', {host: uri, topic: topicName, partition: partitionNumber});
+      ipcRenderer.send('partition:getMessages', {
+        host: uri,
+        topic: topicName,
+        partition: partitionNumber
+      });
     }
   }
 
