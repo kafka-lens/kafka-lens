@@ -1,2 +1,5 @@
 node_modules
+index_bundle.js
 package-lock.json
+Dev-Files
+testFile.js
