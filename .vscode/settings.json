@@ -1,0 +1,14 @@
+{
+  "comma-dangle": [
+    "error",
+    {
+      "arrays": "only-multiline",
+      "objects": "only-multiline",
+      "imports": "never",
+      "exports": "never",
+      "functions": "ignore"
+    }
+  ],
+  "prettier.eslintIntegration": true,
+  "prettier.trailingComma": "es5"
+}
