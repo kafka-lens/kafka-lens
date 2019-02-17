@@ -2,6 +2,7 @@ import React from 'react';
 import Topic from '../components/Topic.jsx';
 import PartitionList from '../components/PartitionList.jsx';
 import MessageList from '../components/MessageList.jsx';
+import circularBuffer from 'circular-buffer';
 
 import { ipcRenderer } from 'electron';
 import '../css/TopicPage.scss';
@@ -10,12 +11,15 @@ import '../css/PartitionList.scss';
 class TopicPage extends React.Component {
   constructor(props) {
     super(props);
+    this.buffer = new circularBuffer(100);
+    this.messagesToDisplay = new circularBuffer(100);
     this.state = {
       topics: [],
       topicInfo: {},
       showPartitions: false,
       buttonId: -1,
       messages: [],
+      hover: false,
       partitionId: '',
       lastElement: '',
       lastParentDiv: ''
@@ -25,13 +29,16 @@ class TopicPage extends React.Component {
     this.showMessages = this.showMessages.bind(this);
   }
   // Lifecycle methods
+
   componentDidMount() {
     //code here
     ipcRenderer.on('partition:getMessages', (e, message) => {
       console.log('logging messages: ', message);
 
-      //TEMPORARY
-      let newMessage = this.state.messages;
+      // Create a copy of the message list from state and unshift the new message to the
+      // front of the array.
+      // SOMETHING TO TEST: IS CONCAT 
+      let newMessage = this.state.messages.slice();
       newMessage.unshift(message);
       this.setState({
         messages: newMessage
@@ -106,16 +113,18 @@ class TopicPage extends React.Component {
 
     let loadingMessages = (
       <div class="spinner">
-        <div class="bounce1"></div>
-        <div class="bounce2"></div>
-        <div class="bounce3"></div>
+        <div class="bounce1" />
+        <div class="bounce2" />
+        <div class="bounce3" />
       </div>
-    )
+    );
 
     return (
       <div className="topic-page-container">
         <div className="topic-list container">{Topics}</div>
-        <div className="incoming-messages-indicator">{this.state.messages.length > 0 ? loadingMessages : ''}</div>
+        <div className="incoming-messages-indicator">
+          {this.state.messages.length > 0 ? loadingMessages : ''}
+        </div>
         <div className="bottom-container">
           <div>
             {this.state.showPartitions === true ? (
