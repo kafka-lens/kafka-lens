@@ -5,7 +5,6 @@ const Message = props => {
   console.log('logging props.message: ', props.message);
   return (
     <div className="single-message">
-      {props.id + ': '}
       {props.message}
     </div>
   );
