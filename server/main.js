@@ -1,9 +1,15 @@
-const { app, BrowserWindow, Menu, ipcMain } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron');
 const path = require('path');
 const url = require('url');
 
 const adminApi = require('./kafka/adminApi');
 const consumerApi = require('./kafka/consumerApi');
+
+// Disable error dialogs by overriding
+// FIX: https://goo.gl/YsDdsS
+dialog.showErrorBox = function(title, content) {
+  console.log(`${title}\n${content}`);
+};
 
 let mainWindow;
 
@@ -13,7 +19,7 @@ function createWindow() {
     url.format({
       pathname: path.join(__dirname, '../client/dist/index.html'),
       protocol: 'file',
-      slashes: true,
+      slashes: true
     })
   );
   mainWindow.on('closed', () => (mainWindow = null));
@@ -40,7 +46,7 @@ app.on('activate', () => {
 
 const addDevToolsToMenu = [
   {
-    label: '',
+    label: ''
   },
   {
     label: 'Developer Tools',
@@ -50,13 +56,13 @@ const addDevToolsToMenu = [
         accelerator: process.platform == 'darwin' ? 'Command+I' : 'Ctrl+I',
         click(item, focusedWindow) {
           focusedWindow.toggleDevTools();
-        },
+        }
       },
       {
-        role: 'reload',
-      },
-    ],
-  },
+        role: 'reload'
+      }
+    ]
+  }
 ];
 
 /*

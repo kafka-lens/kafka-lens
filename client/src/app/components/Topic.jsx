@@ -10,14 +10,6 @@ class Topic extends React.Component {
 
     //bind methods here
   }
-  // Lifecycle methods
-  componentDidMount() {
-    //code here
-  }
-  // Methods
-  exampleMethod(event) {
-    //code here
-  }
 
   render() {
     return (
@@ -26,7 +18,11 @@ class Topic extends React.Component {
           <span className="topic-name">{this.props.topicInfo.topic}</span> <br />
           <span>Partitions: {this.props.topicInfo.partition}</span>
         </div>
-        <button className="view-button btn waves-effect waves-light" id={this.props.id} onClick={this.props.showPartitions}>
+        <button
+          className="view-button btn waves-effect waves-light"
+          id={this.props.id}
+          onClick={this.props.showPartitions}
+        >
           View
         </button>
         <br />
