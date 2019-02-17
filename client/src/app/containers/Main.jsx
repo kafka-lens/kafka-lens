@@ -26,7 +26,8 @@ class Main extends React.Component {
 
   // Lifecycle methods
   componentWillMount() {
-    // code here
+    // Listener will receive response from backend main process
+    // If response is an error, display error to the user in connection page
     ipcRenderer.on('topic:getTopics', (e, data) => {
       this.setState({ isFetching: false });
       if (data === 'Error') {
@@ -43,7 +44,8 @@ class Main extends React.Component {
     });
   }
 
-  // Methods
+  // This function is passed to the connection page to send the connection
+  // url to the main process to connect to the Kafka cluster
   validConnectionChecker(event) {
     event.preventDefault();
     this.setState({
@@ -58,6 +60,7 @@ class Main extends React.Component {
     }
   }
 
+  // This function is passed to the connectionPage
   updateURI(event) {
     const input = event.target.value;
     this.setState(state => ({ uri_input: input }));
@@ -66,6 +69,7 @@ class Main extends React.Component {
   render() {
     return (
       <div className="main-div">
+        {/* Conditionally renders either the ConnectionPage or TopicPage depending on connected in state */}
         {this.state.connected === true ? (
           <TopicPage uri={this.state.uri_input} topicList={this.state.topics} />
         ) : (
