@@ -21,7 +21,7 @@ class ConnectionPage extends React.Component {
         </div>
       );
     }
-    let errorMsg;
+    let errorMsg = '  ';
     if (this.props.connected === false) {
       errorMsg = <p id="error-message">Connection timed out, please check your connection URI.</p>;
     }
