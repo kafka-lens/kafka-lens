@@ -37,6 +37,7 @@ const getMessagesFromPartition = async (kafkaHost, topic, mainWindow, offset = 0
       payload.offset = await getLatestOffset(kafkaHost, topic, partition);
     }
     const options = { encoding: 'utf8', keyEncoding: 'utf8' };
+    // creating new consumer instance
     const consumer = new kafka.Consumer(client, [payload]);
 
     console.log('MADE IT INTO CONSUMER API, THIS PAYLOAD: ', payload)
@@ -45,6 +46,7 @@ const getMessagesFromPartition = async (kafkaHost, topic, mainWindow, offset = 0
       mainWindow.webContents.send('error:getMessage', {});
     });
 
+    // consumer listens for msg event and passes msg to mainWindow
     consumer.on('message', message => {
       console.log(message);
       mainWindow.webContents.send('partition:getMessages', message);
