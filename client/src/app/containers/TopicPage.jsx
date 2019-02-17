@@ -31,20 +31,6 @@ class TopicPage extends React.Component {
 
   componentDidMount() {
     //code here
-    ipcRenderer.on('partition:getMessages', (e, message) => {
-      this.buffer.enq(message);
-      setInterval(() => {
-        if (!this.state.hover) {
-          this.messagesToDisplay.enq(this.buffer.deq());
-          //this.messagesTodisplay.enq(this.buffer.get(0));
-          this.setState({
-            messages: this.messagesToDisplay.toarray()
-          });
-          console.log('MESSAGES!!!!!!!!!', this.state.messages);
-        }
-      }, 1000);
-    });
-  }
 
   // Methods
   showPartitions(event) {
