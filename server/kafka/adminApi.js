@@ -10,7 +10,7 @@ function buildTopicObj(topic, partition, messages) {
   };
 }
 
-adminApi.getCurrentMsgCount = (kafkaHost, topic) => {
+adminApi.getCurrentMsgCount = (kafkaHost, topic, ) => {
   const promises = [];
   return new Promise ((resolve, reject) => {
     promises.push(getEarliestOffset(kafkaHost, topic));
@@ -21,6 +21,11 @@ adminApi.getCurrentMsgCount = (kafkaHost, topic) => {
       reject(error);
     })
   })
+}
+
+adminApi.getTopicMsgCount = (kafkaHost, topic, partition) => {
+  // Iterate through the number of partitions
+  // In each iteration, 
 }
 
 adminApi.getEarliestOffset = (kafkaHost, topic) => {
