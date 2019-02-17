@@ -93,7 +93,7 @@ class TopicPage extends React.Component {
     });
 
     return (
-      <div>
+      <div className="topic-page-container">
         <div className="topic-list container">{Topics}</div>
         <div className="bottom-container">
           <div>
