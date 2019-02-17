@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/teampandawhale/kafka-lens#readme",
   "dependencies": {
+    "circular-buffer": "^1.0.2",
     "kafka-node": "^4.0.1",
     "node-sass": "^4.11.0",
     "react": "^16.8.1",
