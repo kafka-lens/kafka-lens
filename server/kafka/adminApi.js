@@ -1,6 +1,6 @@
 const kafka = require('kafka-node');
 
-const adminApi = {}
+const adminApi = {};
 
 function buildTopicObj(topic, partition, messages) {
   return {
@@ -10,45 +10,53 @@ function buildTopicObj(topic, partition, messages) {
   };
 }
 
-adminApi.getCurrentMsgCount = (kafkaHost, topic, ) => {
+adminApi.getCurrentMsgCount = (kafkaHost, topic, partition = 0) => {
   const promises = [];
-  return new Promise ((resolve, reject) => {
-    promises.push(getEarliestOffset(kafkaHost, topic));
-    promises.push(getLatestOffset(kafkaHost, topic));
-    Promise.all(promises).then(offsets => {
-      resolve(offsets[1] - offsets[0]);
-    }).catch(error => {
-      reject(error);
-    })
+  return new Promise((resolve, reject) => {
+    promises.push(getEarliestOffset(kafkaHost, topic, partition));
+    promises.push(getLatestOffset(kafkaHost, topic, partition));
+    Promise.all(promises)
+      .then(offsets => {
+        resolve(offsets[1] - offsets[0]);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+};
+
+adminApi.getTopicMsgCount = (kafkaHost, topic) => {
+  // Make calls to Kafka offset api to get objects with message offsets
+  const offsets = [getEarliestOffset(kafkaHost, topic), getLatestOffset(kafkaHost, topic)]
+  Promise.all(offsets)
+  .then(result => {
+    let messageCount = 0;
+
   })
-}
+  
+};
 
-adminApi.getTopicMsgCount = (kafkaHost, topic, partition) => {
-  // Iterate through the number of partitions
-  // In each iteration, 
-}
-
-adminApi.getEarliestOffset = (kafkaHost, topic) => {
+adminApi.getEarliestOffset = (kafkaHost, topic, partition) => {
   const client = new kafka.KafkaClient({ kafkaHost });
   const offset = new kafka.Offset(client);
   return new Promise((resolve, reject) => {
     offset.fetchEarliestOffsets(topic, (err, data) => {
       if (err) reject(err);
-      else resolve(data);
+      else resolve(data[topic][partition]);
     });
   });
-}
+};
 
-adminApi.getLatestOffset = (kafkaHost, topic) => {
+adminApi.getLatestOffset = (kafkaHost, topic, partition) => {
   const client = new kafka.KafkaClient({ kafkaHost });
   const offset = new kafka.Offset(client);
   return new Promise((resolve, reject) => {
     offset.fetchLatestOffsets(topic, (err, data) => {
       if (err) reject(err);
-      else resolve(data);
+      else resolve(data[topic][partition]);
     });
   });
-}
+};
 
 adminApi.getTopicData = (kafkaHost, mainWindow) => {
   const client = new kafka.KafkaClient({ kafkaHost });
@@ -77,7 +85,7 @@ adminApi.getTopicData = (kafkaHost, mainWindow) => {
       mainWindow.webContents.send('topic:getTopics', 'Error');
     }
   }, 3000);
-}
+};
 
 adminApi.getPartitionData = (kafkaHost, topic, mainWindow) => {
   const client = new kafka.KafkaClient({ kafkaHost });
