@@ -43,7 +43,7 @@ class TopicPage extends React.Component {
       this.setState({
         messages: newMessage
       });
-      console.log('logging state messages: ', this.state.messages);
+      // console.log('logging state messages: ', this.state.messages);
     });
   }
   // Methods
@@ -92,6 +92,10 @@ class TopicPage extends React.Component {
     if (uri === 'a') {
       uri = '157.230.166.35:9092';
     }
+    if (uri === 's') {
+      uri = 'k2.tpw.made.industries:9092';
+    }
+    console.log('logging uri', uri)
 
     if (partitionId !== this.state.partitionId) {
       this.setState({
