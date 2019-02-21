@@ -15,19 +15,27 @@ const getLatestOffset = (kafkaHost, topic, partition) =>
     });
   });
 
-const getMessagesFromPartition = async (kafkaHost, topic, mainWindow, offset = 0, partition = 0) => {
+const getMessagesFromPartition = async (
+  kafkaHost,
+  topic,
+  mainWindow,
+  offset = 0,
+  partition = 0
+) => {
   // Send back test data
   if (topic === 'test1' && broker === 'asdf') {
     let testOffset = 45532;
     let testHighwater = 45702;
     testStream = setInterval(() => {
-      mainWindow.webContents.send('partition:getMessages', { topic: 'test1',
-      value: `Current date: ${Date.now()}`,
-      offset: testOffset,
-      partition: 0,
-      highWaterOffset: testHighwater,
-      key: null })
-    }, 1500)
+      mainWindow.webContents.send('partition:getMessages', {
+        topic: 'test1',
+        value: `Current date: ${Date.now()}`,
+        offset: testOffset,
+        partition: 0,
+        highWaterOffset: testHighwater,
+        key: null,
+      });
+    }, 1500);
     testOffset += 1;
     testHighwater += 1;
   } else {
@@ -37,14 +45,16 @@ const getMessagesFromPartition = async (kafkaHost, topic, mainWindow, offset = 0
       payload.offset = await getLatestOffset(kafkaHost, topic, partition);
     }
     const options = { encoding: 'utf8', keyEncoding: 'utf8' };
+    // creating new consumer instance
     const consumer = new kafka.Consumer(client, payload);
 
-    console.log('MADE IT INTO CONSUMER API, THIS PAYLOAD: ', payload)
+    console.log('MADE IT INTO CONSUMER API, THIS PAYLOAD: ', payload);
 
     consumer.on('error', err => {
       mainWindow.webContents.send('error:getMessage', {});
     });
 
+    // consumer listens for msg event and passes msg to mainWindow
     consumer.on('message', message => {
       console.log(message);
       mainWindow.webContents.send('partition:getMessages', message);
