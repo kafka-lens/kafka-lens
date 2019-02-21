@@ -38,6 +38,7 @@ app.on('window-all-closed', () => {
   }
 });
 
+//When window is closed but app is still running in the background, create new window upon activation
 app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
@@ -80,6 +81,8 @@ const addDevToolsToMenu = [
  *
  *
  */
+
+// Listens for Uri string from client connection page
 ipcMain.on('topic:getTopics', (e, uri) => {
   adminApi.getTopicData(uri, mainWindow);
 });
@@ -92,6 +95,11 @@ ipcMain.on('partition:getTestMessages', (e, args) => {
   consumerApi.getMessagesFromPartition('asdf', 'test1', mainWindow);
 });
 
+
+/**
+ * @param {Object} e is event
+ * @param {Object} args is an object that contains topic name, host, offset and partition are optional args
+ */
 ipcMain.on('partition:getMessages', (e, args) => {
   console.log('get msg request received', args);
   consumerApi.getMessagesFromPartition(

@@ -1,6 +1,9 @@
 import React from 'react';
 import '../css/ConnectionPage.scss';
 
+/*
+ * refactor to stateless componenet
+ */
 class ConnectionPage extends React.Component {
   constructor() {
     super();
@@ -21,7 +24,8 @@ class ConnectionPage extends React.Component {
         </div>
       );
     }
-    let errorMsg = '  ';
+    // This handles connection timeouts for Kafka cluster
+    let errorMsg;
     if (this.props.connected === false) {
       errorMsg = <p id="error-message">Connection timed out, please check your connection URI.</p>;
     }
@@ -42,9 +46,11 @@ class ConnectionPage extends React.Component {
               Connect
             </button>
           </form>
+          {/* Error message displays here */}
           {errorMsg}
-          <div className="loading-bars">{loading}</div>
         </div>
+        {/* Loading bars here */}
+        <div className="loading-bars">{loading}</div>
       </div>
     );
   }
