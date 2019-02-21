@@ -115,17 +115,19 @@ class TopicPage extends React.Component {
       return <Topic key={i} id={i} topicInfo={element} showPartitions={this.showPartitions} />;
     });
 
-    let loadingMessages = (
-      <div class="spinner">
-        <div class="bounce1" />
-        <div class="bounce2" />
-        <div class="bounce3" />
-      </div>
-    );
+
+    // LOADING MESSAGES INDICATOR
+    // let loadingMessages = (
+    //   <div class="spinner">
+    //     <div class="bounce1" />
+    //     <div class="bounce2" />
+    //     <div class="bounce3" />
+    //   </div>
+    // );
 
     return (
       <h1>Hi</h1>
-      
+
 
 
 
