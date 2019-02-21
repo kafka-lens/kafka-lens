@@ -35,6 +35,7 @@ class Main extends React.Component {
           connected: false
         });
       } else {
+        console.log('logging topics data: ', data)
         this.setState({
           topics: data,
           connected: true
@@ -52,11 +53,16 @@ class Main extends React.Component {
       isFetching: true
     });
 
+    let uri;
     if (this.state.uri_input === 'a') {
-      const uri = '157.230.166.35:9092';
+      uri = '157.230.166.35:9092';
+      ipcRenderer.send('topic:getTopics', uri);
+    } else if (this.state.uri_input === 's') {
+      uri = 'k2.tpw.made.industries:9092';
       ipcRenderer.send('topic:getTopics', uri);
     } else {
-      ipcRenderer.send('topic:getTopics', this.state.uri_input);
+      uri = this.state.uri_input;
+      ipcRenderer.send('topic:getTopics', uri);
     }
   }
 
