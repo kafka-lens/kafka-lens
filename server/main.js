@@ -11,6 +11,8 @@ dialog.showErrorBox = function(title, content) {
   console.log(`${title}\n${content}`);
 };
 
+const consumers = {};
+
 let mainWindow;
 
 function createWindow() {
@@ -19,7 +21,7 @@ function createWindow() {
     url.format({
       pathname: path.join(__dirname, '../client/dist/index.html'),
       protocol: 'file',
-      slashes: true
+      slashes: true,
     })
   );
   mainWindow.on('closed', () => (mainWindow = null));
@@ -38,7 +40,7 @@ app.on('window-all-closed', () => {
   }
 });
 
-//When window is closed but app is still running in the background, create new window upon activation
+// When window is closed but app is still running in the background, create new window upon activation
 app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
@@ -54,9 +56,9 @@ const addDevToolsToMenu = [
         accelerator: process.platform === 'darwin' ? 'Command+Q' : 'Ctrl+Q',
         click() {
           app.quit();
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
   {
     label: 'Developer Tools',
@@ -66,13 +68,13 @@ const addDevToolsToMenu = [
         accelerator: process.platform == 'darwin' ? 'Command+I' : 'Ctrl+I',
         click(item, focusedWindow) {
           focusedWindow.toggleDevTools();
-        }
+        },
       },
       {
-        role: 'reload'
-      }
-    ]
-  }
+        role: 'reload',
+      },
+    ],
+  },
 ];
 
 /*
@@ -95,18 +97,21 @@ ipcMain.on('partition:getTestMessages', (e, args) => {
   consumerApi.getMessagesFromPartition('asdf', 'test1', mainWindow);
 });
 
-
 /**
  * @param {Object} e is event
  * @param {Object} args is an object that contains topic name, host, offset and partition are optional args
  */
 ipcMain.on('partition:getMessages', (e, args) => {
   console.log('get msg request received', args);
-  consumerApi.getMessagesFromPartition(
+  consumers[args.topic] = consumerApi.getMessagesFromPartition(
     args.host,
     args.topic,
     mainWindow,
     args.offset || undefined,
     args.partition || undefined
   );
+});
+
+ipcMain.on('partition:stopMessages', (e, args) => {
+  consumers[args.topic].disconnect();
 });

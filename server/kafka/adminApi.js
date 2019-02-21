@@ -119,7 +119,7 @@ adminApi.getPartitionData = (kafkaHost, topic, mainWindow) => {
   const testData = [
     { partition: 1, broker: 'test.data:9092', currentOffset: 99999, msgCount: 99999 },
     { partition: 2, broker: 'test.data:9092', currentOffset: 99999, msgCount: 99999 },
-    { partition: 3, broker: 'test.data:9092', currentOffset: 99999, msgCount: 99999 }
+    { partition: 3, broker: 'test.data:9092', currentOffset: 99999, msgCount: 99999 },
   ];
   if (topic === 'asdf') return testData;
 };
