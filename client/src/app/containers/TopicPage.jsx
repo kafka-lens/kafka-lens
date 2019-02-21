@@ -124,29 +124,39 @@ class TopicPage extends React.Component {
     );
 
     return (
-      <div className="topic-page-container">
-        <div className="topic-list container">{Topics}</div>
-        <div className="incoming-messages-indicator">
-          {this.state.messages.length > 0 ? loadingMessages : ''}
-        </div>
-        <div className="bottom-container">
-          <div>
-            {this.state.showPartitions === true ? (
-              <PartitionList showMessages={this.showMessages} topicInfo={this.state.topicInfo} />
-            ) : (
-              ''
-            )}
-          </div>
-          <div>
-            {this.state.messages.length > 0 ? (
-              <MessageList messageArray={this.state.messages} />
-            ) : (
-              ''
-            )}
-          </div>
-          <div />
-        </div>
-      </div>
+      <h1>Hi</h1>
+      
+
+
+
+
+
+
+
+      // !!!!!!!!!! DO NOT REMOVE... BELOW IS PREVIOUS UI CODE !!!!!!!!!!!!!!!!!
+      // <div className="topic-page-container">
+      //   <div className="topic-list container">{Topics}</div>
+      //   <div className="incoming-messages-indicator">
+      //     {this.state.messages.length > 0 ? loadingMessages : ''}
+      //   </div>
+      //   <div className="bottom-container">
+      //     <div>
+      //       {this.state.showPartitions === true ? (
+      //         <PartitionList showMessages={this.showMessages} topicInfo={this.state.topicInfo} />
+      //       ) : (
+      //         ''
+      //       )}
+      //     </div>
+      //     <div>
+      //       {this.state.messages.length > 0 ? (
+      //         <MessageList messageArray={this.state.messages} />
+      //       ) : (
+      //         ''
+      //       )}
+      //     </div>
+      //     <div />
+      //   </div>
+      // </div>
     );
   }
 }
