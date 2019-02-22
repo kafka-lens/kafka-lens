@@ -16,13 +16,7 @@ const getLatestOffset = (kafkaHost, topic, partition) =>
     });
   });
 
-const getMessagesFromPartition = async (
-  kafkaHost,
-  topic,
-  mainWindow,
-  offset = 0,
-  partition = 0
-) => {
+const getMessagesFromTopic = async (kafkaHost, topic, mainWindow, offset = 0, partition = 0) => {
   // Send back test data
   const consumer = new bkafka.KafkaConsumer({
     'group.id': 'kafkalens',
@@ -37,6 +31,7 @@ const getMessagesFromPartition = async (
       }, 250);
     })
     .on('data', data => {
+      data.value = data.value.toString('utf8');
       mainWindow.webContents.send('partition:getMessages', data);
     });
   return consumer;
@@ -46,4 +41,4 @@ const stopDataFlow = () => {
   clearInterval(testStream);
 };
 
-module.exports = { getMessagesFromPartition: getMessagesFromTopic, stopDataFlow };
+module.exports = { getMessagesFromTopic, stopDataFlow };
