@@ -137,10 +137,10 @@ adminApi.getPartitionData = (kafkaHost, topic, partition = 0, mainWindow) => {
   // 3. Maybe get current message in buffer (?????)
 
   Promise.all(data)
-    .then(data => {
+    .then(result => {
       mainWindow.webContents.send('partition:getData', {
-        highwaterOffset: data[0],
-        messageCount: data[1],
+        highwaterOffset: result[0],
+        messageCount: result[1],
       });
     })
     .catch(err => console.error(err));
