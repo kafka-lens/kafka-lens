@@ -24,7 +24,7 @@ function createWindow() {
       slashes: true,
     })
   );
-  mainWindow.on('closed', () => (mainWindow = null));
+  mainWindow.on('closed', () => app.quit());
 
   // Building menu
   const mainMenu = Menu.buildFromTemplate(addDevToolsToMenu);
