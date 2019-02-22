@@ -5,6 +5,7 @@ const bkafka = require('node-rdkafka');
 // const consumer = new kafka.Consumer(client, [{ topic: 'test1' }]);
 let testStream;
 
+// Not in use
 const getLatestOffset = (kafkaHost, topic, partition) =>
   new Promise((resolve, reject) => {
     const client = new kafka.KafkaClient({ kafkaHost });
@@ -16,7 +17,7 @@ const getLatestOffset = (kafkaHost, topic, partition) =>
     });
   });
 
-const getMessagesFromTopic = async (kafkaHost, topic, mainWindow, offset = 0, partition = 0) => {
+const getMessagesFromTopic = async (kafkaHost, topic, mainWindow) => {
   // Send back test data
   const consumer = new bkafka.KafkaConsumer({
     'group.id': 'kafkalens',
