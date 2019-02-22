@@ -62,7 +62,6 @@ adminApi.getEarliestOffset = (kafkaHost, topic, partition) => {
   });
 };
 
-
 adminApi.getLatestOffset = (kafkaHost, topic, partition) => {
   const client = new kafka.KafkaClient({ kafkaHost });
   const offset = new kafka.Offset(client);
@@ -119,16 +118,32 @@ adminApi.getTopicData = (kafkaHost, mainWindow) => {
   }, 3000);
 };
 
-adminApi.getPartitionData = (kafkaHost, topic, mainWindow) => {
+adminApi.getPartitionData = (kafkaHost, topic, partition = 0, mainWindow) => {
   const client = new kafka.KafkaClient({ kafkaHost });
   const admin = new kafka.Admin(client);
-  const partitions = [];
+  const data = [];
   const testData = [
     { partition: 1, broker: 'test.data:9092', currentOffset: 99999, msgCount: 99999 },
     { partition: 2, broker: 'test.data:9092', currentOffset: 99999, msgCount: 99999 },
     { partition: 3, broker: 'test.data:9092', currentOffset: 99999, msgCount: 99999 },
   ];
   if (topic === 'asdf') return testData;
+
+  // DATA NEEDED: 1. Highwater Offset; 2. Total message count; 3. Current message in buffer(?)
+  // 1. Determine current highwater offset
+  data[0] = adminApi.getLatestOffset(kafkaHost, topic, partition);
+  // 2. Call getCurrentMsgCount to get current message count
+  data[1] = adminApi.getCurrentMsgCount(kafkaHost, topic, partition);
+  // 3. Maybe get current message in buffer (?????)
+
+  Promise.all(data)
+    .then(data => {
+      mainWindow.webContents.send('partition:getData', {
+        highwaterOffset: data[0],
+        messageCount: data[1],
+      });
+    })
+    .catch(err => console.error(err));
 };
 
 module.exports = adminApi;
