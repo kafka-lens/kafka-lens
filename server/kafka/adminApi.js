@@ -103,7 +103,7 @@ adminApi.getTopicData = (kafkaHost, mainWindow) => {
       resultTopic.push({
         topic,
         partition: topicPartitions,
-        messages: adminApi.getTopicMsgCount(kafkaHost, [topic], topicPartitions)
+        messages: adminApi.getTopicMsgCount(kafkaHost, [topic], topicPartitions),
       });
     });
     Promise.all(resultTopic.map(x => x.messages)).then(() => {
