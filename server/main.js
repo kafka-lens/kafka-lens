@@ -103,13 +103,7 @@ ipcMain.on('partition:getTestMessages', (e, args) => {
  */
 ipcMain.on('partition:getMessages', (e, args) => {
   console.log('get msg request received', args);
-  consumers[args.topic] = consumerApi.getMessagesFromTopic(
-    args.host,
-    args.topic,
-    mainWindow,
-    args.offset || undefined,
-    args.partition || undefined
-  );
+  consumers[args.topic] = consumerApi.getMessagesFromTopic(args.host, args.topic, mainWindow);
 });
 
 ipcMain.on('partition:stopMessages', (e, args) => {
