@@ -100,13 +100,11 @@ adminApi.getTopicData = (kafkaHost, mainWindow) => {
     Object.keys(topics).forEach(topic => {
       // for each topic, get # of partitions and storing that in topic partitions
       const topicPartitions = Object.keys(topics[topic]).length;
-      resultTopic.push(
-        buildTopicObj(
-          topic,
-          topicPartitions,
-          adminApi.getTopicMsgCount(kafkaHost, [topic], topicPartitions)
-        )
-      );
+      resultTopic.push({
+        topic,
+        partition: topicPartitions,
+        messages: adminApi.getTopicMsgCount(kafkaHost, [topic], topicPartitions)
+      });
     });
     Promise.all(resultTopic.map(x => x.messages)).then(() => {
       console.log(resultTopic);
