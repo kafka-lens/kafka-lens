@@ -1,11 +1,16 @@
 @import 'theme';
 
 
-.topic-name {
+.topic-header {
     font-size: 23px;
-    color: $dark-font-header;
+    cursor: pointer;
 }
 
-.view-button {
-    margin-top: 9px;
-}
+// .topic-name {
+//     font-size: 23px;
+//     color: $dark-font-header;
+// }
+
+// .view-button {
+//     margin-top: 9px;
+// }

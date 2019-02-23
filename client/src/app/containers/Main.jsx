@@ -35,13 +35,16 @@ class Main extends React.Component {
           connected: false
         });
       } else {
-        console.log('logging topics data: ', data)
+        data.forEach(topic => {
+          topic.showPartitions = false;
+        })
         this.setState({
           topics: data,
           connected: true
         });
+        console.log('logging topics data: ', data)
       }
-      console.log('logging state', this.state);
+      // console.log('logging state', this.state);
     });
   }
 
