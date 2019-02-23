@@ -17,9 +17,11 @@ class Topic extends React.Component {
 
     return (
 
-      <div className="topic-header" id={this.props.id} onClick={this.props.showPartitions}>
-        {this.props.topicInfo.topic}
-        {this.props.topicInfo.showPartitions === true ? <PartitionList showMessages={this.props.showMessages} topicInfo={this.props.topicInfo} /> : ""}
+      <div className="topic-header">
+        <div id={this.props.id} onClick={this.props.showPartitions}> 
+          {this.props.topicInfo.topic}
+        </div>
+          {this.props.topicInfo.showPartitions === true ? <PartitionList showMessages={this.props.showMessages} topicInfo={this.props.topicInfo} /> : ""}
       </div>
       // !!!!!!!!!! DO NOT REMOVE... BELOW IS PREVIOUS UI CODE !!!!!!!!!!!!!!!!!
       // <div>
