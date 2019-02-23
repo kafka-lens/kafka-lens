@@ -7,6 +7,8 @@ import circularBuffer from 'circular-buffer';
 import { ipcRenderer } from 'electron';
 import '../css/TopicPage.scss';
 import '../css/PartitionList.scss';
+import lens_src from '../../../dist/images/lens-icon.png';
+import metric_demo from '../../../dist/images/metric-demo3.png';
 
 class TopicPage extends React.Component {
   constructor(props) {
@@ -16,7 +18,6 @@ class TopicPage extends React.Component {
     this.state = {
       topics: [],
       topicInfo: {},
-      showPartitions: false,
       buttonId: -1,
       messages: [],
       hover: false,
@@ -51,18 +52,25 @@ class TopicPage extends React.Component {
     const topicInfo = this.props.topicList;
     const i = parseInt(event.target.id);
 
+    console.log('firing show partitions methood')
     //WORKING ON LOGIC HERE
     // this is how you get parent div of the button clicked
     let parentDiv = event.target.parentElement;
     let lastParentDiv = this.state.lastParentDiv;
 
-    if (this.state.showPartitions && this.state.buttonId === i) {
-      return this.setState({
-        showPartitions: false
-      });
+    if (topicInfo[i].showPartitions == true) {
+      topicInfo[i].showPartitions = false;
+    } else {
+      topicInfo[i].showPartitions = true;
     }
+
+    // OLD CODE BELOW
+    // if (this.state.showPartitions && this.state.buttonId === i) {
+    //   return this.setState({
+    //     showPartitions: false
+    //   });
+    // }
     let newState = this.state;
-    newState.showPartitions = true;
     newState.buttonId = i;
     newState.topicInfo = topicInfo[i];
 
@@ -73,6 +81,8 @@ class TopicPage extends React.Component {
     const topicName = event.target.getAttribute('topicname');
     const partitionNumber = parseInt(event.target.id);
     const partitionId = topicName + partitionNumber;
+
+    console.log('fired show messages method')
 
     let element = event.target;
     let lastElement = this.state.lastElement;
@@ -112,7 +122,7 @@ class TopicPage extends React.Component {
 
   render() {
     const Topics = this.props.topicList.map((element, i) => {
-      return <Topic key={i} id={i} topicInfo={element} showPartitions={this.showPartitions} />;
+      return <Topic key={i} id={i} topicInfo={element} showPartitions={this.showPartitions} shouldDisplayPartitions={this.state.showPartitions} showMessages={this.showMessages}/>;
     });
 
 
@@ -126,8 +136,80 @@ class TopicPage extends React.Component {
     // );
 
     return (
-      <h1>Hi</h1>
 
+      <div className="grid-container">
+        <div className="title-bar">Kafka Lens</div>
+        <div className="navi-bar">
+          <div className="logo-box">
+            <img className="lens-icon" src={lens_src} />
+          </div>
+          <div className="topics-header">Topics</div>
+          <div className="list-display">{Topics}</div>
+          <div className="connection-status">
+            <div className="connection-header">Connected</div>
+            <div className="connection-uri">255.249.232.001</div>
+          </div>
+        </div>
+        <div className="route-bar"></div>
+        <div className="more-info-box"></div>
+        <div className="message-box"></div>
+        <div className="health-box"></div>
+        <div className="metrics-box">
+          <img className="metric-demo" src={metric_demo} />
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+      // <div className="grid-container">
+
+      //   <div className="title-bar"> Kafka Lens</div>
+
+      //   <div className="navi-bar">
+      //     <div className="topic-list"></div>
+      //     <div className="connection-status"></div>
+      //   </div>
+
+      //   <div className="route-bar"></div>
+      //   <div className="info-box"></div>
+      //   <div className="message-display"></div>
+      //   <div className="metrics"></div>
+      //   <div className="health-box"></div>
+      // </div>
+
+      // <div className="wrapper">
+
+      //   <div className="side-navigation">
+      //     <div className="kafka-logo-box">
+      //       <img className="lens-icon" src={lens_src} />
+      //     </div>
+      //     {/* Show topics list / partition list */}
+      //     <div className="topic-partition-list">
+      //       {Topics}
+      //     </div>
+      //   </div>
+
+      //   <div className="more-info-box"></div>
+
+      //   {/* Show messages in box */}
+      //   <div className="messages-box">
+      //     {this.state.messages.length > 0 ? (
+      //           <MessageList messageArray={this.state.messages} />
+      //         ) : (
+      //           ''
+      //         )}
+      //   </div>
+      //   <div className="metrics-box"></div>
+      // </div>
 
 
 
@@ -150,11 +232,11 @@ class TopicPage extends React.Component {
       //       )}
       //     </div>
       //     <div>
-      //       {this.state.messages.length > 0 ? (
-      //         <MessageList messageArray={this.state.messages} />
-      //       ) : (
-      //         ''
-      //       )}
+            // {this.state.messages.length > 0 ? (
+            //   <MessageList messageArray={this.state.messages} />
+            // ) : (
+            //   ''
+            // )}
       //     </div>
       //     <div />
       //   </div>

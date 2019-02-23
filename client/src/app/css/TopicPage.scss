@@ -1,85 +1,335 @@
 @import 'theme';
 
-h3 {
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 0.8fr 0.9fr 1.3fr 1fr;
+  grid-template-rows: 0.3fr 0.4fr 1.8fr 1.5fr 1fr 1fr 1fr;
+  grid-template-areas: "title-bar title-bar title-bar title-bar" "navi-bar route-bar route-bar route-bar" "navi-bar more-info-box message-box message-box" "navi-bar more-info-box message-box message-box" "navi-bar more-info-box message-box message-box" "navi-bar health-box metrics-box metrics-box" "navi-bar health-box metrics-box metrics-box";
+  min-width: 100vw;
+  min-height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+.title-bar { 
+  grid-area: title-bar; 
+  background-color: $new-bg-blue;
+  color: $base-font-color;
+  text-align: center;
+  padding-top: 5px;
+}
+
+.navi-bar {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 0.3fr 2.1fr 0.6fr;
+  grid-template-areas: "logo-box" "topics-header" "list-display" "connection-status";
+  grid-area: navi-bar;
+  background-color: $new-bg-blue;
+  color: $base-font-color;
+}
+
+.logo-box { 
+  grid-area: logo-box; 
   text-align: center;
 }
 
-.topic-list {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr;
-  grid-row-gap: 5em;
+.lens-icon {
+  height: 100px;
+  width: 100px;
+}
+
+.topics-header { 
+  grid-area: topics-header; 
+  font-size: 32px;
+  padding-left: 29px;
+}
+
+.list-display { 
+  grid-area: list-display; 
+  overflow: auto;
+  padding-left: 44px;
+  padding-top: 18px;
+}
+
+.connection-status { 
+  grid-area: connection-status; 
   text-align: center;
-  padding-top: 67px;
-  padding-bottom: 81px;
-  border-bottom: 1px solid lightgray;
+  padding-top: 15px;
 }
 
-.bottom-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding-top: 30px;
+.connection-header {
+  font-size: 24px;
+  color: #76C652;
 }
 
-.message-list {
-  justify-self: center;
+.connection-uri {
+  color: $base-font-color;
 }
 
-.highlight-topic {
-  background-color: gray;
+.route-bar { 
+  grid-area: route-bar; 
+  background-color: $highlight-bar-color;
 }
 
-.highlight-this {
-  background-color: #f7ae4f;
-  color: white;
-  border: $border-highlight;
+.more-info-box { 
+  grid-area: more-info-box; 
+  background-color: $second-bg-color; 
 }
+
+.message-box { 
+  grid-area: message-box; 
+}
+
+.health-box { 
+  grid-area: health-box; 
+  background-color: $highlight-bar-color;
+}
+
+.metrics-box { 
+  grid-area: metrics-box; 
+  background-color: $metrics-background-color;
+  text-align: center;
+}
+
+.metric-demo {
+  height: 100%;
+  width: 75%;
+}
+
+::-webkit-scrollbar {     
+  background-color: $new-bg-blue;
+  width: .8em
+}
+
+::-webkit-scrollbar-thumb:window-inactive,
+::-webkit-scrollbar-thumb {
+  background:  $base-font-color;
+}
+
+
+
+
+
+
+
+
+// .grid-container {
+//   display: grid;
+//   grid-template-columns: 0.8fr 1fr 1.2fr 1fr;
+//   grid-template-rows: 0.3fr 0.3fr 1.3fr 1.3fr 1.8fr;
+//   grid-template-areas: "title-bar title-bar title-bar title-bar" "navi-bar route-bar route-bar route-bar" "navi-bar info-box message-display message-display" "navi-bar info-box message-display message-display" "navi-bar health-box metrics metrics";
+//   min-width: 100vw;
+//   min-height: 100vh;
+//   max-width: 100vw;
+//   max-height: 100vh;
+// }
+
+// .title-bar { 
+//   grid-area: title-bar; 
+//   background-color: $new-bg-blue;
+//   color: $base-font-color;
+//   text-align: center;
+//   padding-top: 5px;
+// }
+
+// .navi-bar {
+//   display: grid;
+//   grid-template-columns: 1fr 1fr 1fr;
+//   grid-template-rows: 1.6fr 0.4fr;
+//   grid-template-areas: "topic-list topic-list topic-list" "connection-status connection-status connection-status";
+//   grid-area: navi-bar;
+//   background-color: $new-bg-blue;
+// }
+
+// .topic-list { 
+//   grid-area: topic-list; 
+// }
+
+// .connection-status { 
+//   grid-area: connection-status; 
+// }
+
+// .route-bar { 
+//   grid-area: route-bar; 
+//   background-color: $highlight-bar-color;
+// }
+
+// .info-box { 
+//   grid-area: info-box;
+//   background-color: $second-bg-color; 
+// }
+
+// .message-display { 
+//   grid-area: message-display; 
+// }
+
+// .metrics { 
+//   grid-area: metrics; 
+//   background-color: $metrics-background-color;
+// }
+
+// .health-box { 
+//   grid-area: health-box; 
+//   background-color: $highlight-bar-color;
+// }
+
+
+
+
+
+
+
+
+// .wrapper {
+//   display: grid;
+//   grid-template-columns: 1fr 1fr 3fr;
+//   min-width: 100vw;
+//   min-height: 100vh;
+//   max-width: 100vw;
+//   max-height: 100vh;
+//   // height: 100%;
+// }
+
+// .side-navigation {
+//   display: grid;
+//   grid-row: 1/4;
+//   grid-template-rows: 1fr 3fr;
+//   background-color: $new-bg-blue;
+//   color: $base-font-color;
+//   // position: absolute;
+// }
+
+// .kafka-logo-box {
+//   text-align: center;
+//   padding-top: 36px;
+// }
+
+// .lens-icon {
+//   height: 100px;
+//   width: 100px;
+// }
+
+// .topic-partition-list {
+//   position: absolute;
+//   top: 188px;
+//   height: 100%;
+//   overflow: auto;
+//   padding-left: 3%;
+//   padding-right: 2%;
+//   // overflow: auto;
+//   // padding-left: 20px;
+//   // padding-right: 20px;
+// }
+
+// ::-webkit-scrollbar {     
+//   background-color: $new-bg-blue;
+//   width: .8em
+// }
+
+// ::-webkit-scrollbar-thumb:window-inactive,
+// ::-webkit-scrollbar-thumb {
+//   background:  $base-font-color;
+// }
+
+// .more-info-box {
+//   grid-row: 1/4;
+// }
+
+// .messages-box {
+//   grid-column: 3/4;
+//   grid-row: 1/3;
+// }
+
+// .metrics-box {
+//   grid-column: 3/4;
+//   grid-row: 3/4;
+// }
+
+
+
+
+// @import 'theme';
+
+// h3 {
+//   text-align: center;
+// }
+
+// .topic-list {
+//   display: grid;
+//   grid-template-columns: 1fr 1fr 1fr;
+//   grid-template-rows: 1fr;
+//   grid-row-gap: 5em;
+//   text-align: center;
+//   padding-top: 67px;
+//   padding-bottom: 81px;
+//   border-bottom: 1px solid lightgray;
+// }
+
+// .bottom-container {
+//   display: grid;
+//   grid-template-columns: 1fr 1fr;
+//   padding-top: 30px;
+// }
+
+// .message-list {
+//   justify-self: center;
+// }
+
+// .highlight-topic {
+//   background-color: gray;
+// }
+
+// .highlight-this {
+//   background-color: #f7ae4f;
+//   color: white;
+//   border: $border-highlight;
+// }
 
 // incoming messages loading animation
 
-//incoming messages loading dots 
+// .spinner {
+//   margin: 50px auto 0;
+//   padding-bottom: 20px;
+//   width: 70px;
+//   text-align: center;
+// }
 
-.spinner {
-  margin: 50px auto 0;
-  padding-bottom: 20px;
-  width: 70px;
-  text-align: center;
-}
+// .spinner > div {
+//   width: 14px;
+//   height: 14px;
+//   background-color: $dark-font-primary;
 
-.spinner > div {
-  width: 14px;
-  height: 14px;
-  background-color: $dark-font-primary;
+//   border-radius: 100%;
+//   display: inline-block;
+//   -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+//   animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+// }
 
-  border-radius: 100%;
-  display: inline-block;
-  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-}
+// .spinner .bounce1 {
+//   -webkit-animation-delay: -0.32s;
+//   animation-delay: -0.32s;
+// }
 
-.spinner .bounce1 {
-  -webkit-animation-delay: -0.32s;
-  animation-delay: -0.32s;
-}
+// .spinner .bounce2 {
+//   -webkit-animation-delay: -0.16s;
+//   animation-delay: -0.16s;
+// }
 
-.spinner .bounce2 {
-  -webkit-animation-delay: -0.16s;
-  animation-delay: -0.16s;
-}
+// @-webkit-keyframes sk-bouncedelay {
+//   0%, 80%, 100% { -webkit-transform: scale(0) }
+//   40% { -webkit-transform: scale(1.0) }
+// }
 
-@-webkit-keyframes sk-bouncedelay {
-  0%, 80%, 100% { -webkit-transform: scale(0) }
-  40% { -webkit-transform: scale(1.0) }
-}
-
-@keyframes sk-bouncedelay {
-  0%, 80%, 100% { 
-    -webkit-transform: scale(0);
-    transform: scale(0);
-  } 40% { 
-    -webkit-transform: scale(1.0);
-    transform: scale(1.0);
-  }
-}
+// @keyframes sk-bouncedelay {
+//   0%, 80%, 100% { 
+//     -webkit-transform: scale(0);
+//     transform: scale(0);
+//   } 40% { 
+//     -webkit-transform: scale(1.0);
+//     transform: scale(1.0);
+//   }
+// }
 
 
