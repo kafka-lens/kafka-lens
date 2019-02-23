@@ -7,7 +7,13 @@
     "presets": [
       "@babel/preset-env",
       "@babel/preset-react"
-    ]
+    ]       
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+     "setupFiles":["./client/src/setupTests.js"]
   },
   "scripts": {
     "start": "electron .",
@@ -40,6 +46,7 @@
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
+    "babel-jest": "^24.1.0",
     "babel-loader": "^8.0.5",
     "css-loader": "^2.1.0",
     "electron": "^4.0.4",
