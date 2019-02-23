@@ -1,4 +1,5 @@
 import React from 'react';
+import { ipcRenderer } from 'electron';
 import { shallow, mount } from 'enzyme';
 
 import Main from '../containers/Main.jsx';
@@ -20,5 +21,6 @@ describe('Main.js unit tests', () => {
 
   it('should render without errors', () => {
     expect(wrapper).toMatchSnapshot();
+    console.log(wrapper.debug());
   });
 });
