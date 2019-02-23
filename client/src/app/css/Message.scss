@@ -1,13 +1,28 @@
+@import 'theme';
+
 .single-message {
-    margin-top: 4px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    padding-left: 8px;
+    padding-top: 12px;
+    padding-bottom: 17px;
+    padding-left: 30px;
     padding-right: 8px;
+    // border-bottom: 1px solid $message-border-color;
+    color: darken($message-text-color, 20%);
 }
 
 .single-message:hover {
     background-color: #f7ae4f;
     color: white;
     cursor: pointer;
+}
+
+.offset-indicator {
+    color: $new-bg-blue;
+    background-color: $message-border-color;
+    padding-left: 9px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+h6 {
+    margin: 0;
 }

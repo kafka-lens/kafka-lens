@@ -1,5 +1,6 @@
 import React from 'react';
 import Topic from '../components/Topic.jsx';
+import PartitionInfo from '../components/PartitionInfo.jsx';
 import PartitionList from '../components/PartitionList.jsx';
 import MessageList from '../components/MessageList.jsx';
 import circularBuffer from 'circular-buffer';
@@ -82,7 +83,11 @@ class TopicPage extends React.Component {
     const partitionNumber = parseInt(event.target.id);
     const partitionId = topicName + partitionNumber;
 
-    console.log('fired show messages method')
+    // console.log('fired show messages method')
+    // console.log('here is topicName: ', topicName)
+    // console.log('partitionNumber is: ', partitionNumber)
+    // console.log('partitionId: ', partitionId)
+    // console.log('logging event.target: ', event.target)
 
     let element = event.target;
     let lastElement = this.state.lastElement;
@@ -151,8 +156,12 @@ class TopicPage extends React.Component {
           </div>
         </div>
         <div className="route-bar"></div>
-        <div className="more-info-box"></div>
-        <div className="message-box"></div>
+        <div className="more-info-box">
+          {this.state.messages.length > 1 ? <PartitionInfo lastMessage={this.state.messages[0]} /> : ""}
+        </div>
+        <div className="message-box">
+          <MessageList messageArray={this.state.messages} />
+        </div>
         <div className="health-box"></div>
         <div className="metrics-box">
           <img className="metric-demo" src={metric_demo} />

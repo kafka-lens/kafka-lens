@@ -10,12 +10,11 @@ const MessageList = props => {
 
   messageArray.forEach((msg, i) => {
     //code here
-    renderMessages.push(<Message key={i} id={i} message={messageArray[i].value} />);
+    renderMessages.push(<Message key={i} id={i} message={messageArray[i].value} offset={messageArray[i].offset} />);
   });
 
   return (
     <div className="message-list">
-      <h5 className="m-header">Messages</h5>
       {renderMessages}
     </div>
   );
