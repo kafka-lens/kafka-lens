@@ -47,7 +47,6 @@ class TopicPage extends React.Component {
       this.setState({
         messages: newMessage
       });
-      // console.log('logging state messages: ', this.state.messages);
     });
   }
   // Methods
@@ -55,8 +54,6 @@ class TopicPage extends React.Component {
     const topicInfo = this.props.topicList;
     const i = parseInt(event.target.id);
 
-    console.log('firing show partitions methood')
-    //WORKING ON LOGIC HERE
     // this is how you get parent div of the button clicked
     let parentDiv = event.target.parentElement;
     let lastParentDiv = this.state.lastParentDiv;
@@ -67,17 +64,9 @@ class TopicPage extends React.Component {
       topicInfo[i].showPartitions = true;
     }
 
-    // OLD CODE BELOW
-    // if (this.state.showPartitions && this.state.buttonId === i) {
-    //   return this.setState({
-    //     showPartitions: false
-    //   });
-    // }
     let newState = this.state;
     newState.buttonId = i;
     newState.topicInfo = topicInfo[i];
-
-    console.log('logging this.state.topicInfo: ', this.state.topicInfo)
 
     return this.setState(newState);
   }
@@ -86,12 +75,6 @@ class TopicPage extends React.Component {
     const topicName = event.target.getAttribute('topicname');
     const partitionNumber = parseInt(event.target.id);
     const partitionId = topicName + partitionNumber;
-
-    // console.log('fired show messages method')
-    // console.log('here is topicName: ', topicName)
-    // console.log('partitionNumber is: ', partitionNumber)
-    // console.log('partitionId: ', partitionId)
-    // console.log('logging event.target: ', event.target)
 
     let element = event.target;
     let lastElement = this.state.lastElement;
@@ -114,7 +97,6 @@ class TopicPage extends React.Component {
     if (uri === 's') {
       uri = 'k2.tpw.made.industries:9092';
     }
-    console.log('logging uri', uri)
 
     if (partitionId !== this.state.partitionId) {
       this.setState({
@@ -127,7 +109,6 @@ class TopicPage extends React.Component {
         topic: topicName,
         partition: partitionNumber
       });
-      console.log('logging this.state.partitionNumber: ', partitionNumber)
     }
   }
 
@@ -149,7 +130,7 @@ class TopicPage extends React.Component {
       displayUri = 'k2.tpw.made.industries:9092';
     }
 
-    // LOADING MESSAGES INDICATOR
+    // LOADING MESSAGES INDICATOR ! DO NOT DELETE !
     // let loadingMessages = (
     //   <div class="spinner">
     //     <div class="bounce1" />
@@ -187,89 +168,6 @@ class TopicPage extends React.Component {
           <img className="metric-demo" src={metric_demo} />
         </div>
       </div>
-
-
-
-
-
-
-
-
-
-
-
-
-      // <div className="grid-container">
-
-      //   <div className="title-bar"> Kafka Lens</div>
-
-      //   <div className="navi-bar">
-      //     <div className="topic-list"></div>
-      //     <div className="connection-status"></div>
-      //   </div>
-
-      //   <div className="route-bar"></div>
-      //   <div className="info-box"></div>
-      //   <div className="message-display"></div>
-      //   <div className="metrics"></div>
-      //   <div className="health-box"></div>
-      // </div>
-
-      // <div className="wrapper">
-
-      //   <div className="side-navigation">
-      //     <div className="kafka-logo-box">
-      //       <img className="lens-icon" src={lens_src} />
-      //     </div>
-      //     {/* Show topics list / partition list */}
-      //     <div className="topic-partition-list">
-      //       {Topics}
-      //     </div>
-      //   </div>
-
-      //   <div className="more-info-box"></div>
-
-      //   {/* Show messages in box */}
-      //   <div className="messages-box">
-      //     {this.state.messages.length > 0 ? (
-      //           <MessageList messageArray={this.state.messages} />
-      //         ) : (
-      //           ''
-      //         )}
-      //   </div>
-      //   <div className="metrics-box"></div>
-      // </div>
-
-
-
-
-
-
-
-      // !!!!!!!!!! DO NOT REMOVE... BELOW IS PREVIOUS UI CODE !!!!!!!!!!!!!!!!!
-      // <div className="topic-page-container">
-      //   <div className="topic-list container">{Topics}</div>
-      //   <div className="incoming-messages-indicator">
-      //     {this.state.messages.length > 0 ? loadingMessages : ''}
-      //   </div>
-      //   <div className="bottom-container">
-      //     <div>
-      //       {this.state.showPartitions === true ? (
-      //         <PartitionList showMessages={this.showMessages} topicInfo={this.state.topicInfo} />
-      //       ) : (
-      //         ''
-      //       )}
-      //     </div>
-      //     <div>
-            // {this.state.messages.length > 0 ? (
-            //   <MessageList messageArray={this.state.messages} />
-            // ) : (
-            //   ''
-            // )}
-      //     </div>
-      //     <div />
-      //   </div>
-      // </div>
     );
   }
 }

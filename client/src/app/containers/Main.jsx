@@ -45,7 +45,6 @@ class Main extends React.Component {
         });
         console.log('logging topics data: ', data)
       }
-      // console.log('logging state', this.state);
     });
   }
 

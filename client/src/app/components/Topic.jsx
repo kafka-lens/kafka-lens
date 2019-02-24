@@ -9,7 +9,6 @@ class Topic extends React.Component {
     this.state = {
       topics: []
     };
-
     //bind methods here
   }
 
@@ -23,21 +22,6 @@ class Topic extends React.Component {
         </div>
           {this.props.topicInfo.showPartitions === true ? <PartitionList showMessages={this.props.showMessages} topicInfo={this.props.topicInfo} /> : ""}
       </div>
-      // !!!!!!!!!! DO NOT REMOVE... BELOW IS PREVIOUS UI CODE !!!!!!!!!!!!!!!!!
-      // <div>
-      //   <div>
-      //     <span className="topic-name">{this.props.topicInfo.topic}</span> <br />
-      //     <span>Partitions: {this.props.topicInfo.partition}</span>
-      //   </div>
-      //   <button
-      //     className="view-button btn waves-effect waves-light"
-      //     id={this.props.id}
-      //     onClick={this.props.showPartitions}
-      //   >
-      //     View
-      //   </button>
-      //   <br />
-      // </div>
     );
   }
 }
