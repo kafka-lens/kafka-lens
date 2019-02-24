@@ -436,7 +436,11 @@ eval("exports = module.exports = __webpack_require__(/*! ../../../../node_module
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 eval("exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \".single-message {\\n  padding-top: 12px;\\n  padding-bottom: 17px;\\n  padding-left: 30px;\\n  padding-right: 8px;\\n  color: #636b60; }\\n\\n.single-message:hover {\\n  background-color: #f7ae4f;\\n  color: white;\\n  cursor: pointer; }\\n\\n.offset-indicator {\\n  color: #031534;\\n  background-color: #b3bcaf;\\n  padding-left: 9px;\\n  padding-top: 5px;\\n  padding-bottom: 5px; }\\n\\nh6 {\\n  margin: 0; }\\n\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./client/src/app/css/Message.scss?./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/lib/loader.js");
+=======
+eval("exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \".single-message {\\n  margin-top: 4px;\\n  padding-top: 3px;\\n  padding-bottom: 3px;\\n  padding-left: 8px;\\n  padding-right: 8px; }\\n\\n.single-message:hover {\\n  background-color: #f7ae4f;\\n  color: white;\\n  cursor: pointer; }\\n\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./client/src/app/css/Message.scss?./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/lib/loader.js");
+>>>>>>> ad447651d5941520cbc428de60f52d56cc402898
 
 /***/ }),
 
