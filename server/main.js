@@ -14,7 +14,9 @@ dialog.showErrorBox = function(title, content) {
 let mainWindow;
 
 function createWindow() {
-  mainWindow = new BrowserWindow({ width: 900, height: 680 });
+  mainWindow = new BrowserWindow({ show: false });
+  mainWindow.maximize();
+  mainWindow.show();
   mainWindow.loadURL(
     url.format({
       pathname: path.join(__dirname, '../client/dist/index.html'),
