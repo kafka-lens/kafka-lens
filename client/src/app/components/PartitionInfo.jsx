@@ -4,9 +4,11 @@ import '../css/PartitionInfo.scss';
 const PartitionInfo = props => {
   return (
 
-    <div>
-        <h4>Partition: {props.lastMessage.partition}</h4>
-        <h4>High Water Offset: {props.lastMessage.highWaterOffset}</h4>
+    <div className="partition-info">
+        <h5>Partition: {props.lastMessage.partition}</h5>
+        <p className="info-font-size">Current Message: {props.lastMessage.offset}</p>
+        <p className="info-font-size">High Water Offset: {props.lastMessage.highWaterOffset}</p>
+        <p className="info-font-size">Total Messages: . . .</p>
     </div>
   );
 };

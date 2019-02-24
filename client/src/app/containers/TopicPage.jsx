@@ -2,6 +2,7 @@ import React from 'react';
 import Topic from '../components/Topic.jsx';
 import PartitionInfo from '../components/PartitionInfo.jsx';
 import PartitionList from '../components/PartitionList.jsx';
+import RouteBar from '../components/RouteBar.jsx';
 import MessageList from '../components/MessageList.jsx';
 import circularBuffer from 'circular-buffer';
 
@@ -23,6 +24,7 @@ class TopicPage extends React.Component {
       messages: [],
       hover: false,
       partitionId: '',
+      partitionNumber: -1,
       lastElement: '',
       lastParentDiv: ''
     };
@@ -75,6 +77,8 @@ class TopicPage extends React.Component {
     newState.buttonId = i;
     newState.topicInfo = topicInfo[i];
 
+    console.log('logging this.state.topicInfo: ', this.state.topicInfo)
+
     return this.setState(newState);
   }
 
@@ -115,6 +119,7 @@ class TopicPage extends React.Component {
     if (partitionId !== this.state.partitionId) {
       this.setState({
         messages: [],
+        partitionNumber: partitionNumber,
         partitionId: partitionId
       });
       ipcRenderer.send('partition:getMessages', {
@@ -122,6 +127,7 @@ class TopicPage extends React.Component {
         topic: topicName,
         partition: partitionNumber
       });
+      console.log('logging this.state.partitionNumber: ', partitionNumber)
     }
   }
 
@@ -130,6 +136,18 @@ class TopicPage extends React.Component {
       return <Topic key={i} id={i} topicInfo={element} showPartitions={this.showPartitions} shouldDisplayPartitions={this.state.showPartitions} showMessages={this.showMessages}/>;
     });
 
+    let isConnected = this.props.isConnected;
+    const connected = (<h5 className="connection-header">Connected</h5>)
+    const disconnected = (<h5 className="disconnected-header">Disconnected</h5>)
+
+    let displayUri = this.props.uri;
+
+    if (displayUri === 'a') {
+      displayUri = '157.230.166.35:9092';
+    }
+    if (displayUri === 's') {
+      displayUri = 'k2.tpw.made.industries:9092';
+    }
 
     // LOADING MESSAGES INDICATOR
     // let loadingMessages = (
@@ -151,11 +169,13 @@ class TopicPage extends React.Component {
           <div className="topics-header">Topics</div>
           <div className="list-display">{Topics}</div>
           <div className="connection-status">
-            <div className="connection-header">Connected</div>
-            <div className="connection-uri">255.249.232.001</div>
+            <div className="connection-header">{isConnected === true ? connected : disconnected}</div>
+            <div className="connection-uri">{displayUri}</div>
           </div>
         </div>
-        <div className="route-bar"></div>
+        <div className="route-bar">
+          <RouteBar topicName={this.state.topicInfo.topic} partitionNumber={this.state.partitionNumber} />
+        </div>
         <div className="more-info-box">
           {this.state.messages.length > 1 ? <PartitionInfo lastMessage={this.state.messages[0]} /> : ""}
         </div>

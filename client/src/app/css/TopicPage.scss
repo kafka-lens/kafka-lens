@@ -33,6 +33,7 @@
 .logo-box { 
   grid-area: logo-box; 
   text-align: center;
+  padding-top: 26px;
 }
 
 .lens-icon {
@@ -64,6 +65,11 @@
   color: #76C652;
 }
 
+.disconnected-header {
+  font-size: 24px;
+  color: red;
+}
+
 .connection-uri {
   color: $base-font-color;
 }
@@ -71,6 +77,7 @@
 .route-bar { 
   grid-area: route-bar; 
   background-color: $highlight-bar-color;
+  padding-bottom: 6px;
 }
 
 .more-info-box { 

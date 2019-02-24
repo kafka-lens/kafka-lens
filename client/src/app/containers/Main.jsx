@@ -80,7 +80,7 @@ class Main extends React.Component {
       <div className="main-div">
         {/* Conditionally renders either the ConnectionPage or TopicPage depending on connected in state */}
         {this.state.connected === true ? (
-          <TopicPage uri={this.state.uri_input} topicList={this.state.topics} />
+          <TopicPage uri={this.state.uri_input} topicList={this.state.topics} isConnected={this.state.connected} />
         ) : (
           <ConnectionPage
             validConnectionChecker={this.validConnectionChecker}
