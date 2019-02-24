@@ -37,7 +37,7 @@ class TopicPage extends React.Component {
 
       // Create a copy of the message list from state and unshift the new message to the
       // front of the array.
-      // SOMETHING TO TEST: IS CONCAT 
+      // SOMETHING TO TEST: IS CONCAT
       let newMessage = this.state.messages.slice();
       newMessage.unshift(message);
       this.setState({
