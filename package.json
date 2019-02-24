@@ -23,6 +23,9 @@
     },
     "moduleDirectories": [
       "node_modules"
+    ],
+    "modulePaths": [
+      "<rootDir>"
     ]
   },
   "scripts": {
