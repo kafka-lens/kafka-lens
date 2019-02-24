@@ -3,13 +3,14 @@ import '../css/Partition.scss';
 
 const Partition = props => {
   return (
-    <div 
+    <div
       className="single-partition"
       id={props.id}
       onClick={props.showMessages}
       topicname={props.topicName}
     >
-      Partition &nbsp; {props.id}
+      {/* Partition &nbsp; {props.id} */}
+      {`Partition  ${props.id}`}
     </div>
   );
 };

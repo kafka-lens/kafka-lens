@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TopicPage.js unit tests Should render without errors 1`] = `
+<div
+  className="topic-page-container"
+>
+  <div
+    className="topic-list container"
+  />
+  <div
+    className="incoming-messages-indicator"
+  />
+  <div
+    className="bottom-container"
+  >
+    <div />
+    <div />
+    <div />
+  </div>
+</div>
+`;

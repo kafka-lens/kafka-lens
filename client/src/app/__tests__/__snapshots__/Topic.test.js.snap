@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Topic.js unit tests Should render without errors 1`] = `
+<div>
+  <div>
+    <span
+      className="topic-name"
+    >
+      test1
+    </span>
+     
+    <br />
+    <span>
+      Partitions: 
+      5
+    </span>
+  </div>
+  <button
+    className="view-button btn waves-effect waves-light"
+    id={1}
+    onClick={[MockFunction]}
+  >
+    View
+  </button>
+  <br />
+</div>
+`;
