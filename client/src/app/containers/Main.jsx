@@ -38,6 +38,7 @@ class Main extends React.Component {
         data.forEach(topic => {
           topic.showPartitions = false;
         })
+
         this.setState({
           topics: data,
           connected: true
