@@ -9,6 +9,25 @@
       "@babel/preset-react"
     ]
   },
+  "jest": {
+    "verbose": true,
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "setupFiles": [
+      "./client/src/setupTests.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|scss)$": "<rootDir>/client/src/app/__mocks__/styleMock.js",
+      "electron": "<rootDir>/client/src/app/__mocks__/electron.js"
+    },
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "modulePaths": [
+      "<rootDir>"
+    ]
+  },
   "scripts": {
     "start": "electron .",
     "start:dev": "webpack-dev-server --open",
@@ -30,23 +49,32 @@
   "homepage": "https://github.com/teampandawhale/kafka-lens#readme",
   "dependencies": {
     "circular-buffer": "^1.0.2",
+    "jest-css-modules-transform": "^2.1.1",
     "kafka-node": "^4.0.1",
+    "node-rdkafka": "^2.5.1",
     "node-sass": "^4.11.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
-    "sass-loader": "^7.1.0"
+    "sass-loader": "^7.1.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
+    "babel-jest": "^24.1.0",
     "babel-loader": "^8.0.5",
     "css-loader": "^2.1.0",
     "electron": "^4.0.4",
     "electron-builder": "^20.38.5",
+    "electron-rebuild": "^1.8.4",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.9.1",
+    "enzyme-to-json": "^3.3.5",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^24.1.0",
     "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2",
     "webpack": "^4.29.3",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.1.14"
