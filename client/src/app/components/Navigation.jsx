@@ -4,7 +4,7 @@ import '../css/Navigation.scss'
 
 const Navigation = props => {
   return (
-    <p><i>[- - kafka lens navigation bar - -]</i></p>
+    <div>Kafka lens</div>
   )
 };
 

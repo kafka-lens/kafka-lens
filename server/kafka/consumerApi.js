@@ -1,9 +1,11 @@
 const kafka = require('kafka-node');
+const bkafka = require('node-rdkafka');
 
 // const client = new kafka.KafkaClient({ kafkaHost: '157.230.166.35:9092' });
 // const consumer = new kafka.Consumer(client, [{ topic: 'test1' }]);
 let testStream;
 
+// Not in use
 const getLatestOffset = (kafkaHost, topic, partition) =>
   new Promise((resolve, reject) => {
     const client = new kafka.KafkaClient({ kafkaHost });
@@ -15,47 +17,29 @@ const getLatestOffset = (kafkaHost, topic, partition) =>
     });
   });
 
-const getMessagesFromPartition = async (kafkaHost, topic, mainWindow, offset = 0, partition = 0) => {
+const getMessagesFromTopic = async (kafkaHost, topic, mainWindow) => {
   // Send back test data
-  if (topic === 'test1' && broker === 'asdf') {
-    let testOffset = 45532;
-    let testHighwater = 45702;
-    testStream = setInterval(() => {
-      mainWindow.webContents.send('partition:getMessages', { topic: 'test1',
-      value: `Current date: ${Date.now()}`,
-      offset: testOffset,
-      partition: 0,
-      highWaterOffset: testHighwater,
-      key: null })
-    }, 1500)
-    testOffset += 1;
-    testHighwater += 1;
-  } else {
-    const client = new kafka.KafkaClient({ kafkaHost });
-    const payload = { topic, offset, partition };
-    if (offset === 'latest') {
-      payload.offset = await getLatestOffset(kafkaHost, topic, partition);
-    }
-    const options = { encoding: 'utf8', keyEncoding: 'utf8' };
-    // creating new consumer instance
-    const consumer = new kafka.Consumer(client, [payload]);
-
-    console.log('MADE IT INTO CONSUMER API, THIS PAYLOAD: ', payload)
-
-    consumer.on('error', err => {
-      mainWindow.webContents.send('error:getMessage', {});
+  const consumer = new bkafka.KafkaConsumer({
+    'group.id': 'kafkalens',
+    'metadata.broker.list': kafkaHost,
+  });
+  consumer.connect();
+  consumer
+    .on('ready', () => {
+      consumer.subscribe([topic]);
+      setInterval(() => {
+        consumer.consume(25);
+      }, 250);
+    })
+    .on('data', data => {
+      data.value = data.value.toString('utf8');
+      mainWindow.webContents.send('partition:getMessages', data);
     });
-
-    // consumer listens for msg event and passes msg to mainWindow
-    consumer.on('message', message => {
-      console.log(message);
-      mainWindow.webContents.send('partition:getMessages', message);
-    });
-  }
+  return consumer;
 };
 
 const stopDataFlow = () => {
   clearInterval(testStream);
 };
 
-module.exports = { getMessagesFromPartition, stopDataFlow };
+module.exports = { getMessagesFromTopic, stopDataFlow };
