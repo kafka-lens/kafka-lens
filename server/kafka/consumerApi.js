@@ -1,5 +1,5 @@
 const kafka = require('kafka-node');
-const bkafka = require('node-rdkafka');
+const rdkafka = require('node-rdkafka');
 
 // const client = new kafka.KafkaClient({ kafkaHost: '157.230.166.35:9092' });
 // const consumer = new kafka.Consumer(client, [{ topic: 'test1' }]);
@@ -19,7 +19,7 @@ const getLatestOffset = (kafkaHost, topic, partition) =>
 
 const getMessagesFromTopic = async (kafkaHost, topic, mainWindow) => {
   // Send back test data
-  const consumer = new bkafka.KafkaConsumer({
+  const consumer = new rdkafka.KafkaConsumer({
     'group.id': 'kafkalens',
     'metadata.broker.list': kafkaHost,
   });
@@ -42,4 +42,4 @@ const stopDataFlow = () => {
   clearInterval(testStream);
 };
 
-module.exports = { getMessagesFromTopic, stopDataFlow };
+module.exports = { getMessagesFromTopic, stopDataFlow, getLatestOffset };
