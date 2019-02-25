@@ -34,7 +34,7 @@ class ConnectionPage extends React.Component {
         <div className="connection-form container">
           <form>
             <div>
-              <label>Enter Your Kafka Server URI</label>
+              <label id="label-instructions">Enter Your Kafka Server URI</label>
               <input id="uri-input" type="text" onChange={this.props.updateURI} />
             </div>
             <button
