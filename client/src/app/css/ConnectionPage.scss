@@ -1,3 +1,5 @@
+@import 'theme';
+
 .connection-box {
   height: 100%;
   width: 100%;
@@ -5,10 +7,23 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: $second-bg-color;
 }
 
 .connection-form {
-  width: 300px;
+  width: 34%;
+}
+
+#label-instructions {
+  font-size: 16px;
+  color: $base-font-color;
+}
+
+#uri-input {
+  color: $off-white-color;
+  font-size: 33px;
+  padding-bottom: 15px;
+  padding-top: 12px;
 }
 
 #connect-button {
@@ -17,14 +32,16 @@
 }
 
 #error-message {
-  width: 178px;
+  color: #db4646;
+  width: 374px;
+  padding-top: 5px;
 }
 
 .loading {
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-top: 20px;
+  margin-top: 100px;
 }
 .loading-bar {
   display: inline-block;

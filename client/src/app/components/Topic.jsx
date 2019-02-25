@@ -1,12 +1,27 @@
 import React from 'react';
 import '../css/Topic.scss';
 
-const Topic = props => {
-  return (
-    <div>
-      <div>
-        <span className="topic-name">{props.topicInfo.topic}</span> <br />
-        <span>Partitions: {props.topicInfo.partition}</span>
+import PartitionList from '../components/PartitionList.jsx';
+
+class Topic extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      topics: []
+    };
+    //bind methods here
+  }
+
+  render() {
+
+    return (
+
+      <div className="topic-header">
+        <div id={this.props.id} onClick={this.props.showPartitions}> 
+          {this.props.topicInfo.topic}
+        </div>
+          {this.props.topicInfo.showPartitions === true ? <PartitionList showMessages={this.props.showMessages} topicInfo={this.props.topicInfo} /> : ""}
+
       </div>
       <button
         className="view-button btn waves-effect waves-light"

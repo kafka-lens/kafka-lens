@@ -16,7 +16,6 @@ const PartitionList = props => {
 
   return (
     <div className="partition-list">
-      <h5 className="p-header">Partitions</h5>
       {partitionsArray}
     </div>
   );
