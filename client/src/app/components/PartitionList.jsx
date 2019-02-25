@@ -2,9 +2,11 @@ import React from 'react';
 import Partition from '../components/Partition.jsx';
 
 const PartitionList = props => {
+  let partitionsArray = [];
   const numberOfPartitions = props.topicInfo.partition;
-  partitionsArray = numberOfPartitions.map(() => {
-    return (
+
+  for (let i = 0; i < numberOfPartitions; i++) {
+    partitionsArray.push(
       <Partition
         key={i}
         id={i}
@@ -12,7 +14,7 @@ const PartitionList = props => {
         topicName={props.topicInfo.topic}
       />
     );
-  });
+  }
 
   return (
     <div className="partition-list">
