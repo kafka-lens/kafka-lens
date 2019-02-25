@@ -21,9 +21,18 @@ class Topic extends React.Component {
           {this.props.topicInfo.topic}
         </div>
           {this.props.topicInfo.showPartitions === true ? <PartitionList showMessages={this.props.showMessages} topicInfo={this.props.topicInfo} /> : ""}
+
       </div>
-    );
-  }
-}
+      <button
+        className="view-button btn waves-effect waves-light"
+        id={props.id}
+        onClick={props.showPartitions}
+      >
+        View
+      </button>
+      <br />
+    </div>
+  );
+};
 
 export default Topic;
