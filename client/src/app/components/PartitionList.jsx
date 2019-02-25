@@ -3,6 +3,8 @@ import Partition from '../components/Partition.jsx';
 
 const PartitionList = props => {
   const numberOfPartitions = props.topicInfo.partition;
+  let partitionsArray = [];
+  
   partitionsArray = numberOfPartitions.map(() => {
     return (
       <Partition
