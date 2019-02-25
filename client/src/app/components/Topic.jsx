@@ -24,14 +24,9 @@ class Topic extends React.Component {
           ''
         )}
       </div>
-<<<<<<< HEAD
-    );
-  }
-=======
 
     );
   };
->>>>>>> 5c26e440dcb02df2f6d0738eaa1d76382e196811
 }
 
 export default Topic;
