@@ -10,7 +10,7 @@
     ]
   },
   "jest": {
-    "verbose":true,
+    "verbose": true,
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ],
