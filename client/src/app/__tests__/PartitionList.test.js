@@ -15,7 +15,7 @@ describe('ParitionList unit tests', () => {
   });
 
   it('Should render without errors', () => {
-    expect(wrapper).toMatchInlineSnapshot();
+    expect(wrapper).toMatchInlineSnapshot(`undefined`);
   });
 
   it('Should render a Partition component', () => {
