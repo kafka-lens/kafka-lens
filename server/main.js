@@ -120,9 +120,9 @@ ipcMain.on('partition:getData', (e, args) => {
 
   Promise.all(results).then(result => {
     const data = {
-      highwaterOffset: results[0],
-      earliestOffset: results[1],
-      messageCount: results[2],
+      highwaterOffset: result[0],
+      earliestOffset: result[1],
+      messageCount: result[2],
     };
     mainWindow.webContents.send('partition:getData', data);
   });

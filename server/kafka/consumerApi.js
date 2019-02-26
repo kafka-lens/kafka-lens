@@ -29,7 +29,7 @@ const getMessagesFromTopic = async (kafkaHost, topic, mainWindow) => {
       consumer.subscribe([topic]);
       setInterval(() => {
         consumer.consume(25);
-      }, 250);
+      }, 1500);
     })
     .on('data', data => {
       data.value = data.value.toString('utf8');
