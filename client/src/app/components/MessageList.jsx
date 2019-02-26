@@ -7,14 +7,12 @@ const MessageList = props => {
   let renderMessages = [];
 
   messageArray.forEach((msg, i) => {
-    renderMessages.push(<Message key={i} id={i} message={messageArray[i].value} offset={messageArray[i].offset} />);
+    renderMessages.push(
+      <Message key={i} id={i} message={messageArray[i].value} offset={messageArray[i].offset} />
+    );
   });
 
-  return (
-    <div className="message-list">
-      {renderMessages}
-    </div>
-  );
+  return <div className="message-list">{renderMessages}</div>;
 };
 
 export default MessageList;

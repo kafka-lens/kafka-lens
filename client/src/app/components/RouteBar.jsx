@@ -1,8 +1,6 @@
 import React from 'react';
 import '../css/RouteBar.scss';
 
-import React, { Component } from 'react';
-
 const RouteBar = props => {
   let topicName;
   let partitionNumber;
