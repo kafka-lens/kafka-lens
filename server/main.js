@@ -111,3 +111,19 @@ ipcMain.on('partition:getMessages', (e, args) => {
 ipcMain.on('partition:stopMessages', (e, args) => {
   consumers[args.topic].disconnect();
 });
+
+ipcMain.on('partition:getData', (e, args) => {
+  const results = [];
+  results[0] = adminApi.getLatestOffset(args.kafkaHost, args.topic, args.partition);
+  results[1] = adminApi.getEarliestOffset(args.kafkaHost, args.topic, args.partition);
+  results[2] = adminApi.getCurrentMsgCount(args.kafkaHost, args.topic, args.partition);
+
+  Promise.all(results).then(result => {
+    const data = {
+      highwaterOffset: result[0],
+      earliestOffset: result[1],
+      messageCount: result[2],
+    };
+    mainWindow.webContents.send('partition:getData', data);
+  });
+});
