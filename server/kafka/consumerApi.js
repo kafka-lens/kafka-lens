@@ -33,6 +33,7 @@ const getMessagesFromTopic = async (kafkaHost, topic, mainWindow) => {
     })
     .on('data', data => {
       data.value = data.value.toString('utf8');
+      // console.log('message', data);
       mainWindow.webContents.send('partition:getMessages', data);
     });
   return consumer;

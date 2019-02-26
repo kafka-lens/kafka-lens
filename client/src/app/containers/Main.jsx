@@ -43,7 +43,7 @@ class Main extends React.Component {
           topics: data,
           connected: true
         });
-        console.log('logging topics data: ', data)
+        // console.log('logging topics data: ', data)
       }
     });
   }
