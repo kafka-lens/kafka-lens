@@ -3,8 +3,8 @@ import Message from './Message.jsx';
 import '../css/MessageList.scss';
 
 const MessageList = props => {
-  let messageArray = props.messageArray;
-  let renderMessages = [];
+  const messageArray = props.messageArray;
+  const renderMessages = [];
 
   // if (props.partitionNumber) {
   //   messageArray = messageArray.filter(
