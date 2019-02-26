@@ -20,13 +20,15 @@ class TopicPage extends React.Component {
     this.state = {
       topics: [],
       topicInfo: {},
+      topicName: '',
       buttonId: -1,
       messages: [],
       hover: false,
       partitionId: '',
       partitionNumber: -1,
       lastElement: '',
-      lastParentDiv: ''
+      lastParentDiv: '',
+      infoBoxData: {},
     };
 
     this.showPartitions = this.showPartitions.bind(this);
@@ -37,7 +39,7 @@ class TopicPage extends React.Component {
   componentDidMount() {
     //code here
     ipcRenderer.on('partition:getMessages', (e, message) => {
-      console.log('logging messages: ', message);
+      // console.log('logging messages: ', message);
 
       // Create a copy of the message list from state and unshift the new message to the
       // front of the array.
@@ -48,11 +50,21 @@ class TopicPage extends React.Component {
         messages: newMessage
       });
     });
+
+    // This will get an object from the main process with the partition data incl. highwaterOffset, earliestOffset, and messageCount
+    ipcRenderer.on('partition:getData', (e, data) => {
+      console.log('logging infoBoxData ...... : ', data)
+      this.setState({infoBoxData: data})
+    })
   }
-  // Methods
+  
+  // Called when topic is clicked in order to show partitions
   showPartitions(event) {
     const topicInfo = this.props.topicList;
+    const topicName = event.target.getAttribute('topicname');
     const i = parseInt(event.target.id);
+
+    // console.log('logging event.target after clicking topic: ', event.target);
 
     // this is how you get parent div of the button clicked
     let parentDiv = event.target.parentElement;
@@ -63,6 +75,23 @@ class TopicPage extends React.Component {
     } else {
       topicInfo[i].showPartitions = true;
     }
+
+    let uri = this.props.uri;
+    // Below code is for quick testing startup
+    if (uri === 'a') {
+      uri = '157.230.166.35:9092';
+    }
+    if (uri === 's') {
+      uri = 'k2.tpw.made.industries:9092';
+    }
+
+    ipcRenderer.send('partition:getMessages', {
+      host: uri,
+      topic: topicName,
+    });
+
+    // console.log('here is uri: ', uri)
+    // console.log('here is topicName: ', topicName);
 
     let newState = this.state;
     newState.buttonId = i;
@@ -76,39 +105,41 @@ class TopicPage extends React.Component {
     const partitionNumber = parseInt(event.target.id);
     const partitionId = topicName + partitionNumber;
 
+    
     let element = event.target;
     let lastElement = this.state.lastElement;
 
-    if (lastElement !== element) {
-      if (lastElement !== '') {
-        lastElement.classList.remove('highlight-this');
-      }
-      this.setState({
-        lastElement: element
-      });
-      element.classList.add('highlight-this');
-    }
-
     let uri = this.props.uri;
-
+    // Below code is for quick testing startup
     if (uri === 'a') {
       uri = '157.230.166.35:9092';
     }
     if (uri === 's') {
       uri = 'k2.tpw.made.industries:9092';
     }
+    
+    if (lastElement !== element) {
+      if (lastElement !== '') {
+        lastElement.classList.remove('highlight-this');
+      }
+      console.log('sending partition:getData event to backend ............')
+      ipcRenderer.send('partition:getData', {kafkaHost: uri, partition: partitionNumber, topic: topicName})
+      this.setState({
+        lastElement: element
+      });
+      element.classList.add('highlight-this');
+    }
 
     if (partitionId !== this.state.partitionId) {
       this.setState({
         messages: [],
+        topicName: topicName,
         partitionNumber: partitionNumber,
         partitionId: partitionId
       });
-      ipcRenderer.send('partition:getMessages', {
-        host: uri,
-        topic: topicName,
-        partition: partitionNumber
-      });
+
+
+
     }
   }
 
@@ -178,7 +209,7 @@ class TopicPage extends React.Component {
           )}
         </div>
         <div className="message-box">
-          <MessageList messageArray={this.state.messages} />
+          <MessageList partitionNumber={this.state.partitionNumber} topicName={this.state.topicName} messageArray={this.state.messages} />
         </div>
         <div className="health-box" />
         <div className="metrics-box">
