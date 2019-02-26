@@ -21,6 +21,8 @@ const getLatestOffset = (kafkaHost, topic, partition) =>
 const getMessagesFromTopic = async (kafkaHost, topic, mainWindow) => {
   // Send back test data
   const buffer = new MessageBuffer(1000);
+  let hasData = false;
+  let lastChecked = Date.now();
   const consumer = new rdkafka.KafkaConsumer({
     'group.id': 'kafkalens',
     'metadata.broker.list': kafkaHost,
@@ -37,10 +39,14 @@ const getMessagesFromTopic = async (kafkaHost, topic, mainWindow) => {
       data.value = data.value.toString('utf8');
       // console.log('message', data);
       // mainWindow.webContents.send('partition:getMessages', data);
+      hasData = Date.now();
       buffer.queue(data);
     });
   const sendBuffer = setInterval(() => {
-    buffer.getNextSegment(mainWindow);
+    if (lastChecked < hasData) {
+      lastChecked = Date.now();
+      buffer.getNextSegment(mainWindow);
+    }
   }, 200);
   return { consumer, sendBuffer };
 };

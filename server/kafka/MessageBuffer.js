@@ -61,11 +61,11 @@ class MessageBuffer {
    * Will create an array of items needed for display to the passed Electron window.
    */
   getNextSegment(mainWindow) {
-    const array = [];
+    const segment = [];
     for (let i = this.winEnd; i > this.winStart - 1; i -= 1) {
-      array.push(this.array[i]);
+      segment.push(this.array[i]);
     }
-    mainWindow.webContents.send('partition:getMessages', array);
+    mainWindow.webContents.send('partition:getMessages', segment);
     if (this.length > 50) {
       delete this.array[this.winStart];
       this.length -= 1;
