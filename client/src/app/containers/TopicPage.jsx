@@ -38,17 +38,8 @@ class TopicPage extends React.Component {
 
   componentDidMount() {
     //code here
-    ipcRenderer.on('partition:getMessages', (e, message) => {
-      // console.log('logging messages: ', message);
-
-      // Create a copy of the message list from state and unshift the new message to the
-      // front of the array.
-      // SOMETHING TO TEST: IS CONCAT
-      let newMessage = this.state.messages.slice();
-      newMessage.unshift(message);
-      this.setState({
-        messages: newMessage
-      });
+    ipcRenderer.on('partition:getMessages', (e, messages) => {
+      this.setState({messages})
     });
 
     // This will get an object from the main process with the partition data incl. highwaterOffset, earliestOffset, and messageCount

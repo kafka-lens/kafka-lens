@@ -7,7 +7,7 @@ class MessageBuffer {
    */
   constructor(size) {
     this.maxSize = size;
-    this.array = {};
+    this.array = { 0: null };
     this.length = 0;
     this.loIndex = 0;
     this.winStart = 0;
@@ -16,7 +16,7 @@ class MessageBuffer {
 
   /**
    *
-   * @param {*} item Any data type to be added to the end of the queue
+   * @param {any} item Any data type to be added to the end of the queue.
    * This will add data to the end of the queue. If the item added causes the length of the queue to
    * exceed the maximum size of the buffer, this will also cause the buffer to drop the oldest data in the buffer
    */
