@@ -47,7 +47,7 @@ const getMessagesFromTopic = async (kafkaHost, topic, mainWindow) => {
       lastChecked = Date.now();
       buffer.getNextSegment(mainWindow);
     }
-  }, 100);
+  }, 50);
   return { consumer, sendBuffer };
 };
 
