@@ -13,9 +13,14 @@ class Topic extends React.Component {
   }
 
   render() {
+    // console.log('topic info', this.props.topicInfo);
     return (
       <div className="topic-header">
-        <div id={this.props.id} onClick={this.props.showPartitions}>
+        <div
+          id={this.props.id}
+          topicname={this.props.topicInfo.topic}
+          onClick={this.props.showPartitions}
+        >
           {this.props.topicInfo.topic}
         </div>
         {this.props.topicInfo.showPartitions === true ? (
@@ -24,9 +29,8 @@ class Topic extends React.Component {
           ''
         )}
       </div>
-
     );
-  };
+  }
 }
 
 export default Topic;

@@ -1,20 +1,24 @@
 import React from 'react';
-import Message from '../components/Message.jsx';
+import Message from './Message.jsx';
 import '../css/MessageList.scss';
 
 const MessageList = props => {
   let messageArray = props.messageArray;
   let renderMessages = [];
 
+  if (props.partitionNumber) {
+    messageArray = messageArray.filter(
+      msg => msg.topic === props.topicName && msg.partition === props.partitionNumber
+    );
+  }
+
   messageArray.forEach((msg, i) => {
-    renderMessages.push(<Message key={i} id={i} message={messageArray[i].value} offset={messageArray[i].offset} />);
+    renderMessages.push(
+      <Message key={i} id={i} message={messageArray[i].value} offset={messageArray[i].offset} />
+    );
   });
 
-  return (
-    <div className="message-list">
-      {renderMessages}
-    </div>
-  );
+  return <div className="message-list">{renderMessages}</div>;
 };
 
 export default MessageList;
