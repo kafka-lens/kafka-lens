@@ -1,9 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Message.js unit tests Should render without errors 1`] = `
-<div
-  className="single-message"
->
-  Test
-</div>
+<span>
+  <h6
+    className="offset-indicator"
+  />
+  <p
+    className="single-message"
+  >
+    Test
+  </p>
+</span>
 `;
