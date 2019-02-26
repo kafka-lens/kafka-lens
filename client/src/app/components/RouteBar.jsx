@@ -1,16 +1,22 @@
 import React from 'react';
 import '../css/RouteBar.scss';
 
+import React, { Component } from 'react';
+
 const RouteBar = props => {
   let topicName;
   let partitionNumber;
-  const home = (<h5 className="display-inline">Home &nbsp; &nbsp;</h5>);
+  const home = <h5 className="display-inline">Home &nbsp; &nbsp;</h5>;
 
   if (props.topicName) {
-    topicName = (<h5 className="display-inline"> > &nbsp; &nbsp; {props.topicName} &nbsp; &nbsp; </h5>);
+    topicName = (
+      <h5 className="display-inline"> > &nbsp; &nbsp; {props.topicName} &nbsp; &nbsp; </h5>
+    );
   }
   if (props.partitionNumber !== -1) {
-    partitionNumber = (<h5 className="display-inline">  > &nbsp; &nbsp; Partition {props.partitionNumber}</h5>);
+    partitionNumber = (
+      <h5 className="display-inline"> > &nbsp; &nbsp; Partition {props.partitionNumber}</h5>
+    );
   }
 
   return (

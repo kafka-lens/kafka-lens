@@ -4,11 +4,6 @@ exports[`MessageList.js unit tests Should render without errors 1`] = `
 <div
   className="message-list"
 >
-  <h5
-    className="m-header"
-  >
-    Messages
-  </h5>
   <Message
     id={0}
     key="0"
