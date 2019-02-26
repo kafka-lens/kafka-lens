@@ -1,2 +1,4 @@
 language: node_js
-
+scripts:
+  - npm install CFLAGS=-I/usr/local/opt/openssl/include LDFLAGS=-L/usr/local/opt/openssl/lib npm install --save node-rdkafka
+  - npm install
