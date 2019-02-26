@@ -1,7 +1,7 @@
 import React from 'react';
 import '../css/Topic.scss';
 
-import PartitionList from '../components/PartitionList.jsx';
+import PartitionList from './PartitionList.jsx';
 
 class Topic extends React.Component {
   constructor(props) {
@@ -9,13 +9,18 @@ class Topic extends React.Component {
     this.state = {
       topics: []
     };
-    //bind methods here
+    // bind methods here
   }
 
   render() {
+    // console.log('topic info', this.props.topicInfo);
     return (
       <div className="topic-header">
-        <div id={this.props.id} onClick={this.props.showPartitions}>
+        <div
+          id={this.props.id}
+          topicname={this.props.topicInfo.topic}
+          onClick={this.props.showPartitions}
+        >
           {this.props.topicInfo.topic}
         </div>
         {this.props.topicInfo.showPartitions === true ? (
@@ -27,5 +32,4 @@ class Topic extends React.Component {
     );
   }
 }
-
 export default Topic;
