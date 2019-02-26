@@ -4,7 +4,9 @@ exports[`Message.js unit tests Should render without errors 1`] = `
 <span>
   <h6
     className="offset-indicator"
-  />
+  >
+    5
+  </h6>
   <p
     className="single-message"
   >

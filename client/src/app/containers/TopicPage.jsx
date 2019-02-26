@@ -114,12 +114,21 @@ class TopicPage extends React.Component {
 
   render() {
     const Topics = this.props.topicList.map((element, i) => {
-      return <Topic key={i} id={i} topicInfo={element} showPartitions={this.showPartitions} shouldDisplayPartitions={this.state.showPartitions} showMessages={this.showMessages}/>;
+      return (
+        <Topic
+          key={i}
+          id={i}
+          topicInfo={element}
+          showPartitions={this.showPartitions}
+          shouldDisplayPartitions={this.state.showPartitions}
+          showMessages={this.showMessages}
+        />
+      );
     });
 
     let isConnected = this.props.isConnected;
-    const connected = (<h5 className="connection-header">Connected</h5>)
-    const disconnected = (<h5 className="disconnected-header">Disconnected</h5>)
+    const connected = <h5 className="connection-header">Connected</h5>;
+    const disconnected = <h5 className="disconnected-header">Disconnected</h5>;
 
     let displayUri = this.props.uri;
 
@@ -140,7 +149,6 @@ class TopicPage extends React.Component {
     // );
 
     return (
-
       <div className="grid-container">
         <div className="title-bar">Kafka Lens</div>
         <div className="navi-bar">
@@ -150,20 +158,29 @@ class TopicPage extends React.Component {
           <div className="topics-header">Topics</div>
           <div className="list-display">{Topics}</div>
           <div className="connection-status">
-            <div className="connection-header">{isConnected === true ? connected : disconnected}</div>
+            <div className="connection-header">
+              {isConnected === true ? connected : disconnected}
+            </div>
             <div className="connection-uri">{displayUri}</div>
           </div>
         </div>
         <div className="route-bar">
-          <RouteBar topicName={this.state.topicInfo.topic} partitionNumber={this.state.partitionNumber} />
+          <RouteBar
+            topicName={this.state.topicInfo.topic}
+            partitionNumber={this.state.partitionNumber}
+          />
         </div>
         <div className="more-info-box">
-          {this.state.messages.length > 1 ? <PartitionInfo lastMessage={this.state.messages[0]} /> : ""}
+          {this.state.messages.length > 1 ? (
+            <PartitionInfo lastMessage={this.state.messages[0]} />
+          ) : (
+            ''
+          )}
         </div>
         <div className="message-box">
           <MessageList messageArray={this.state.messages} />
         </div>
-        <div className="health-box"></div>
+        <div className="health-box" />
         <div className="metrics-box">
           <img className="metric-demo" src={metric_demo} />
         </div>

@@ -2,20 +2,84 @@
 
 exports[`TopicPage.js unit tests Should render without errors 1`] = `
 <div
-  className="topic-page-container"
+  className="grid-container"
 >
   <div
-    className="topic-list container"
-  />
-  <div
-    className="incoming-messages-indicator"
-  />
-  <div
-    className="bottom-container"
+    className="title-bar"
   >
-    <div />
-    <div />
-    <div />
+    Kafka Lens
+  </div>
+  <div
+    className="navi-bar"
+  >
+    <div
+      className="logo-box"
+    >
+      <img
+        className="lens-icon"
+        src={
+          Object {
+            "process": [Function],
+          }
+        }
+      />
+    </div>
+    <div
+      className="topics-header"
+    >
+      Topics
+    </div>
+    <div
+      className="list-display"
+    />
+    <div
+      className="connection-status"
+    >
+      <div
+        className="connection-header"
+      >
+        <h5
+          className="disconnected-header"
+        >
+          Disconnected
+        </h5>
+      </div>
+      <div
+        className="connection-uri"
+      />
+    </div>
+  </div>
+  <div
+    className="route-bar"
+  >
+    <RouteBar
+      partitionNumber={-1}
+    />
+  </div>
+  <div
+    className="more-info-box"
+  />
+  <div
+    className="message-box"
+  >
+    <MessageList
+      messageArray={Array []}
+    />
+  </div>
+  <div
+    className="health-box"
+  />
+  <div
+    className="metrics-box"
+  >
+    <img
+      className="metric-demo"
+      src={
+        Object {
+          "process": [Function],
+        }
+      }
+    />
   </div>
 </div>
 `;
