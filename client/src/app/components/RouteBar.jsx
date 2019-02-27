@@ -9,7 +9,7 @@ const RouteBar = props => {
   if (props.topicName) {
     topicName = (<h5 className="display-inline"> > &nbsp; &nbsp; {props.topicName} &nbsp; &nbsp; </h5>);
   }
-  if (props.partitionNumber !== -1) {
+  if (props.showPartitionInfo) {
     partitionNumber = (<h5 className="display-inline">  > &nbsp; &nbsp; Partition {props.partitionNumber}</h5>);
   }
 

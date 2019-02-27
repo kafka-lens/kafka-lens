@@ -1,11 +1,12 @@
 @import 'theme';
 
 .single-message {
-    padding-top: 12px;
-    padding-bottom: 17px;
+    padding-top: 22px;
+    padding-bottom: 30px;
     padding-left: 30px;
     padding-right: 8px;
     color: darken($message-text-color, 20%);
+    border-bottom: 1px solid $message-border-color;
 }
 
 .single-message:hover {
@@ -15,11 +16,15 @@
 }
 
 .offset-indicator {
-    color: $new-bg-blue;
-    background-color: $message-border-color;
+    color: $off-white-color;
+    background-color: darken($highlight-bar-color, 10%);
+    float: right;
+    margin: 0px;
     padding-left: 9px;
+    padding-right: 9px;
     padding-top: 5px;
     padding-bottom: 5px;
+    border-radius: 5px;
 }
 
 h6 {

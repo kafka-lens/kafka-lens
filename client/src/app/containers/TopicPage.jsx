@@ -3,6 +3,7 @@ import Topic from '../components/Topic.jsx';
 import PartitionInfo from '../components/PartitionInfo.jsx';
 import PartitionList from '../components/PartitionList.jsx';
 import RouteBar from '../components/RouteBar.jsx';
+import MessageInfo from '../components/MessageInfo.jsx';
 import MessageList from '../components/MessageList.jsx';
 import circularBuffer from 'circular-buffer';
 
@@ -29,6 +30,7 @@ class TopicPage extends React.Component {
       lastElement: '',
       lastParentDiv: '',
       infoBoxData: {},
+      showPartitionInfo: false
     };
 
     this.showPartitions = this.showPartitions.bind(this);
@@ -39,6 +41,7 @@ class TopicPage extends React.Component {
   componentDidMount() {
     //code here
     ipcRenderer.on('partition:getMessages', (e, messages) => {
+      // console.log('logging message: ', messages)
       this.setState({messages})
     });
 
@@ -85,6 +88,11 @@ class TopicPage extends React.Component {
     // console.log('here is topicName: ', topicName);
 
     let newState = this.state;
+
+    if (this.state.showPartitionInfo === true) {
+      newState.showPartitionInfo = false;
+    }
+
     newState.buttonId = i;
     newState.topicInfo = topicInfo[i];
 
@@ -113,7 +121,7 @@ class TopicPage extends React.Component {
       if (lastElement !== '') {
         lastElement.classList.remove('highlight-this');
       }
-      console.log('sending partition:getData event to backend ............')
+      // console.log('sending partition:getData event to backend ............')
       ipcRenderer.send('partition:getData', {kafkaHost: uri, partition: partitionNumber, topic: topicName})
       this.setState({
         lastElement: element
@@ -126,7 +134,8 @@ class TopicPage extends React.Component {
         messages: [],
         topicName: topicName,
         partitionNumber: partitionNumber,
-        partitionId: partitionId
+        partitionId: partitionId,
+        showPartitionInfo: true
       });
 
 
@@ -165,31 +174,56 @@ class TopicPage extends React.Component {
 
       <div className="grid-container">
         <div className="title-bar">Kafka Lens</div>
-        <div className="navi-bar">
-          <div className="logo-box">
-            <img className="lens-icon" src={lens_src} />
-          </div>
-          <div className="topics-header">Topics</div>
-          <div className="list-display">{Topics}</div>
-          <div className="connection-status">
-            <div className="connection-header">{isConnected === true ? connected : disconnected}</div>
-            <div className="connection-uri">{displayUri}</div>
-          </div>
-        </div>
         <div className="route-bar">
-          <RouteBar topicName={this.state.topicInfo.topic} partitionNumber={this.state.partitionNumber} />
+          <RouteBar topicName={this.state.topicInfo.topic} showPartitionInfo={this.state.showPartitionInfo} partitionNumber={this.state.partitionNumber} />
         </div>
-        <div className="more-info-box">
-          {this.state.messages.length > 1 ? <PartitionInfo lastMessage={this.state.messages[0]} /> : ""}
+        <div className="logo-box">
+          <img className="lens-icon" src={lens_src} />
         </div>
+        <div className="topics-header">Topics</div>
+        <div className="partition-info">
+          {this.state.showPartitionInfo === true && Object.keys(this.state.infoBoxData).length > 1 ? <PartitionInfo infoBoxData={this.state.infoBoxData} partitionNumber={this.state.partitionNumber} /> : ""}
+        </div>
+        <div className="message-info">
+        {this.state.showPartitionInfo === true && this.state.messages.length > 1 ? <MessageInfo lastMessage={this.state.messages[0]} /> : ""}
+        </div>
+        <div className="list-display">{Topics}</div>
         <div className="message-box">
           <MessageList partitionNumber={this.state.partitionNumber} topicName={this.state.topicName} messageArray={this.state.messages} />
         </div>
-        <div className="health-box"></div>
-        <div className="metrics-box">
-          <img className="metric-demo" src={metric_demo} />
+        <div className="connection-status">
+          {isConnected === true ? connected : disconnected}
+          <div className="connection-uri">{displayUri}</div>
         </div>
       </div>
+
+      // <div className="grid-container">
+      //   <div className="title-bar">Kafka Lens</div>
+      //   <div className="navi-bar">
+      //     <div className="logo-box">
+      //       <img className="lens-icon" src={lens_src} />
+      //     </div>
+      //     <div className="topics-header">Topics</div>
+      //     <div className="list-display">{Topics}</div>
+      //     <div className="connection-status">
+      //       <div className="connection-header">{isConnected === true ? connected : disconnected}</div>
+      //       <div className="connection-uri">{displayUri}</div>
+      //     </div>
+      //   </div>
+      //   <div className="route-bar">
+      //     <RouteBar topicName={this.state.topicInfo.topic} partitionNumber={this.state.partitionNumber} />
+      //   </div>
+      //   <div className="more-info-box">
+      //     {this.state.messages.length > 1 ? <PartitionInfo lastMessage={this.state.messages[0]} /> : ""}
+      //   </div>
+      //   <div className="message-box">
+      //     <MessageList partitionNumber={this.state.partitionNumber} topicName={this.state.topicName} messageArray={this.state.messages} />
+      //   </div>
+      //   <div className="health-box"></div>
+      //   <div className="metrics-box">
+      //     <img className="metric-demo" src={metric_demo} />
+      //   </div>
+      // </div>
     );
   }
 }
