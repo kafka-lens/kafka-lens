@@ -39,15 +39,13 @@ class TopicPage extends React.Component {
   // Lifecycle methods
 
   componentDidMount() {
-    //code here
+
     ipcRenderer.on('partition:getMessages', (e, messages) => {
-      // console.log('logging message: ', messages)
       this.setState({messages})
     });
 
     // This will get an object from the main process with the partition data incl. highwaterOffset, earliestOffset, and messageCount
     ipcRenderer.on('partition:getData', (e, data) => {
-      console.log('logging infoBoxData ...... : ', data)
       this.setState({infoBoxData: data})
     })
   }
@@ -57,8 +55,6 @@ class TopicPage extends React.Component {
     const topicInfo = this.props.topicList;
     const topicName = event.target.getAttribute('topicname');
     const i = parseInt(event.target.id);
-
-    // console.log('logging event.target after clicking topic: ', event.target);
 
     // this is how you get parent div of the button clicked
     let parentDiv = event.target.parentElement;
@@ -84,15 +80,11 @@ class TopicPage extends React.Component {
       topic: topicName,
     });
 
-    // console.log('here is uri: ', uri)
-    // console.log('here is topicName: ', topicName);
-
     let newState = this.state;
 
     if (this.state.showPartitionInfo === true) {
       newState.showPartitionInfo = false;
     }
-
     newState.buttonId = i;
     newState.topicInfo = topicInfo[i];
 
@@ -121,11 +113,12 @@ class TopicPage extends React.Component {
       if (lastElement !== '') {
         lastElement.classList.remove('highlight-this');
       }
-      // console.log('sending partition:getData event to backend ............')
+
       ipcRenderer.send('partition:getData', {kafkaHost: uri, partition: partitionNumber, topic: topicName})
       this.setState({
         lastElement: element
       });
+
       element.classList.add('highlight-this');
     }
 
@@ -137,9 +130,6 @@ class TopicPage extends React.Component {
         partitionId: partitionId,
         showPartitionInfo: true
       });
-
-
-
     }
   }
 
@@ -196,34 +186,6 @@ class TopicPage extends React.Component {
           <div className="connection-uri">{displayUri}</div>
         </div>
       </div>
-
-      // <div className="grid-container">
-      //   <div className="title-bar">Kafka Lens</div>
-      //   <div className="navi-bar">
-      //     <div className="logo-box">
-      //       <img className="lens-icon" src={lens_src} />
-      //     </div>
-      //     <div className="topics-header">Topics</div>
-      //     <div className="list-display">{Topics}</div>
-      //     <div className="connection-status">
-      //       <div className="connection-header">{isConnected === true ? connected : disconnected}</div>
-      //       <div className="connection-uri">{displayUri}</div>
-      //     </div>
-      //   </div>
-      //   <div className="route-bar">
-      //     <RouteBar topicName={this.state.topicInfo.topic} partitionNumber={this.state.partitionNumber} />
-      //   </div>
-      //   <div className="more-info-box">
-      //     {this.state.messages.length > 1 ? <PartitionInfo lastMessage={this.state.messages[0]} /> : ""}
-      //   </div>
-      //   <div className="message-box">
-      //     <MessageList partitionNumber={this.state.partitionNumber} topicName={this.state.topicName} messageArray={this.state.messages} />
-      //   </div>
-      //   <div className="health-box"></div>
-      //   <div className="metrics-box">
-      //     <img className="metric-demo" src={metric_demo} />
-      //   </div>
-      // </div>
     );
   }
 }
