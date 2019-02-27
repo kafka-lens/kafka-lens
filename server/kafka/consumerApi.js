@@ -1,5 +1,6 @@
 const kafka = require('kafka-node');
 const rdkafka = require('node-rdkafka');
+const MessageBuffer = require('./MessageBuffer');
 
 // const client = new kafka.KafkaClient({ kafkaHost: '157.230.166.35:9092' });
 // const consumer = new kafka.Consumer(client, [{ topic: 'test1' }]);
@@ -19,6 +20,9 @@ const getLatestOffset = (kafkaHost, topic, partition) =>
 
 const getMessagesFromTopic = async (kafkaHost, topic, mainWindow) => {
   // Send back test data
+  const buffer = new MessageBuffer(1000);
+  let hasData = false;
+  let lastChecked = Date.now();
   const consumer = new rdkafka.KafkaConsumer({
     'group.id': 'kafkalens',
     'metadata.broker.list': kafkaHost,
@@ -34,9 +38,17 @@ const getMessagesFromTopic = async (kafkaHost, topic, mainWindow) => {
     .on('data', data => {
       data.value = data.value.toString('utf8');
       // console.log('message', data);
-      mainWindow.webContents.send('partition:getMessages', data);
+      // mainWindow.webContents.send('partition:getMessages', data);
+      hasData = Date.now();
+      buffer.queue(data);
     });
-  return consumer;
+  const sendBuffer = setInterval(() => {
+    if (lastChecked < hasData) {
+      lastChecked = Date.now();
+      buffer.getNextSegment(mainWindow);
+    }
+  }, 50);
+  return { consumer, sendBuffer };
 };
 
 const stopDataFlow = () => {
