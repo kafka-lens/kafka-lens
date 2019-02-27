@@ -8,8 +8,6 @@ class ConnectionPage extends React.Component {
   constructor() {
     super();
     this.state = {};
-
-    // bind methods here
   }
 
   render() {

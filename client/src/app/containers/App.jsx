@@ -7,8 +7,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    
-    // bind methods here
   }
 
   render() {
