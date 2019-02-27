@@ -9,14 +9,13 @@ class Topic extends React.Component {
     this.state = {
       topics: [],
     };
-    // bind methods here
   }
 
   render() {
-    // console.log('topic info', this.props.topicInfo);
     return (
       <div className="topic-header">
         <div
+          className="topic-padding"
           id={this.props.id}
           topicname={this.props.topicInfo.topic}
           onClick={this.props.showPartitions}

@@ -9,7 +9,6 @@ const Partition = props => {
       onClick={props.showMessages}
       topicname={props.topicName}
     >
-      {/* Partition &nbsp; {props.id} */}
       {`Partition  ${props.id}`}
     </div>
   );
