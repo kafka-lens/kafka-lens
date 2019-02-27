@@ -7,6 +7,7 @@ exports[`Topic.js unit tests Should render without errors 1`] = `
   <div
     id={1}
     onClick={[MockFunction]}
+    topicname="test1"
   >
     test1
   </div>
