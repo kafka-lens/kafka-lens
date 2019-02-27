@@ -9,7 +9,7 @@ class MessageBuffer {
     this.maxSize = size;
     this.array = { 0: null };
     this.length = 0;
-    this.hiIndex = 0;
+    this.hiIndex = -1;
     this.loIndex = 0;
     this.winStart = 0;
     this.winEnd = 0;
@@ -22,10 +22,10 @@ class MessageBuffer {
    * exceed the maximum size of the buffer, this will also cause the buffer to drop the oldest data in the buffer
    */
   queue(item) {
+    this.hiIndex += 1;
     this.array[this.hiIndex] = item;
     if (this.length < 50) this.winEnd = this.hiIndex;
     this.length += 1;
-    this.hiIndex += 1;
     // Begin logic to delete from beginning of array if maxSize is reached
     if (this.maxSize && this.length > this.maxSize) {
       delete this.array[this.loIndex];
