@@ -17,6 +17,7 @@ class Topic extends React.Component {
     return (
       <div className="topic-header">
         <div
+          className="topic-padding"
           id={this.props.id}
           topicname={this.props.topicInfo.topic}
           onClick={this.props.showPartitions}
