@@ -4,12 +4,6 @@ Kafka Lens aims to give developers a tool to easily inspect a Kafka cluster in r
 
 ![alt text](kl-g.gif "Screen Capture")
 
-## Download
-
-|![macOS](https://img.icons8.com/ios/2x/mac-os-filled.png "https://google.com")|![Windows](https://www.freeiconspng.com/minicovers/system-windows-icon-png-4.png "https://google.com")|![linux](https://www.freeiconspng.com/minicovers/linux-icon-4.png "Linux")|
-|:---:|:---:|:---:|
-|macOS|Windows|Linux|
-
 ## 5 Steps for a Quick Startup
 
 **Fork** and **Clone** Repository
