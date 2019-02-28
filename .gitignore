@@ -5,6 +5,8 @@ testFile.js
 Launch-application/
 .DS_Store
 .vscode/
+build/
+dist/
 
 # Logs
 logs
