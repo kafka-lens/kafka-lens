@@ -16,11 +16,9 @@ Follow these quick steps to launch the application.
 ```
 1. npm install
 2. npm run webpack
-3. npm run package-mac (for macs)
-⋅⋅ npm run package-win (for windows)
-⋅⋅ npm run package-linux (for linux)
-4. double click 'Launch-application' folder
-5. Launch Kafka Lens!
+3. cd into your 'kafka-lens' folder
+4. run this script in your command line: './node_modules/.bin/electron-rebuild'
+5. npm start
 ```
 
 ### Connecting to Your Broker
