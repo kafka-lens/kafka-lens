@@ -1,4 +1,4 @@
-![](K-rm-logo.gif)
+![alt-text](kl-f-logo.png)
 
 A real-time visualization tool for you Kafka cluster.
 
