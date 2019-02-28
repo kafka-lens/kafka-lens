@@ -1,11 +1,10 @@
 @import 'theme';
 
-
 .grid-container {
   display: grid;
   grid-template-columns: 0.8fr 0.9fr 1.3fr 1fr;
-  grid-template-rows: 0.3fr 0.4fr 1.8fr 1.5fr 1fr 1fr 1fr;
-  grid-template-areas: "title-bar title-bar title-bar title-bar" "navi-bar route-bar route-bar route-bar" "navi-bar more-info-box message-box message-box" "navi-bar more-info-box message-box message-box" "navi-bar more-info-box message-box message-box" "navi-bar health-box metrics-box metrics-box" "navi-bar health-box metrics-box metrics-box";
+  grid-template-rows: 0.2fr 0.2fr 1fr 0.3fr 2fr 2.3fr 1fr;
+  grid-template-areas: "title-bar title-bar title-bar title-bar" "logo-box route-bar route-bar route-bar" "logo-box partition-info message-box message-box" "topics-header partition-info message-box message-box" "list-display partition-info message-box message-box" "list-display message-info message-box message-box" "connection-status message-info message-box message-box";
   min-width: 100vw;
   min-height: 100vh;
   max-width: 100vw;
@@ -20,20 +19,16 @@
   padding-top: 5px;
 }
 
-.navi-bar {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 0.3fr 2.1fr 0.6fr;
-  grid-template-areas: "logo-box" "topics-header" "list-display" "connection-status";
-  grid-area: navi-bar;
-  background-color: $new-bg-blue;
-  color: $base-font-color;
+.route-bar { 
+  grid-area: route-bar; 
+  background-color: $highlight-bar-color;
 }
 
 .logo-box { 
   grid-area: logo-box; 
   text-align: center;
   padding-top: 26px;
+  background-color: $new-bg-blue;
 }
 
 .lens-icon {
@@ -43,21 +38,40 @@
 
 .topics-header { 
   grid-area: topics-header; 
-  font-size: 32px;
-  padding-left: 29px;
+  font-size: 21px;
+  padding-left: 22px;
+  background-color: $new-bg-blue;
+  color: $off-white-color;
+}
+
+.partition-info { 
+  grid-area: partition-info; 
+  background-color: $second-bg-color; 
+}
+
+.message-info { 
+  grid-area: message-info; 
+  background-color: lighten($second-bg-color, 5%); 
 }
 
 .list-display { 
   grid-area: list-display; 
   overflow: auto;
-  padding-left: 44px;
   padding-top: 18px;
+  background-color: $new-bg-blue;
+  color: $base-font-color;
+}
+
+.message-box { 
+  grid-area: message-box; 
+  background-color: lighten($off-white-color, 20%);
 }
 
 .connection-status { 
   grid-area: connection-status; 
   text-align: center;
   padding-top: 15px;
+  background-color: $new-bg-blue;
 }
 
 .connection-header {
@@ -74,43 +88,13 @@
   color: $base-font-color;
 }
 
-.route-bar { 
-  grid-area: route-bar; 
-  background-color: $highlight-bar-color;
-  padding-bottom: 6px;
-}
+// DO NOT REMOVE (scroll bar style)
+// ::-webkit-scrollbar {     
+//   background-color: $new-bg-blue;
+//   width: .8em
+// }
 
-.more-info-box { 
-  grid-area: more-info-box; 
-  background-color: $second-bg-color; 
-}
-
-.message-box { 
-  grid-area: message-box; 
-}
-
-.health-box { 
-  grid-area: health-box; 
-  background-color: $highlight-bar-color;
-}
-
-.metrics-box { 
-  grid-area: metrics-box; 
-  background-color: $metrics-background-color;
-  text-align: center;
-}
-
-.metric-demo {
-  height: 100%;
-  width: 75%;
-}
-
-::-webkit-scrollbar {     
-  background-color: $new-bg-blue;
-  width: .8em
-}
-
-::-webkit-scrollbar-thumb:window-inactive,
-::-webkit-scrollbar-thumb {
-  background:  $base-font-color;
-}
+// ::-webkit-scrollbar-thumb:window-inactive,
+// ::-webkit-scrollbar-thumb {
+//   background:  $base-font-color;
+// }

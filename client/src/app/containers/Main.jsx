@@ -1,4 +1,6 @@
 import { ipcRenderer } from 'electron';
+import React from 'react';
+// const React = require('react');
 
 // import components here
 import ConnectionPage from './ConnectionPage.jsx';
@@ -6,8 +8,6 @@ import TopicPage from './TopicPage.jsx';
 
 import '../css/index.scss';
 import '../css/Main.scss';
-
-const React = require('react');
 
 class Main extends React.Component {
   constructor(props) {
@@ -29,7 +29,9 @@ class Main extends React.Component {
     // Listener will receive response from backend main process
     // If response is an error, display error to the user in connection page
     ipcRenderer.on('topic:getTopics', (e, data) => {
+
       this.setState({ isFetching: false });
+      
       if (data === 'Error') {
         this.setState({
           connected: false
@@ -37,13 +39,16 @@ class Main extends React.Component {
       } else {
         data.forEach(topic => {
           topic.showPartitions = false;
+        });
+
+        const filteredData = data.filter(el => {
+          return el.topic !== 'null' && el.topic !== '__consumer_offsets' && el.topic !== 'undefined'
         })
 
         this.setState({
-          topics: data,
+          topics: filteredData,
           connected: true
         });
-        console.log('logging topics data: ', data)
       }
     });
   }
@@ -56,19 +61,11 @@ class Main extends React.Component {
       isFetching: true
     });
 
-    let uri;
-    if (this.state.uri_input === 'a') {
-      uri = '157.230.166.35:9092';
-      ipcRenderer.send('topic:getTopics', uri);
-    } else if (this.state.uri_input === 's') {
-      uri = 'k2.tpw.made.industries:9092';
-      ipcRenderer.send('topic:getTopics', uri);
-    } else {
-      uri = this.state.uri_input;
-      ipcRenderer.send('topic:getTopics', uri);
-    }
-  }
+    let uri = this.state.uri_input;
 
+    ipcRenderer.send('topic:getTopics', uri);
+
+  }
   // This function is passed to the connectionPage
   updateURI(event) {
     const input = event.target.value;
@@ -80,7 +77,11 @@ class Main extends React.Component {
       <div className="main-div">
         {/* Conditionally renders either the ConnectionPage or TopicPage depending on connected in state */}
         {this.state.connected === true ? (
-          <TopicPage uri={this.state.uri_input} topicList={this.state.topics} isConnected={this.state.connected} />
+          <TopicPage
+            uri={this.state.uri_input}
+            topicList={this.state.topics}
+            isConnected={this.state.connected}
+          />
         ) : (
           <ConnectionPage
             validConnectionChecker={this.validConnectionChecker}

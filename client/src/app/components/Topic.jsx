@@ -1,7 +1,7 @@
 import React from 'react';
 import '../css/Topic.scss';
 
-import PartitionList from '../components/PartitionList.jsx';
+import PartitionList from './PartitionList.jsx';
 
 class Topic extends React.Component {
   constructor(props) {
@@ -9,30 +9,26 @@ class Topic extends React.Component {
     this.state = {
       topics: []
     };
-    //bind methods here
   }
 
   render() {
-
     return (
-
       <div className="topic-header">
-        <div id={this.props.id} onClick={this.props.showPartitions}> 
+        <div
+          className="topic-padding"
+          id={this.props.id}
+          topicname={this.props.topicInfo.topic}
+          onClick={this.props.showPartitions}
+        >
           {this.props.topicInfo.topic}
         </div>
-          {this.props.topicInfo.showPartitions === true ? <PartitionList showMessages={this.props.showMessages} topicInfo={this.props.topicInfo} /> : ""}
-
+        {this.props.topicInfo.showPartitions === true ? (
+          <PartitionList showMessages={this.props.showMessages} topicInfo={this.props.topicInfo} />
+        ) : (
+          ''
+        )}
       </div>
-      <button
-        className="view-button btn waves-effect waves-light"
-        id={props.id}
-        onClick={props.showPartitions}
-      >
-        View
-      </button>
-      <br />
-    </div>
-  );
-};
-
+    );
+  }
+}
 export default Topic;
