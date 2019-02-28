@@ -7,7 +7,7 @@ class Topic extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      topics: [],
+      topics: []
     };
   }
 
@@ -22,9 +22,13 @@ class Topic extends React.Component {
         >
           {this.props.topicInfo.topic}
         </div>
-          {this.props.topicInfo.showPartitions === true ? <PartitionList showMessages={this.props.showMessages} topicInfo={this.props.topicInfo} /> : ""}
+        {this.props.topicInfo.showPartitions === true ? (
+          <PartitionList showMessages={this.props.showMessages} topicInfo={this.props.topicInfo} />
+        ) : (
+          ''
+        )}
       </div>
-  );
-};
+    );
+  }
 }
 export default Topic;
