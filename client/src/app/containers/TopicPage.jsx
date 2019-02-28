@@ -158,22 +158,6 @@ class TopicPage extends React.Component {
 
     let displayUri = this.props.uri;
 
-    if (displayUri === 'a') {
-      displayUri = '157.230.166.35:9092';
-    }
-    if (displayUri === 's') {
-      displayUri = 'k2.tpw.made.industries:9092';
-    }
-
-    // LOADING MESSAGES INDICATOR ! DO NOT DELETE !
-    // let loadingMessages = (
-    //   <div class="spinner">
-    //     <div class="bounce1" />
-    //     <div class="bounce2" />
-    //     <div class="bounce3" />
-    //   </div>
-    // );
-
     return (
       <div className="grid-container">
         <div className="title-bar">Kafka Lens</div>
