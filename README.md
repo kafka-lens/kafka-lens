@@ -16,8 +16,8 @@ Follow these quick steps to launch the application.
 ```
 1. npm install
 2. npm run webpack
-3. cd into your 'kafka-lens' folder
-4. run this script in your command line: './node_modules/.bin/electron-rebuild'
+3. **cd** into your 'kafka-lens' folder
+4. **run** this script in your command line: **'./node_modules/.bin/electron-rebuild'**
 5. npm start
 ```
 
