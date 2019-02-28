@@ -10,54 +10,38 @@ exports[`TopicPage.js unit tests Should render without errors 1`] = `
     Kafka Lens
   </div>
   <div
-    className="navi-bar"
-  >
-    <div
-      className="logo-box"
-    >
-      <img
-        className="lens-icon"
-        src={
-          Object {
-            "process": [Function],
-          }
-        }
-      />
-    </div>
-    <div
-      className="topics-header"
-    >
-      Topics
-    </div>
-    <div
-      className="list-display"
-    />
-    <div
-      className="connection-status"
-    >
-      <div
-        className="connection-header"
-      >
-        <h5
-          className="disconnected-header"
-        >
-          Disconnected
-        </h5>
-      </div>
-      <div
-        className="connection-uri"
-      />
-    </div>
-  </div>
-  <div
     className="route-bar"
   >
     <RouteBar
       partitionNumber={-1}
+      showPartitionInfo={false}
     />
   </div>
   <div
-    className="more-info-box"
+    className="logo-box"
+  >
+    <img
+      className="lens-icon"
+      src={
+        Object {
+          "process": [Function],
+        }
+      }
+    />
+  </div>
+  <div
+    className="topics-header"
+  >
+    Topics
+  </div>
+  <div
+    className="partition-info"
+  />
+  <div
+    className="message-info"
+  />
+  <div
+    className="list-display"
   />
   <div
     className="message-box"
@@ -69,18 +53,15 @@ exports[`TopicPage.js unit tests Should render without errors 1`] = `
     />
   </div>
   <div
-    className="health-box"
-  />
-  <div
-    className="metrics-box"
+    className="connection-status"
   >
-    <img
-      className="metric-demo"
-      src={
-        Object {
-          "process": [Function],
-        }
-      }
+    <h5
+      className="disconnected-header"
+    >
+      Disconnected
+    </h5>
+    <div
+      className="connection-uri"
     />
   </div>
 </div>
