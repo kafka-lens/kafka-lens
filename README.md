@@ -1,24 +1,25 @@
 # Kafka Lens
 
-// Write readme info here.
+![](kl-g.gif)
 
-## 5 Steps for quick start up (this is in H2)
+## 5 Steps for a quick start up
 
-Follow these steps for quick start up (this is reg font)
-* This one has asterick
-* these should be bullet points
-* bullets?
+Follow these quick steps to launch the application.
 
 ```
 1. npm install
 2. npm run webpack
 3. npm run package-mac (for macs)
-⋅⋅* npm run package-win (for windows)
-⋅⋅* npm run package-linux (for linux)
+⋅⋅ npm run package-win (for windows)
+⋅⋅ npm run package-linux (for linux)
 4. double click 'Launch-application' folder
 5. Launch Kafka Lens!
 ```
 
-`single back tick`
+### Enter your Kafka host URI
 
-![](kl-g.gif)
+Enter a valid connection string then hit 'Connect' to connect to your Kafka server. Once you connect, you are ready to start consuming messages in real-time. 
+
+![](cp-rm.gif)
+
+
