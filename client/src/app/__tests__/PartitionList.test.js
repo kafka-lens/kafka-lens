@@ -15,7 +15,44 @@ describe('ParitionList unit tests', () => {
   });
 
   it('Should render without errors', () => {
-    expect(wrapper).toMatchInlineSnapshot();
+    expect(wrapper).toMatchInlineSnapshot(`
+<div
+  className="partition-list"
+>
+  <Partition
+    id={0}
+    key="0"
+  />
+  <Partition
+    id={1}
+    key="1"
+  />
+  <Partition
+    id={2}
+    key="2"
+  />
+  <Partition
+    id={3}
+    key="3"
+  />
+  <Partition
+    id={4}
+    key="4"
+  />
+  <Partition
+    id={5}
+    key="5"
+  />
+  <Partition
+    id={6}
+    key="6"
+  />
+  <Partition
+    id={7}
+    key="7"
+  />
+</div>
+`);
   });
 
   it('Should render a Partition component', () => {

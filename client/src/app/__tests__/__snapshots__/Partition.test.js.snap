@@ -3,8 +3,10 @@
 exports[`Parition.js unit tests Should render without errors 1`] = `
 <div
   className="single-partition"
-  id={1}
+  id="5"
+  onClick={[MockFunction]}
+  topicname="Test"
 >
-  Partition  1
+  Partition  5
 </div>
 `;

@@ -1,8 +1,8 @@
 {
   "name": "kafka-lens",
-  "version": "0.0.1",
+  "version": "0.0.9",
   "description": "A tool for visualizing a Kafka cluster's brokers, topics, partitions, and message flow.",
-  "main": "server/main.js",
+  "main": "main/main.js",
   "babel": {
     "presets": [
       "@babel/preset-env",
@@ -10,7 +10,7 @@
     ]
   },
   "jest": {
-    "verbose":true,
+    "verbose": true,
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ],
@@ -19,6 +19,7 @@
     ],
     "moduleNameMapper": {
       "\\.(css|less|scss)$": "<rootDir>/client/src/app/__mocks__/styleMock.js",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/client/src/app/__mocks__/assetsTransformer.js",
       "electron": "<rootDir>/client/src/app/__mocks__/electron.js"
     },
     "moduleDirectories": [
@@ -32,7 +33,12 @@
     "start": "electron .",
     "start:dev": "webpack-dev-server --open",
     "webpack": "webpack",
-    "test": "jest"
+    "test": "jest",
+    "package": "",
+    "build": "electron-packager . Kafka-Lens",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=Launch-application",
+    "package-win": "electron-packager . Kafka-Lens --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=Launch-application --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Kafka Lens\"",
+    "package-linux": "electron-packager . Kafka-Lens --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/icon.png --prune=true --out=Launch-application"
   },
   "repository": {
     "type": "git",
@@ -48,15 +54,13 @@
   },
   "homepage": "https://github.com/teampandawhale/kafka-lens#readme",
   "dependencies": {
-    "circular-buffer": "^1.0.2",
     "jest-css-modules-transform": "^2.1.1",
     "kafka-node": "^4.0.1",
     "node-rdkafka": "^2.5.1",
     "node-sass": "^4.11.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
-    "sass-loader": "^7.1.0",
-    "uuid": "^3.3.2"
+    "sass-loader": "^7.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -67,6 +71,7 @@
     "css-loader": "^2.1.0",
     "electron": "^4.0.4",
     "electron-builder": "^20.38.5",
+    "electron-packager": "^13.1.0",
     "electron-rebuild": "^1.8.4",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.9.1",
