@@ -29,7 +29,9 @@ class Main extends React.Component {
     // Listener will receive response from backend main process
     // If response is an error, display error to the user in connection page
     ipcRenderer.on('topic:getTopics', (e, data) => {
+
       this.setState({ isFetching: false });
+      
       if (data === 'Error') {
         this.setState({
           connected: false
@@ -39,11 +41,14 @@ class Main extends React.Component {
           topic.showPartitions = false;
         });
 
+        const filteredData = data.filter(el => {
+          return el.topic !== 'null' && el.topic !== '__consumer_offsets' && el.topic !== 'undefined'
+        })
+
         this.setState({
-          topics: data,
+          topics: filteredData,
           connected: true
         });
-        // console.log('logging topics data: ', data)
       }
     });
   }
