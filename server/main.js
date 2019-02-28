@@ -53,6 +53,9 @@ app.on('activate', () => {
 // * Add Chrome dev tools menu
 const addDevToolsToMenu = [
   {
+    label: ' '
+  },
+  {
     label: 'File',
     submenu: [
       {
@@ -61,21 +64,6 @@ const addDevToolsToMenu = [
         click() {
           app.quit();
         }
-      }
-    ]
-  },
-  {
-    label: 'Developer Tools',
-    submenu: [
-      {
-        label: 'Toggle DevTools',
-        accelerator: process.platform == 'darwin' ? 'Command+I' : 'Ctrl+I',
-        click(item, focusedWindow) {
-          focusedWindow.toggleDevTools();
-        }
-      },
-      {
-        role: 'reload'
       }
     ]
   }
