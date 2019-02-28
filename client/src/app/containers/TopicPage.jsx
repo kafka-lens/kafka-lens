@@ -5,6 +5,7 @@ import PartitionList from '../components/PartitionList.jsx';
 import RouteBar from '../components/RouteBar.jsx';
 import MessageInfo from '../components/MessageInfo.jsx';
 import MessageList from '../components/MessageList.jsx';
+import LoadingData from '../components/LoadingData.jsx';
 import circularBuffer from 'circular-buffer';
 
 import { ipcRenderer } from 'electron';
@@ -30,7 +31,8 @@ class TopicPage extends React.Component {
       lastElement: '',
       lastParentDiv: '',
       infoBoxData: {},
-      showPartitionInfo: false
+      showPartitionInfo: false,
+      loadingData: false
     };
 
     this.showPartitions = this.showPartitions.bind(this);
@@ -87,6 +89,7 @@ class TopicPage extends React.Component {
     }
     newState.buttonId = i;
     newState.topicInfo = topicInfo[i];
+    newState.loadingData = true;
 
     return this.setState(newState);
   }
@@ -172,7 +175,8 @@ class TopicPage extends React.Component {
         </div>
         <div className="topics-header">Topics</div>
         <div className="partition-info">
-          {this.state.showPartitionInfo === true && Object.keys(this.state.infoBoxData).length > 1 ? <PartitionInfo infoBoxData={this.state.infoBoxData} partitionNumber={this.state.partitionNumber} /> : ""}
+          {this.state.loadingData === true && this.state.messages.length === 0 ? <LoadingData /> : ""}
+          {this.state.showPartitionInfo === true && Object.keys(this.state.infoBoxData).length > 1 && this.state.messages.length > 0 ? <PartitionInfo infoBoxData={this.state.infoBoxData} partitionNumber={this.state.partitionNumber} /> : ""}
         </div>
         <div className="message-info">
         {this.state.showPartitionInfo === true && this.state.messages.length > 1 ? <MessageInfo lastMessage={this.state.messages[0]} /> : ""}
