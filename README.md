@@ -2,4 +2,4 @@
 
 // Write readme info here.
 
-![](kafka-lens3.mov)
+![](kafka-lens3.gif)
