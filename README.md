@@ -6,9 +6,7 @@ Kafka Lens provides a tool that lets you inspect a Kafka cluster in real-time, e
 
 ![](kl-g.gif)
 
-## 5 Steps for a quick start up
-
-Follow these quick steps to launch the application.
+## 5 Steps for a Quick Startup
 
 **Fork** and **Clone** Repository
 ```
