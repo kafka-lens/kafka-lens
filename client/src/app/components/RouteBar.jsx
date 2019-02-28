@@ -11,10 +11,8 @@ const RouteBar = props => {
       <h5 className="display-inline"> > &nbsp; &nbsp; {props.topicName} &nbsp; &nbsp; </h5>
     );
   }
-  if (props.partitionNumber !== -1) {
-    partitionNumber = (
-      <h5 className="display-inline"> > &nbsp; &nbsp; Partition {props.partitionNumber}</h5>
-    );
+  if (props.showPartitionInfo) {
+    partitionNumber = (<h5 className="display-inline">  > &nbsp; &nbsp; Partition {props.partitionNumber}</h5>);
   }
 
   return (
