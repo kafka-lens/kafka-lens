@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TopicPage.js unit tests Should render without errors 1`] = `
+<div
+  className="grid-container"
+>
+  <div
+    className="title-bar"
+  >
+    Kafka Lens
+  </div>
+  <div
+    className="route-bar"
+  >
+    <RouteBar
+      partitionNumber={-1}
+      showPartitionInfo={false}
+    />
+  </div>
+  <div
+    className="logo-box"
+  >
+    <img
+      className="lens-icon"
+      src={
+        Object {
+          "process": [Function],
+        }
+      }
+    />
+  </div>
+  <div
+    className="topics-header"
+  >
+    Topics
+  </div>
+  <div
+    className="partition-info"
+  />
+  <div
+    className="message-info"
+  />
+  <div
+    className="list-display"
+  />
+  <div
+    className="message-box"
+  >
+    <MessageList
+      messageArray={Array []}
+      partitionNumber={-1}
+      topicName=""
+    />
+  </div>
+  <div
+    className="connection-status"
+  >
+    <h5
+      className="disconnected-header"
+    >
+      Disconnected
+    </h5>
+    <div
+      className="connection-uri"
+    />
+  </div>
+</div>
+`;
