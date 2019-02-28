@@ -5,6 +5,7 @@ exports[`Topic.js unit tests Should render without errors 1`] = `
   className="topic-header"
 >
   <div
+    className="topic-padding"
     id={1}
     onClick={[MockFunction]}
     topicname="test1"
