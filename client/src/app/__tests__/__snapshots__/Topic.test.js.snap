@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Topic.js unit tests Should render without errors 1`] = `
+<div
+  className="topic-header"
+>
+  <div
+    id={1}
+    onClick={[MockFunction]}
+    topicname="test1"
+  >
+    test1
+  </div>
+</div>
+`;

@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Connection.js unit tests Renders without errors 1`] = `
+<div
+  className="connection-box"
+>
+  <div
+    className="connection-form container"
+  >
+    <form>
+      <div>
+        <label
+          id="label-instructions"
+        >
+          Enter Your Kafka Server URI
+        </label>
+        <input
+          id="uri-input"
+          onChange={[MockFunction]}
+          type="text"
+        />
+      </div>
+      <button
+        className="btn waves-effect waves-light"
+        id="connect-button"
+        onClick={[MockFunction]}
+        type="submit"
+      >
+        Connect
+      </button>
+    </form>
+  </div>
+  <div
+    className="loading-bars"
+  />
+</div>
+`;

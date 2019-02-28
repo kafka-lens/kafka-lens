@@ -1,13 +1,31 @@
+@import 'theme';
+
 .single-message {
-    margin-top: 4px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    padding-left: 8px;
+    padding-top: 7px;
+    padding-bottom: 11px;
+    padding-left: 48px;
     padding-right: 8px;
+    color: lighten(#544d4d, 10%);
+    border-bottom: 1px solid $message-border-color;
 }
 
 .single-message:hover {
     background-color: #f7ae4f;
     color: white;
     cursor: pointer;
+}
+
+.offset-indicator {
+    color: $off-white-color;
+    background-color: darken($highlight-bar-color, 10%);
+    float: right;
+    margin: 0px;
+    padding-left: 8px;
+    padding-right: 7px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+h6 {
+    margin: 0;
 }

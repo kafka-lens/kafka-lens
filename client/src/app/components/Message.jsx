@@ -2,11 +2,11 @@ import React from 'react';
 import '../css/Message.scss';
 
 const Message = props => {
-  console.log('logging props.message: ', props.message);
   return (
-    <div className="single-message">
-      {props.message}
-    </div>
+    <span>
+      
+      <div className="single-message">{props.message}<p className="offset-indicator">{props.offset}</p></div>
+    </span>
   );
 };
 
