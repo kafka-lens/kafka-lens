@@ -1,8 +1,7 @@
-
-# Kafka Lens
+![Kafka Lens Logo](kl-f-logo.png)
 Kafka Lens aims to give developers a tool to easily inspect a Kafka cluster in real-time to enable easier troubleshooting of cluster problems. Now you can easily test whether new services are functioning correctly by monitoring the messages as they are sent to your cluster without the need to inspect the cluster through the CLI.
 
-![alt text](kl-g.gif "Screen Capture")
+![Screen Capture](kl-g.gif)
 
 ## 5 Steps for a Quick Startup
 
