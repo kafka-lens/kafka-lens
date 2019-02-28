@@ -1,11 +1,9 @@
 import React from 'react';
 
-import '../css/Navigation.scss'
+import '../css/Navigation.scss';
 
 const Navigation = props => {
-  return (
-    <p><i>[- - kafka lens navigation bar - -]</i></p>
-  )
+  return <div>Kafka lens</div>;
 };
 
 export default Navigation;
