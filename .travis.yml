@@ -3,3 +3,4 @@ node_js:
   - '10.15.1'
 scripts:
   - 'npm install'
+  - 'npm test --detectOpenHandles'
