@@ -9,6 +9,7 @@ describe('Topic.js unit tests', () => {
     id: 1,
     showPartitions: jest.fn(),
     topicInfo: {
+      showPartitions: false,
       topic: 'test1',
       partition: 5
     }
@@ -23,9 +24,30 @@ describe('Topic.js unit tests', () => {
 
   it('Should call showPartitions on click', () => {
     wrapper
-      .find('button')
+      .find('div')
       .at(0)
+      .childAt(0)
       .simulate('click');
     expect(props.showPartitions).toHaveBeenCalled();
+  });
+
+  it('Should render a div with inner text "test1" ', () => {
+    expect(
+      wrapper
+        .find('div')
+        .at(0)
+        .text()
+    ).toEqual('test1');
+  });
+
+  it('Should render PartitionList when showMessages = true', () => {
+    wrapper.setProps({
+      topicInfo: {
+        showPartitions: true,
+        topic: 'test1',
+        partition: 5
+      }
+    });
+    expect(wrapper.exists('PartitionList')).toEqual(true);
   });
 });
