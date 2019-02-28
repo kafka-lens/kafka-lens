@@ -1,4 +1,4 @@
-import adminApi from './adminApi';
+import adminApi from '../adminApi';
 
 describe('adminApi unit tests', () => {
   const args = {

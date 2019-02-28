@@ -1,4 +1,6 @@
 import { ipcRenderer } from 'electron';
+import React from 'react';
+// const React = require('react');
 
 // import components here
 import ConnectionPage from './ConnectionPage.jsx';
@@ -6,8 +8,6 @@ import TopicPage from './TopicPage.jsx';
 
 import '../css/index.scss';
 import '../css/Main.scss';
-
-const React = require('react');
 
 class Main extends React.Component {
   constructor(props) {
@@ -39,7 +39,7 @@ class Main extends React.Component {
       } else {
         data.forEach(topic => {
           topic.showPartitions = false;
-        })
+        });
 
         const filteredData = data.filter(el => {
           return el.topic !== 'null' && el.topic !== '__consumer_offsets' && el.topic !== 'undefined'
@@ -85,7 +85,11 @@ class Main extends React.Component {
       <div className="main-div">
         {/* Conditionally renders either the ConnectionPage or TopicPage depending on connected in state */}
         {this.state.connected === true ? (
-          <TopicPage uri={this.state.uri_input} topicList={this.state.topics} isConnected={this.state.connected} />
+          <TopicPage
+            uri={this.state.uri_input}
+            topicList={this.state.topics}
+            isConnected={this.state.connected}
+          />
         ) : (
           <ConnectionPage
             validConnectionChecker={this.validConnectionChecker}

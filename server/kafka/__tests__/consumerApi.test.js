@@ -1,4 +1,4 @@
-import consumerApi from './consumerApi';
+import consumerApi from '../consumerApi';
 
 describe('Testing consumerApi', () => {
   const mainWindow = {

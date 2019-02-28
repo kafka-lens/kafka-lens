@@ -3,26 +3,10 @@ const kafka = require('kafka-node');
 const adminApi = {};
 
 /**
- *
- * @param {String} topic
- * @param {Number} partition
- * @param {Number} messages
- * !--- DEPRECATED ---!
- * Will receive from get topic data the parameters and will return an obj with topic, partition, and messages
- */
-function buildTopicObj(topic, partition, messages) {
-  return {
-    topic,
-    partition,
-    messages,
-  };
-}
-
-/**
  * @param {String} kafkaHost URI of Kafka broker(s)
  * @param {String} topic Single topic to lookup
  * @param {Number} partition Topic partition number. Defaults to 0
- * 
+ *
  * This function will return a promise which will resolve to the number of messages in a specific partition
  */
 adminApi.getCurrentMsgCount = (kafkaHost, topic, partition = 0) => {
@@ -44,7 +28,7 @@ adminApi.getCurrentMsgCount = (kafkaHost, topic, partition = 0) => {
  * @param {String} kafkaHost URI of Kafka broker(s)
  * @param {String} topic Single topic to lookup
  * @param {Number} partitions Number of partitions in a topic
- * 
+ *
  * This function will return a promise. Function will loop through the number of partitions in a topic getting the current message count for
  * each of the partitions. Resolves to the total number of messages in all partitions.
  */
@@ -70,7 +54,7 @@ adminApi.getTopicMsgCount = (kafkaHost, topic, partitions) => {
  * @param {String} kafkaHost URI of Kafka broker(s)
  * @param {String} topic Single topic to lookup
  * @param {partition} partition Partition number of topic
- * 
+ *
  * This function will return a promise. Fetches the earliest/lowest offset from Kafka broker.
  * Will resolve the number of the earliest offset in the topic partition.
  */
@@ -89,7 +73,7 @@ adminApi.getEarliestOffset = (kafkaHost, topic, partition) => {
  * @param {String} kafkaHost URI of Kafka broker(s)
  * @param {String} topic Single topic to lookup
  * @param {partition} partition Partition number of topic
- * 
+ *
  * This function will return a promise. Fetches the latest/highwater offset from Kafka broker.
  * Will resolve the number of the latest offset in the topic partition.
  */
@@ -132,7 +116,7 @@ adminApi.getTopicData = (kafkaHost, mainWindow) => {
       resultTopic.push({
         topic,
         partition: topicPartitions,
-        messages: adminApi.getTopicMsgCount(kafkaHost, topic, topicPartitions),
+        messages: adminApi.getTopicMsgCount(kafkaHost, topic, topicPartitions)
       });
     });
     Promise.all(resultTopic.map(x => x.messages)).then(() => {
@@ -153,7 +137,7 @@ adminApi.getTopicData = (kafkaHost, mainWindow) => {
  * @param {String} topic Single topic to lookup
  * @param {Number} partition Topic partition number. Defaults to 0
  * @param {Object} mainWindow Electron window to send resulting data to
- * 
+ *
  * This function returns data to the renderer process. Calls getLatestOffset and getCurrentMsgCount then sends back the result
  * as an object containing highwaterOffset and messageCount as properties.
  */
@@ -164,7 +148,7 @@ adminApi.getPartitionData = (kafkaHost, topic, partition = 0, mainWindow) => {
   const testData = [
     { partition: 1, broker: 'test.data:9092', currentOffset: 99999, msgCount: 99999 },
     { partition: 2, broker: 'test.data:9092', currentOffset: 99999, msgCount: 99999 },
-    { partition: 3, broker: 'test.data:9092', currentOffset: 99999, msgCount: 99999 },
+    { partition: 3, broker: 'test.data:9092', currentOffset: 99999, msgCount: 99999 }
   ];
   if (topic === 'asdf') return testData;
 
@@ -174,12 +158,12 @@ adminApi.getPartitionData = (kafkaHost, topic, partition = 0, mainWindow) => {
   // 2. Call getCurrentMsgCount to get current message count
   data[1] = adminApi.getCurrentMsgCount(kafkaHost, topic, partition);
   // 3. Maybe get current message in buffer (?????)
-  
+
   Promise.all(data)
     .then(result => {
       mainWindow.webContents.send('partition:getData', {
         highwaterOffset: result[0],
-        messageCount: result[1],
+        messageCount: result[1]
       });
     })
     .catch(err => console.error(err));
