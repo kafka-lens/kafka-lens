@@ -1,4 +1,4 @@
-# Kafka Lens
+![](K-rm-logo.gif)
 
 A real-time visualization tool for you Kafka cluster.
 
