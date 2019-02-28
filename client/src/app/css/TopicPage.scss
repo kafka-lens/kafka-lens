@@ -38,7 +38,7 @@
 
 .topics-header { 
   grid-area: topics-header; 
-  font-size: 32px;
+  font-size: 21px;
   padding-left: 22px;
   background-color: $new-bg-blue;
   color: $off-white-color;
@@ -51,7 +51,7 @@
 
 .message-info { 
   grid-area: message-info; 
-  background-color: $second-bg-color; 
+  background-color: lighten($second-bg-color, 5%); 
 }
 
 .list-display { 
@@ -64,6 +64,7 @@
 
 .message-box { 
   grid-area: message-box; 
+  background-color: lighten($off-white-color, 20%);
 }
 
 .connection-status { 
