@@ -1,11 +1,11 @@
 @import 'theme';
 
 .single-message {
-    padding-top: 22px;
-    padding-bottom: 30px;
+    padding-top: 7px;
+    padding-bottom: 11px;
     padding-left: 48px;
     padding-right: 8px;
-    color: darken($message-text-color, 20%);
+    color: lighten(#544d4d, 10%);
     border-bottom: 1px solid $message-border-color;
 }
 
@@ -20,11 +20,10 @@
     background-color: darken($highlight-bar-color, 10%);
     float: right;
     margin: 0px;
-    padding-left: 9px;
-    padding-right: 9px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    border-radius: 5px;
+    padding-left: 8px;
+    padding-right: 7px;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
 
 h6 {
