@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import Message from '../components/Message';
 
-describe('Message.js unit tests', () => {
+describe('Message.jsx unit tests', () => {
   let wrapper;
   const props = {
     offset: '5',
@@ -17,11 +17,11 @@ describe('Message.js unit tests', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('Should render a p tag with inner text', () => {
-    expect(wrapper.find('p').text()).toEqual('Test');
+  it('Should render a div tag with inner text', () => {
+    expect(wrapper.find('div').text()).toEqual('Test5');
   });
 
-  it('Should render an h6 tag with inner text', () => {
-    expect(wrapper.find('h6').text()).toEqual('5');
+  it('Should render a p tag with inner text', () => {
+    expect(wrapper.find('p').text()).toEqual('5');
   });
 });

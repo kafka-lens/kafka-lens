@@ -1,16 +1,17 @@
 import adminApi from '../adminApi';
 
-describe('adminApi unit tests', () => {
+xdescribe('adminApi unit tests', () => {
   const args = {
     kafkaHost: 'k2.tpw.made.industries:9092',
     topic: 'swipes',
-    partition: 0,
+    partition: 0
   };
   describe('Testing getEarliestOffset', () => {
-    it('Should return a number', () =>
+    it('Should return a number', () => {
       adminApi.getEarliestOffset(args.kafkaHost, args.topic, args.partition).then(num => {
         expect(typeof num).toEqual('number');
-      }));
+      });
+    });
   });
   describe('Testing getLatestOffset', () => {
     it('Should return a number', () =>
