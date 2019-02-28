@@ -53,9 +53,6 @@ app.on('activate', () => {
 // * Add Chrome dev tools menu
 const addDevToolsToMenu = [
   {
-    label: ' '
-  },
-  {
     label: 'File',
     submenu: [
       {
