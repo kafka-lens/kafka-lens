@@ -5,6 +5,7 @@ testFile.js
 Launch-application/
 .DS_Store
 .vscode/
+adminApi.test.js
 
 # Logs
 logs
