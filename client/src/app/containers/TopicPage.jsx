@@ -1,24 +1,20 @@
 import React from 'react';
 import Topic from '../components/Topic.jsx';
 import PartitionInfo from '../components/PartitionInfo.jsx';
-import PartitionList from '../components/PartitionList.jsx';
 import RouteBar from '../components/RouteBar.jsx';
 import MessageInfo from '../components/MessageInfo.jsx';
 import MessageList from '../components/MessageList.jsx';
 import LoadingData from '../components/LoadingData.jsx';
-import circularBuffer from 'circular-buffer';
 
 import { ipcRenderer } from 'electron';
 import '../css/TopicPage.scss';
 import '../css/PartitionList.scss';
 import lens_src from '../../../dist/images/lens-icon.png';
-import metric_demo from '../../../dist/images/metric-demo3.png';
 
 class TopicPage extends React.Component {
   constructor(props) {
     super(props);
-    this.buffer = new circularBuffer(100);
-    this.messagesToDisplay = new circularBuffer(100);
+
     this.state = {
       topics: [],
       topicInfo: {},

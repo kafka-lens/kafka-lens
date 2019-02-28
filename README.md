@@ -1,10 +1,14 @@
-![alt-text](kl-f-logo.png)
 
-# A visualization tool for your Kafka cluster
+# Kafka Lens
+Kafka Lens aims to give developers a tool to easily inspect a Kafka cluster in real-time to enable easier troubleshooting of cluster problems. Now you can easily test whether new services are functioning correctly by monitoring the messages as they are sent to your cluster without the need to inspect the cluster through the CLI.
 
-Kafka Lens provides a tool that lets you inspect a Kafka cluster in real-time, empowering you to troubleshoot issues in the cluster as they occur. Now you can easily test whether new services are functioning correctly by monitoring how messages are published to topics and paritions in your data pipeline without the need of a CLI or other costly solutions.
+![alt text](kl-g.gif "Screen Capture")
 
-![](kl-g.gif)
+## Download
+
+|![macOS](https://img.icons8.com/ios/2x/mac-os-filled.png "https://google.com")|![Windows](https://www.freeiconspng.com/minicovers/system-windows-icon-png-4.png "https://google.com")|![linux](https://www.freeiconspng.com/minicovers/linux-icon-4.png "Linux")|
+|:---:|:---:|:---:|
+|macOS|Windows|Linux|
 
 ## 5 Steps for a Quick Startup
 
@@ -22,3 +26,10 @@ Kafka Lens provides a tool that lets you inspect a Kafka cluster in real-time, e
 Enter the URI of your Kafka broker (e.g. kafka1.contoso.com:9092) then click 'Connect' to connect to your Kafka broker. Once you are connected, you are ready to start consuming messages in real-time. 
 
 ![](cp-rm.gif)
+
+## Authors
+[Harmon Huynh](https://github.com/iAmHarmon)
+
+[Howard Na](https://github.com/howardNa)
+
+[Jordan Betzer](https://github.com/jordanzobean)
