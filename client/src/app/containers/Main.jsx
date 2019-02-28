@@ -61,19 +61,11 @@ class Main extends React.Component {
       isFetching: true
     });
 
-    let uri;
-    if (this.state.uri_input === 'a') {
-      uri = '157.230.166.35:9092';
-      ipcRenderer.send('topic:getTopics', uri);
-    } else if (this.state.uri_input === 's') {
-      uri = 'k2.tpw.made.industries:9092';
-      ipcRenderer.send('topic:getTopics', uri);
-    } else {
-      uri = this.state.uri_input;
-      ipcRenderer.send('topic:getTopics', uri);
-    }
-  }
+    let uri = this.state.uri_input;
 
+    ipcRenderer.send('topic:getTopics', uri);
+
+  }
   // This function is passed to the connectionPage
   updateURI(event) {
     const input = event.target.value;
