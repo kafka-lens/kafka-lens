@@ -481,7 +481,7 @@ eval("exports = module.exports = __webpack_require__(/*! ../../../../node_module
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \".message-details {\\n  color: #dbe7eb;\\n  padding-left: 50px;\\n  padding-top: 36px; }\\n\\n.info-font-size {\\n  font-size: 16px; }\\n\\n.message-details h5 {\\n  font-size: 21px; }\\n\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./client/src/app/css/MessageInfo.scss?./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/lib/loader.js");
+eval("exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \".message-details {\\n  color: #dbe7eb;\\n  padding-left: 36px;\\n  padding-top: 36px; }\\n\\n.info-font-size {\\n  font-size: 16px; }\\n\\n.message-details h5 {\\n  font-size: 21px; }\\n\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./client/src/app/css/MessageInfo.scss?./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/lib/loader.js");
 
 /***/ }),
 
