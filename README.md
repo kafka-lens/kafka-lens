@@ -1,3 +1,4 @@
+
 # Kafka Lens
 Kafka Lens aims to give developers a tool to easily inspect a Kafka cluster in real-time to enable easier troubleshooting of cluster problems. Now you can easily test whether new services are functioning correctly by monitoring the messages as they are sent to your cluster without the need to inspect the cluster through the CLI.
 
@@ -9,9 +10,7 @@ Kafka Lens aims to give developers a tool to easily inspect a Kafka cluster in r
 |:---:|:---:|:---:|
 |macOS|Windows|Linux|
 
-## Building Your Own Version
-
-Follow these quick steps to launch the application.
+## 5 Steps for a Quick Startup
 
 **Fork** and **Clone** Repository
 ```
@@ -34,4 +33,3 @@ Enter the URI of your Kafka broker (e.g. kafka1.contoso.com:9092) then click 'Co
 [Howard Na](https://github.com/howardNa)
 
 [Jordan Betzer](https://github.com/jordanzobean)
-
