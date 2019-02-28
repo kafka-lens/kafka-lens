@@ -24,5 +24,3 @@ Follow these quick steps to launch the application.
 Enter the URI of your Kafka broker (e.g. kafka1.contoso.com:9092) then click 'Connect' to connect to your Kafka broker. Once you are connected, you are ready to start consuming messages in real-time. 
 
 ![](cp-rm.gif)
-
-
