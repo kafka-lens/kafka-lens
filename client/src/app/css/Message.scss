@@ -6,13 +6,15 @@
     padding-left: 48px;
     padding-right: 8px;
     color: lighten(#544d4d, 10%);
-    border-bottom: 1px solid $message-border-color;
+    border-bottom: 1px solid lighten($message-border-color, 2%);
 }
 
 .single-message:hover {
     background-color: #f7ae4f;
     color: white;
     cursor: pointer;
+    box-shadow: 0 0 50px rgba(33,33,33,.2); 
+    border-bottom: 1px solid $message-border-color;
 }
 
 .offset-indicator {
