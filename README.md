@@ -4,6 +4,7 @@
 ![David](https://img.shields.io/david/dev/kafka-lens/kafka-lens.svg)
 ![GitHub repo size in bytes](https://img.shields.io/github/repo-size/kafka-lens/kafka-lens.svg)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/kafka-lens/kafka-lens.svg)
+![Maintenance](https://img.shields.io/maintenance/yes/2019.svg)
 
 ### A visuailization tool for your Kafka cluster
 
