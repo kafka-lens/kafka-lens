@@ -1,5 +1,10 @@
 ![Kafka Lens Logo](kl-f-logo.png)
 
+[![Build Status](https://travis-ci.com/kafka-lens/kafka-lens.svg?branch=master)](https://travis-ci.com/kafka-lens/kafka-lens)
+![David](https://img.shields.io/david/dev/kafka-lens/kafka-lens.svg)
+![GitHub repo size in bytes](https://img.shields.io/github/repo-size/kafka-lens/kafka-lens.svg)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/kafka-lens/kafka-lens.svg)
+
 ### A visuailization tool for your Kafka cluster
 
 Kafka Lens provides a tool that lets you inspect a Kafka cluster in real-time and allows developers a way to easily troubleshoot issues in the cluster as they occur. Now you can quickly test whether new services are functioning correctly by monitoring how messages are published to Kafka topics and partitions without a CLI or other costly solutions.
