@@ -63,15 +63,6 @@ class TopicPage extends React.Component {
       topicInfo[i].showPartitions = true;
     }
 
-    let uri = this.props.uri;
-    // Below code is for quick testing startup
-    if (uri === 'a') {
-      uri = '157.230.166.35:9092';
-    }
-    if (uri === 's') {
-      uri = 'k2.tpw.made.industries:9092';
-    }
-
     ipcRenderer.send('partition:getMessages', {
       host: uri,
       topic: topicName
@@ -98,13 +89,6 @@ class TopicPage extends React.Component {
     let lastElement = this.state.lastElement;
 
     let uri = this.props.uri;
-    // Below code is for quick testing startup
-    if (uri === 'a') {
-      uri = '157.230.166.35:9092';
-    }
-    if (uri === 's') {
-      uri = 'k2.tpw.made.industries:9092';
-    }
 
     if (lastElement !== element) {
       if (lastElement !== '') {
