@@ -63,6 +63,8 @@ class TopicPage extends React.Component {
       topicInfo[i].showPartitions = true;
     }
 
+    let uri = this.props.uri;
+    
     ipcRenderer.send('partition:getMessages', {
       host: uri,
       topic: topicName
