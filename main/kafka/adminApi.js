@@ -44,7 +44,7 @@ adminApi.getTopicMsgCount = (kafkaHost, topic, partitions) => {
     // Resolve promise when promise all resolves all promises from array sending back a single number
     Promise.all(results)
       .then(counts => {
-        resolve(counts.reduce((total, curr) => (total += curr)));
+        resolve(counts.reduce((total, curr) => (total += curr), 0));
       })
       .catch(err => reject(err));
   });
