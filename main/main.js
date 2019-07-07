@@ -61,6 +61,12 @@ const addDevToolsToMenu = [
         click() {
           app.quit();
         }
+      },
+      {
+        label: 'DevTools',
+        click() {
+          mainWindow.webContents.openDevTools();
+        }
       }
     ]
   }

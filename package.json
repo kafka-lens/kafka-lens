@@ -30,7 +30,7 @@
     ]
   },
   "scripts": {
-    "start": "electron .",
+    "start": "electron . --inspect=5858",
     "start:dev": "webpack-dev-server --open",
     "webpack": "webpack",
     "test": "jest",

@@ -3,7 +3,7 @@ const rdkafka = require('node-rdkafka');
 const MessageBuffer = require('./MessageBuffer');
 
 // const client = new kafka.KafkaClient({ kafkaHost: '157.230.166.35:9092' });
-// const consumer = new kafka.Consumer(client, [{ topic: 'test1' }]);
+//const Consumer = new kafka.Consumer;
 let testStream;
 
 // Not in use
@@ -23,24 +23,34 @@ const getMessagesFromTopic = async (kafkaHost, topic, mainWindow) => {
   const buffer = new MessageBuffer(1000);
   let hasData = false;
   let lastChecked = Date.now();
-  const consumer = new rdkafka.KafkaConsumer({
-    'group.id': 'kafkalens',
-    'metadata.broker.list': kafkaHost,
-  });
-  consumer.connect();
-  consumer
+  console.log('consumerAPI getMessagesFromTopic "topic":', topic)
+  // const consumer = new rdkafka.KafkaConsumer({
+  //   'group.id': 'kafkalens',
+  //   'metadata.broker.list': kafkaHost,
+  // });
+  let consumerGroup = new kafka.ConsumerGroup(
+    {
+      kafkaHost: kafkaHost,
+      groupId: 'testingLab',
+      fromOffset: 'earliest'
+    },
+    topic
+  );
+  consumerGroup.connect();
+  consumerGroup
     .on('ready', () => {
-      consumer.subscribe([topic]);
-      setInterval(() => {
-        consumer.consume(25);
-      }, 1500);
+
+      // consumer.subscribe([topic]);
+      // setInterval(() => {
+      //   consumer.consume(25);
+      // }, 1500);
     })
-    .on('data', data => {
-      data.value = data.value.toString('utf8');
-      // console.log('message', data);
+    .on('message', message => {
+      message.value = message.value.toString('utf8');
+      console.log('message', message);
       // mainWindow.webContents.send('partition:getMessages', data);
       hasData = Date.now();
-      buffer.queue(data);
+      buffer.queue(message);
     });
   const sendBuffer = setInterval(() => {
     if (lastChecked < hasData) {
