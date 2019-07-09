@@ -106,9 +106,9 @@ ipcMain.on('partition:stopMessages', (e, args) => {
 
 ipcMain.on('partition:getData', (e, args) => {
   const results = [];
-  results[0] = adminApi.getLatestOffset(args.kafkaHost, args.topic, args.partition);
-  results[1] = adminApi.getEarliestOffset(args.kafkaHost, args.topic, args.partition);
-  results[2] = adminApi.getCurrentMsgCount(args.kafkaHost, args.topic, args.partition);
+  results[0] = adminApi.getLatestOffset(args.kafkaHostURI, args.topic, args.partition);
+  results[1] = adminApi.getEarliestOffset(args.kafkaHostURI, args.topic, args.partition);
+  results[2] = adminApi.getPartitionMsgCount(args.kafkaHostURI, args.topic, args.partition);
 
   Promise.all(results).then(result => {
     const data = {
