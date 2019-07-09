@@ -2,14 +2,14 @@ const kafka = require('kafka-node');
 const rdkafka = require('node-rdkafka');
 const MessageBuffer = require('./MessageBuffer');
 
-// const client = new kafka.KafkaClient({ kafkaHost: '157.230.166.35:9092' });
+// const client = new kafka.KafkaClient({ kafkaHostURI: '157.230.166.35:9092' });
 //const Consumer = new kafka.Consumer;
 let testStream;
 
 // Not in use
-const getLatestOffset = (kafkaHost, topic, partition) =>
+const getLatestOffset = (kafkaHostURI, topic, partition) =>
   new Promise((resolve, reject) => {
-    const client = new kafka.KafkaClient({ kafkaHost });
+    const client = new kafka.KafkaClient({ kafkaHostURI });
     const offset = new kafka.Offset(client);
     offset.fetchLatestOffsets([{ topic, partition }], (err, data) => {
       if (err) reject(err);
@@ -18,7 +18,7 @@ const getLatestOffset = (kafkaHost, topic, partition) =>
     });
   });
 
-const getMessagesFromTopic = async (kafkaHost, topic, mainWindow) => {
+const getMessagesFromTopic = async (kafkaHostURI, topic, mainWindow) => {
   // Send back test data
   const buffer = new MessageBuffer(1000);
   let hasData = false;
@@ -26,11 +26,11 @@ const getMessagesFromTopic = async (kafkaHost, topic, mainWindow) => {
   console.log('consumerAPI getMessagesFromTopic "topic":', topic)
   // const consumer = new rdkafka.KafkaConsumer({
   //   'group.id': 'kafkalens',
-  //   'metadata.broker.list': kafkaHost,
+  //   'metadata.broker.list': kafkaHostURI,
   // });
   let consumerGroup = new kafka.ConsumerGroup(
     {
-      kafkaHost: kafkaHost,
+      kafkaHostURI: kafkaHostURI,
       groupId: 'testingLab1',
       fromOffset: 'earliest',
       outOfRangeOffset: 'earliest'

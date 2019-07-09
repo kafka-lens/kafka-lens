@@ -9,7 +9,7 @@ import LoadingData from '../components/LoadingData.jsx';
 import { ipcRenderer } from 'electron';
 import '../css/TopicPage.scss';
 import '../css/PartitionList.scss';
-import lens_src from '../../../dist/images/lens-icon.png';
+import lens_src from '../../../../assets/images/lens-icon.png';
 
 class TopicPage extends React.Component {
   constructor(props) {
@@ -98,7 +98,7 @@ class TopicPage extends React.Component {
       }
 
       ipcRenderer.send('partition:getData', {
-        kafkaHost: uri,
+        kafkaHostURI: uri,
         partition: partitionNumber,
         topic: topicName
       });
