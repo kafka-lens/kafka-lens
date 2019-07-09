@@ -66,7 +66,7 @@ adminApi.getEarliestOffset = (kafkaHost, topic, partition) => {
     offset.fetchEarliestOffsets([topic], (err, data) => {
       if (err) reject(err);
       else{
-        console.log('earliet offset data:', data)
+        //console.log('earliet offset data:', data)
         resolve(data[topic][partition]);
       }
     });
@@ -89,7 +89,7 @@ adminApi.getLatestOffset = (kafkaHost, topic, partition) => {
     offset.fetchLatestOffsets([topic], (err, data) => {
       if (err) reject(err);
       else {
-        console.log('latest offset data:', data)
+        //console.log('latest offset data:', data)
         resolve(data[topic][partition]);
       }
     });
@@ -116,15 +116,17 @@ adminApi.getTopicData = (kafkaHost, mainWindow) => {
   admin.listTopics((err, topics) => {
     if (err) console.error(err);
     // Reassign topics with only the object containing the topic data
+    console.log('Result of admin.listTopics API call:', topics)
     topics = topics[1].metadata;
     isRunning = true;
     Object.keys(topics).forEach(topic => {
       // for each topic, get # of partitions and storing that in topic partitions
       const topicPartitions = Object.keys(topics[topic]).length;
+      console.log('Topic Info:', topics[topic])
       resultTopic.push({
         topic,
         partition: topicPartitions,
-        messages: adminApi.getTopicMsgCount(kafkaHost, topic, topicPartitions)
+        messages: adminApi.getTopicMsgCount(kafkaHost, topic, topicPartitions),
       });
     });
     Promise.all(resultTopic.map(x => x.messages)).then(() => {
