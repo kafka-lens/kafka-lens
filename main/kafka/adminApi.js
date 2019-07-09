@@ -68,7 +68,7 @@ adminApi.getEarliestOffset = (kafkaHostURI, topicName, partitionId) => {
     offset.fetchEarliestOffsets([topicName], (err, data) => {
       if (err) reject(err);
       else{
-        console.log('earliet offset data:', data)
+        // console.log('earliet offset data:', data);
         resolve(data[topicName][partitionId]);
       }
     });
@@ -91,7 +91,7 @@ adminApi.getLatestOffset = (kafkaHostURI, topicName, partitionId) => {
     offset.fetchLatestOffsets([topicName], (err, data) => {
       if (err) reject(err);
       else {
-        console.log('latest offset data:', data)
+        // console.log('latest offset data:', data);
         resolve(data[topicName][partitionId]);
       }
     });
@@ -118,9 +118,9 @@ adminApi.getTopicData = (kafkaHostURI, mainWindow) => {
   admin.listTopics((err, data) => {
     if (err) console.error(err);  // TODO: Handle listTopics error properly
     // Reassign topics with only the object containing the topic data
-    console.log('data response from server:', data)
+    console.log('Result of admin.listTopics API call:', data)
     topicsMetadata = data[1].metadata;
-    console.log('topics metadata:', topicsMetadata)
+    console.log('topicsMetadata:', topicsMetadata)
 
     isRunning = true;
 
