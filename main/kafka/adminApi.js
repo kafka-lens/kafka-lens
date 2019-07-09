@@ -27,17 +27,17 @@ adminApi.getCurrentMsgCount = (kafkaHost, topic, partition = 0) => {
 /**
  * @param {String} kafkaHost URI of Kafka broker(s)
  * @param {String} topic Single topic to lookup
- * @param {Number} partitions Number of partitions in a topic
+ * @param {Number} numberOfPartitions Number of partitions in a topic
  *
  * This function will return a promise. Function will loop through the number of partitions in a topic getting the current message count for
  * each of the partitions. Resolves to the total number of messages in all partitions.
  */
-adminApi.getTopicMsgCount = (kafkaHost, topic, partitions) => {
+adminApi.getTopicMsgCount = (kafkaHost, topic, numberOfPartitions) => {
   const results = [];
   // Return a new promise
   return new Promise((resolve, reject) => {
     // Create for loop with limit of n-partition iterations
-    for (let i = 0; i < partitions; i += 1) {
+    for (let i = 0; i < numberOfPartitions; i += 1) {
       // Push a promise from call to getCurrentMsgCount with the arguments of host, topic, and ith-partition number into array
       results.push(adminApi.getCurrentMsgCount(kafkaHost, topic, i));
     }
@@ -59,16 +59,12 @@ adminApi.getTopicMsgCount = (kafkaHost, topic, partitions) => {
  * Will resolve the number of the earliest offset in the topic partition.
  */
 adminApi.getEarliestOffset = (kafkaHost, topic, partition) => {
-  console.log('Inside adminApi.getEarlistOffset');
   const client = new kafka.KafkaClient({ kafkaHost });
   const offset = new kafka.Offset(client);
   return new Promise((resolve, reject) => {
     offset.fetchEarliestOffsets([topic], (err, data) => {
       if (err) reject(err);
-      else{
-        //console.log('earliet offset data:', data)
-        resolve(data[topic][partition]);
-      }
+      else resolve(data[topic][partition]);
     });
   });
 };
@@ -82,16 +78,12 @@ adminApi.getEarliestOffset = (kafkaHost, topic, partition) => {
  * Will resolve the number of the latest offset in the topic partition.
  */
 adminApi.getLatestOffset = (kafkaHost, topic, partition) => {
-  console.log('Inside adminApi.getLatestOffset');
   const client = new kafka.KafkaClient({ kafkaHost });
   const offset = new kafka.Offset(client);
   return new Promise((resolve, reject) => {
     offset.fetchLatestOffsets([topic], (err, data) => {
       if (err) reject(err);
-      else {
-        //console.log('latest offset data:', data)
-        resolve(data[topic][partition]);
-      }
+      else resolve(data[topic][partition]);
     });
   });
 };
@@ -113,20 +105,21 @@ adminApi.getTopicData = (kafkaHost, mainWindow) => {
   console.log(kafkaHost);
 
   // Fetch all topics from the Kafka broker
-  admin.listTopics((err, topics) => {
-    if (err) console.error(err);
+  admin.listTopics((err, data) => {
+    if (err) console.error(err);  // TODO: Handle listTopics error properly
     // Reassign topics with only the object containing the topic data
-    console.log('Result of admin.listTopics API call:', topics)
-    topics = topics[1].metadata;
+    console.log('data response from server:', data)
+    topicsMetadata = data[1].metadata;
+    console.log('topics metadata:', topicsMetadata)
+
     isRunning = true;
-    Object.keys(topics).forEach(topic => {
+    Object.entries(topicsMetadata).forEach(([topicName, topic]) => {
       // for each topic, get # of partitions and storing that in topic partitions
-      const topicPartitions = Object.keys(topics[topic]).length;
-      console.log('Topic Info:', topics[topic])
+      const numberOfPartitions = Object.keys(topic).length;
       resultTopic.push({
-        topic,
-        partition: topicPartitions,
-        messages: adminApi.getTopicMsgCount(kafkaHost, topic, topicPartitions),
+        topic: topicName,
+        partition: numberOfPartitions,
+        messages: adminApi.getTopicMsgCount(kafkaHost, topicName, numberOfPartitions)
       });
     });
     Promise.all(resultTopic.map(x => x.messages)).then(() => {
