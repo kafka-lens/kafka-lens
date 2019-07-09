@@ -98,7 +98,7 @@ class TopicPage extends React.Component {
       }
 
       ipcRenderer.send('partition:getData', {
-        kafkaHost: uri,
+        kafkaHostURI: uri,
         partition: partitionNumber,
         topic: topicName
       });
