@@ -31,24 +31,25 @@ const getMessagesFromTopic = async (kafkaHost, topic, mainWindow) => {
   let consumerGroup = new kafka.ConsumerGroup(
     {
       kafkaHost: kafkaHost,
-      groupId: 'testingLab',
-      fromOffset: 'earliest'
+      groupId: 'testingLab1',
+      fromOffset: 'earliest',
+      outOfRangeOffset: 'earliest'
     },
     topic
   );
   consumerGroup.connect();
   consumerGroup
-    .on('ready', () => {
-
-      // consumer.subscribe([topic]);
-      // setInterval(() => {
-      //   consumer.consume(25);
-      // }, 1500);
-    })
+    // .on('ready', () => {
+    //   consumerGroup.subscribe([topic]);
+    //   setInterval(() => {
+    //     consumerGroup.consume(25);
+    //   }, 1500);
+    //   consumerGroup.consume();
+    // })
     .on('message', message => {
       message.value = message.value.toString('utf8');
       console.log('message', message);
-      // mainWindow.webContents.send('partition:getMessages', data);
+      //mainWindow.webContents.send('partition:getMessages', message);
       hasData = Date.now();
       buffer.queue(message);
     });
@@ -58,7 +59,7 @@ const getMessagesFromTopic = async (kafkaHost, topic, mainWindow) => {
       buffer.getNextSegment(mainWindow);
     }
   }, 50);
-  return { consumer, sendBuffer };
+  return { consumerGroup, sendBuffer };
 };
 
 const stopDataFlow = () => {

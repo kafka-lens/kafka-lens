@@ -59,12 +59,16 @@ adminApi.getTopicMsgCount = (kafkaHost, topic, numberOfPartitions) => {
  * Will resolve the number of the earliest offset in the topic partition.
  */
 adminApi.getEarliestOffset = (kafkaHost, topic, partition) => {
+  console.log('Inside adminApi.getEarlistOffset');
   const client = new kafka.KafkaClient({ kafkaHost });
   const offset = new kafka.Offset(client);
   return new Promise((resolve, reject) => {
     offset.fetchEarliestOffsets([topic], (err, data) => {
       if (err) reject(err);
-      else resolve(data[topic][partition]);
+      else{
+        console.log('earliet offset data:', data)
+        resolve(data[topic][partition]);
+      }
     });
   });
 };
@@ -78,12 +82,16 @@ adminApi.getEarliestOffset = (kafkaHost, topic, partition) => {
  * Will resolve the number of the latest offset in the topic partition.
  */
 adminApi.getLatestOffset = (kafkaHost, topic, partition) => {
+  console.log('Inside adminApi.getLatestOffset');
   const client = new kafka.KafkaClient({ kafkaHost });
   const offset = new kafka.Offset(client);
   return new Promise((resolve, reject) => {
     offset.fetchLatestOffsets([topic], (err, data) => {
       if (err) reject(err);
-      else resolve(data[topic][partition]);
+      else {
+        console.log('latest offset data:', data)
+        resolve(data[topic][partition]);
+      }
     });
   });
 };
