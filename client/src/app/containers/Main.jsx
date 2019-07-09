@@ -3,7 +3,7 @@ import React from 'react';
 // const React = require('react');
 
 // import components here
-import ConnectionPage from './ConnectionPage.jsx';
+import ConnectionPage from '../components/ConnectionPage.jsx';
 import TopicPage from './TopicPage.jsx';
 
 import '../css/index.scss';
