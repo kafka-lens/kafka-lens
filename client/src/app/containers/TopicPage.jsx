@@ -23,7 +23,6 @@ class TopicPage extends React.Component {
       messages: [],
       hover: false,
       partitionId: '',
-      partitionNumber: -1,
       lastElement: '',
       lastParentDiv: '',
       infoBoxData: {},
@@ -67,7 +66,7 @@ class TopicPage extends React.Component {
     
     ipcRenderer.send('partition:getMessages', {
       host: uri,
-      topic: topicName
+      topicName,
     });
 
     let newState = this.state;
@@ -84,13 +83,12 @@ class TopicPage extends React.Component {
 
   showMessages(event) {
     const topicName = event.target.getAttribute('topicname');
-    const partitionNumber = parseInt(event.target.id);
-    const partitionId = topicName + partitionNumber;
+    const partitionId = parseInt(event.target.id);
 
     let element = event.target;
     let lastElement = this.state.lastElement;
 
-    let uri = this.props.uri;
+    let kafkaHostURI = this.props.uri;
 
     if (lastElement !== element) {
       if (lastElement !== '') {
@@ -98,9 +96,9 @@ class TopicPage extends React.Component {
       }
 
       ipcRenderer.send('partition:getData', {
-        kafkaHostURI: uri,
-        partition: partitionNumber,
-        topic: topicName
+        kafkaHostURI,
+        partitionId,
+        topicName,
       });
       this.setState({
         lastElement: element
@@ -109,11 +107,10 @@ class TopicPage extends React.Component {
       element.classList.add('highlight-this');
     }
 
-    if (partitionId !== this.state.partitionId) {
+    if (partitionId !== this.state.partitionId || topicName !== this.state.topicName) {
       this.setState({
         messages: [],
         topicName: topicName,
-        partitionNumber: partitionNumber,
         partitionId: partitionId,
         showPartitionInfo: true
       });
@@ -144,10 +141,11 @@ class TopicPage extends React.Component {
       <div className="grid-container">
         <div className="title-bar">Kafka Lens</div>
         <div className="route-bar">
+          {console.log('topicInfo:', this.state.topicInfo)}
           <RouteBar
-            topicName={this.state.topicInfo.topic}
+            partitionId={this.state.partitionId}
+            topicName={this.state.topicInfo.topicName}
             showPartitionInfo={this.state.showPartitionInfo}
-            partitionNumber={this.state.partitionNumber}
           />
         </div>
         <div className="logo-box">
@@ -165,12 +163,12 @@ class TopicPage extends React.Component {
           this.state.messages.length > 0 ? (
             <PartitionInfo
               infoBoxData={this.state.infoBoxData}
-              partitionNumber={this.state.partitionNumber}
             />
           ) : (
             ''
           )}
         </div>
+        {console.log('this.state.messages:', this.state.messages)}
         <div className="message-info">
           {this.state.showPartitionInfo === true && this.state.messages.length > 1 ? (
             <MessageInfo lastMessage={this.state.messages[0]} />
@@ -181,7 +179,6 @@ class TopicPage extends React.Component {
         <div className="list-display">{Topics}</div>
         <div className="message-box">
           <MessageList
-            partitionNumber={this.state.partitionNumber}
             topicName={this.state.topicName}
             messageArray={this.state.messages}
           />

@@ -1,33 +1,16 @@
 const kafka = require('kafka-node');
-const rdkafka = require('node-rdkafka');
 const MessageBuffer = require('./MessageBuffer');
 
 // const client = new kafka.KafkaClient({ kafkaHostURI: '157.230.166.35:9092' });
 //const Consumer = new kafka.Consumer;
 let testStream;
 
-// Not in use
-const getLatestOffset = (kafkaHostURI, topic, partition) =>
-  new Promise((resolve, reject) => {
-    const client = new kafka.KafkaClient({ kafkaHostURI });
-    const offset = new kafka.Offset(client);
-    offset.fetchLatestOffsets([{ topic, partition }], (err, data) => {
-      if (err) reject(err);
-      console.log('result from latest offset in consumer: ', data);
-      resolve(data);
-    });
-  });
-
-const getMessagesFromTopic = async (kafkaHostURI, topic, mainWindow) => {
+const getMessagesFromTopic = async (kafkaHostURI, topicName, mainWindow) => {
   // Send back test data
   const buffer = new MessageBuffer(1000);
   let hasData = false;
   let lastChecked = Date.now();
-  console.log('consumerAPI getMessagesFromTopic "topic":', topic)
-  // const consumer = new rdkafka.KafkaConsumer({
-  //   'group.id': 'kafkalens',
-  //   'metadata.broker.list': kafkaHostURI,
-  // });
+  console.log('consumerAPI getMessagesFromTopic "topicName":', topicName)
   let consumerGroup = new kafka.ConsumerGroup(
     {
       kafkaHostURI: kafkaHostURI,
@@ -35,23 +18,23 @@ const getMessagesFromTopic = async (kafkaHostURI, topic, mainWindow) => {
       fromOffset: 'earliest',
       outOfRangeOffset: 'earliest'
     },
-    topic
+    topicName
   );
   consumerGroup.connect();
   consumerGroup
-    // .on('ready', () => {
-    //   consumerGroup.subscribe([topic]);
-    //   setInterval(() => {
-    //     consumerGroup.consume(25);
-    //   }, 1500);
-    //   consumerGroup.consume();
-    // })
     .on('message', message => {
-      message.value = message.value.toString('utf8');
-      console.log('message', message);
-      //mainWindow.webContents.send('partition:getMessages', message);
+      const formatedMessage = {
+        value: message.value.toString('utf8'),
+        topicName: message.topic,
+        partitionId: message.partition,
+        key: message.key,
+        offset: message.offset,
+        timestamp: message.timestamp,
+      }
+      console.log('message:', message);
+      console.log('formatedMessage:', formatedMessage);
       hasData = Date.now();
-      buffer.queue(message);
+      buffer.queue(formatedMessage);
     });
   const sendBuffer = setInterval(() => {
     if (lastChecked < hasData) {
@@ -66,4 +49,4 @@ const stopDataFlow = () => {
   clearInterval(testStream);
 };
 
-module.exports = { getMessagesFromTopic, stopDataFlow, getLatestOffset };
+module.exports = { getMessagesFromTopic, stopDataFlow };
