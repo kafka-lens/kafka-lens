@@ -7,7 +7,7 @@ describe('ParitionList unit tests', () => {
   let wrapper;
   const props = {
     topicInfo: {
-      partition: 8
+      numberOfPartitions: 8
     }
   };
   beforeAll(() => {
