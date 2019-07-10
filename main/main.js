@@ -97,18 +97,18 @@ ipcMain.on('partition:getTestMessages', (e, args) => {
  */
 ipcMain.on('partition:getMessages', (e, args) => {
   console.log('get msg request received', args);
-  consumers[args.topic] = consumerApi.getMessagesFromTopic(args.host, args.topic, mainWindow);
+  consumers[args.topicName] = consumerApi.getMessagesFromTopic(args.host, args.topicName, mainWindow);
 });
 
 ipcMain.on('partition:stopMessages', (e, args) => {
-  consumers[args.topic].disconnect();
+  consumers[args.topicName].disconnect();
 });
 
 ipcMain.on('partition:getData', (e, args) => {
   const results = [];
-  results[0] = adminApi.getLatestOffset(args.kafkaHostURI, args.topic, args.partition);
-  results[1] = adminApi.getEarliestOffset(args.kafkaHostURI, args.topic, args.partition);
-  results[2] = adminApi.getPartitionMsgCount(args.kafkaHostURI, args.topic, args.partition);
+  results[0] = adminApi.getLatestOffset(args.kafkaHostURI, args.topicName, args.partitionId);
+  results[1] = adminApi.getEarliestOffset(args.kafkaHostURI, args.topicName, args.partitionId);
+  results[2] = adminApi.getPartitionMsgCount(args.kafkaHostURI, args.topicName, args.partitionId);
 
   Promise.all(results).then(result => {
     const data = {
