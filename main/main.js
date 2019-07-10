@@ -5,6 +5,7 @@ const url = require('url');
 const adminApi = require('./kafka/adminApi');
 const offsetApi = require('./kafka/offsetApi');
 const consumerApi = require('./kafka/consumerApi');
+const brokerApi = require('./kafka/brokerApi');
 
 // * Disable error dialogs by overriding
 // * FIX: https://goo.gl/YsDdsS
@@ -112,3 +113,8 @@ ipcMain.on('partition:getData', (e, args) => {
     mainWindow.webContents.send('partition:getData', data);
   });
 });
+
+ipcMain.on('broker:getBrokers', (e, args) => {
+  console.log('broker:getBrokers received in main.js args:', args);
+  brokerApi.getBrokerData(args.kafkaHostURI, mainWindow);
+})

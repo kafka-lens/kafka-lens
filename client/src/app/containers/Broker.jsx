@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { ipcRenderer } from 'electron';
+
 import BrokerView from '../components/BrokerView.jsx';
 
 class Broker extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      kafkaHostURI: 'localhost:9092',
       brokers: [
         {
           brokerId: 1,
@@ -25,17 +28,23 @@ class Broker extends Component {
     };
   }
 
-  /*
   // create method to parse through our data from the backend and set our new state
   componentDidMount() {
     // channel of listner to retain broker information from the backend and set state
-    ipcRender.on('', (e, data) => {
+    console.log('Broker Component did mount');
+
+    ipcRenderer.on('broker:getBrokers', (e, { error, data }) => {
+      if (error) {
+        console.error('getBrokers ERROR:', error);
+      }
+      console.log('getBrokers received data:', data);
       this.setState({
         brokers: data
       });
     });
+
+    ipcRenderer.send('broker:getBrokers', { kafkaHostURI: this.state.kafkaHostURI });
   }
-  */
 
   render() {
     const arr = [];
