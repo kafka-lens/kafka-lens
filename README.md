@@ -1,4 +1,4 @@
-![Kafka Lens Logo](kl-f-logo.png)
+![Kafka Lens Logo](assets/images/kl-f-logo.png)
 
 [![Build Status](https://travis-ci.com/kafka-lens/kafka-lens.svg?branch=master)](https://travis-ci.com/kafka-lens/kafka-lens)
 ![David](https://img.shields.io/david/dev/kafka-lens/kafka-lens.svg)
@@ -10,7 +10,7 @@
 
 Kafka Lens provides a tool that lets you inspect a Kafka cluster and allows developers a way to easily troubleshoot issues in the cluster as they occur. Now you can quickly test whether new services are functioning correctly by monitoring how messages are published to Kafka topics and partitions without a CLI or other costly solutions.
 
-![Screen Capture](kl-g.gif)
+![Screen Capture](assets/images/kl-g.gif)
 
 ## 5 Steps for Quick Startup
 
@@ -27,7 +27,7 @@ Kafka Lens provides a tool that lets you inspect a Kafka cluster and allows deve
 
 Enter the URI of your Kafka broker (e.g. kafka1.contoso.com:9092) then click 'Connect' to connect to your Kafka broker. Once you are connected, you are ready to start consuming messages. 
 
-![](cp-rm.gif)
+![](assets/images/cp-rm.gif)
 
 ## Authors
 [Harmon Huynh](https://github.com/iAmHarmon)
