@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 
-import ConnectionPage from '../containers/ConnectionPage';
+import ConnectionPage from '../components/ConnectionPage';
 
 describe('Connection.js unit tests', () => {
   let wrapper;
