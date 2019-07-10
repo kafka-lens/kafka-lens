@@ -17,10 +17,10 @@ class Topic extends React.Component {
         <div
           className="topic-padding"
           id={this.props.id}
-          topicname={this.props.topicInfo.topic}
+          topicname={this.props.topicInfo.topicName}
           onClick={this.props.showPartitions}
         >
-          {this.props.topicInfo.topic}
+          {this.props.topicInfo.topicName}
         </div>
         {this.props.topicInfo.showPartitions === true ? (
           <PartitionList showMessages={this.props.showMessages} topicInfo={this.props.topicInfo} />
