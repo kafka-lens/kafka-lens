@@ -10,8 +10,8 @@ describe('Topic.js unit tests', () => {
     showPartitions: jest.fn(),
     topicInfo: {
       showPartitions: false,
-      topic: 'test1',
-      partition: 5
+      topicName: 'test1',
+      numberOfPartitions: 5
     }
   };
   beforeAll(() => {
@@ -44,8 +44,8 @@ describe('Topic.js unit tests', () => {
     wrapper.setProps({
       topicInfo: {
         showPartitions: true,
-        topic: 'test1',
-        partition: 5
+        topicName: 'test1',
+        numberOfPartitions: 5
       }
     });
     expect(wrapper.exists('PartitionList')).toEqual(true);
