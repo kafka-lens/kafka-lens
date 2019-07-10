@@ -1,4 +1,4 @@
-![Kafka Lens Logo](kl-f-logo.png)
+![Kafka Lens Logo](assets/images/kl-f-logo.png)
 
 [![Build Status](https://travis-ci.com/kafka-lens/kafka-lens.svg?branch=master)](https://travis-ci.com/kafka-lens/kafka-lens)
 ![David](https://img.shields.io/david/dev/kafka-lens/kafka-lens.svg)
