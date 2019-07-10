@@ -48,56 +48,59 @@ brokerApi.checkBrokerActive = brokerId => {
 };
 
 brokerApi.getBrokerData = (kafkaHostURI, mainWindow) => {
-  // Declares a new instance of client that will be used to make a connection
-  const client = new kafka.KafkaClient({ kafkaHostURI });
-  // Declaring a new kafka.Admin instance creates a connection to the Kafka admin API
-  const admin = new kafka.Admin(client);
-  const brokerResult = {};
-  let isRunning = false;
-  console.log(kafkaHostURI);
+  console.log('attempting connection to', kafkaHostURI);
+  try {
+    // Declares a new instance of client that will be used to make a connection
+    const client = new kafka.KafkaClient({ kafkaHostURI });
+    // Declaring a new kafka.Admin instance creates a connection to the Kafka admin API
+    const admin = new kafka.Admin(client);
+    const brokerResult = {};
+    let isRunning = false;
 
-  // Fetch all topics from the Kafka broker
-  admin.listTopics((err, data) => {
-    if (err) console.error(err); // TODO: Handle listTopics error properly
-    // Reassign topics with only the object containing the topic data
-    //console.log('brokerMetadata IN BROKER API:', data[0]);
-    const brokerMetadata = data[0];
-    const topicsMetadata = data[1].metadata;
+    // Fetch all topics from the Kafka broker
+    admin.listTopics((err, data) => {
+      if (err) console.error(err); // TODO: Handle listTopics error properly
+      // Reassign topics with only the object containing the topic data
+      //console.log('brokerMetadata IN BROKER API:', data[0]);
+      const brokerMetadata = data[0];
+      const topicsMetadata = data[1].metadata;
 
-    isRunning = true;
-    console.log('Object Entries of brokerMetadata', Object.entries(brokerMetadata));
+      isRunning = true;
+      console.log('Object Entries of brokerMetadata', Object.entries(brokerMetadata));
 
-    Object.entries(brokerMetadata).forEach(([broker, brokerData]) => {
-      console.log(brokerData);
-      brokerResult[broker] = {
-        brokerId: brokerData.nodeId,
-        brokerUri: brokerData.port,
-        topics: [],
-        active: true
-      };
-    });
-
-    Object.entries(topicsMetadata).forEach(([topicName, topic]) => {
-      // for each topic, find associated broker and add topic name to topic array in brokerResults
-      const associatedBrokers = new Set();
-      Object.values(topic).forEach(partition => associatedBrokers.add(...partition.replicas));
-      console.log('Associated Brokers Set', associatedBrokers);
-      associatedBrokers.forEach(id => {
-        if (!brokerResult[id]) {
-          brokerResult[id] = {
-            brokerId: id,
-            brokerUri: 'Unknown',
-            topics: [],
-            active: false
-          };
-        }
-        brokerResult[id].topics.push({ topicName: topicName, msgsPerSec: 'num' });
+      Object.entries(brokerMetadata).forEach(([broker, brokerData]) => {
+        console.log(brokerData);
+        brokerResult[broker] = {
+          brokerId: brokerData.nodeId,
+          brokerUri: brokerData.port,
+          topics: [],
+          active: true
+        };
       });
-    });
-    console.log('brokerResult:', brokerResult);
-  });
 
-  //mainWindow.webContents.send('broker:getBrokers', brokerResult);
+      Object.entries(topicsMetadata).forEach(([topicName, topic]) => {
+        // for each topic, find associated broker and add topic name to topic array in brokerResults
+        const associatedBrokers = new Set();
+        Object.values(topic).forEach(partition => associatedBrokers.add(...partition.replicas));
+        console.log('Associated Brokers Set', associatedBrokers);
+        associatedBrokers.forEach(id => {
+          if (!brokerResult[id]) {
+            brokerResult[id] = {
+              brokerId: id,
+              brokerUri: 'Unknown',
+              topics: [],
+              active: false
+            };
+          }
+          brokerResult[id].topics.push({ topicName: topicName, msgsPerSec: 'num' });
+        });
+      });
+      console.log('brokerResult:', brokerResult);
+      mainWindow.webContents.send('broker:getBrokers', { data: brokerResult });
+    });
+  } catch (error) {
+    mainWindow.webContents.send('broker:getBrokers', { error });
+  }
 };
 
 module.exports = brokerApi;
