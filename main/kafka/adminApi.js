@@ -5,56 +5,6 @@ const offsetApi = require('./offsetApi');
 const adminApi = {};
 
 /**
- * @param {String} kafkaHostURI URI of Kafka broker(s)
- * @param {String} topicName Single topic to lookup
- * @param {Number} partitionId Topic partition number. Defaults to 0
- *
- * This function will return a promise which will resolve to the number of messages in a specific partition
- */
-adminApi.getPartitionMsgCount = (kafkaHostURI, topicName, partitionId = 0) => {
-  const promises = [];
-  return new Promise((resolve, reject) => {
-    promises.push(offsetApi.getEarliestOffset(kafkaHostURI, topicName, partitionId));
-    promises.push(offsetApi.getLatestOffset(kafkaHostURI, topicName, partitionId));
-    Promise.all(promises)
-      .then(([earliestOffset, latestOffset]) => {
-        resolve(latestOffset - earliestOffset);
-      })
-      .catch(error => {
-        reject(error);
-      });
-  });
-};
-
-/**
- * @param {String} kafkaHostURI URI of Kafka broker(s)
- * @param {String} topicName Single topic to lookup
- * @param {Number} numberOfPartitions Number of partitions in a topic
- *
- * This function will return a promise. Function will loop through the number of partitions
- * in a topic getting the current message count for each of the partitions.
- * Resolves to the aggregated number of messages from all partitions.
- */
-adminApi.getTopicMsgCount = (kafkaHostURI, topicName, numberOfPartitions) => {
-  const promises = [];
-  // Return a new promise
-  return new Promise((resolve, reject) => {
-    // Create for loop with limit of n-partition iterations
-    for (let i = 0; i < numberOfPartitions; i += 1) {
-      // Push a promise from call to getCurrentMsgCount with the arguments of host, topic, and ith-partition number into array
-      promises.push(adminApi.getPartitionMsgCount(kafkaHostURI, topicName, i));
-    }
-    // Resolve promise when promise all resolves all promises from array sending back a single number
-    Promise.all(promises)
-      .then(partitionMsgsCount => {
-        const topicMsgsCount = partitionMsgsCount.reduce((total, curr) => (total += curr), 0);
-        resolve(topicMsgsCount);
-      })
-      .catch(err => reject(err));
-  });
-};
-
-/**
  * @param {String} kafkaHostURI the connection uri that the user types into connection input
  * @param {Electron Window} mainWindow Main window that gets data
  *
@@ -110,6 +60,56 @@ adminApi.getTopicData = (kafkaHostURI, mainWindow) => {
 /**
  * @param {String} kafkaHostURI URI of Kafka broker(s)
  * @param {String} topicName Single topic to lookup
+ * @param {Number} numberOfPartitions Number of partitions in a topic
+ *
+ * This function will return a promise. Function will loop through the number of partitions
+ * in a topic getting the current message count for each of the partitions.
+ * Resolves to the aggregated number of messages from all partitions.
+ */
+adminApi.getTopicMsgCount = (kafkaHostURI, topicName, numberOfPartitions) => {
+  const promises = [];
+  // Return a new promise
+  return new Promise((resolve, reject) => {
+    // Create for loop with limit of n-partition iterations
+    for (let i = 0; i < numberOfPartitions; i += 1) {
+      // Push a promise from call to getCurrentMsgCount with the arguments of host, topic, and ith-partition number into array
+      promises.push(adminApi.getPartitionMsgCount(kafkaHostURI, topicName, i));
+    }
+    // Resolve promise when promise all resolves all promises from array sending back a single number
+    Promise.all(promises)
+      .then(partitionMsgsCount => {
+        const topicMsgsCount = partitionMsgsCount.reduce((total, curr) => (total += curr), 0);
+        resolve(topicMsgsCount);
+      })
+      .catch(err => reject(err));
+  });
+};
+
+/**
+ * @param {String} kafkaHostURI URI of Kafka broker(s)
+ * @param {String} topicName Single topic to lookup
+ * @param {Number} partitionId Topic partition number. Defaults to 0
+ *
+ * This function will return a promise which will resolve to the number of messages in a specific partition
+ */
+adminApi.getPartitionMsgCount = (kafkaHostURI, topicName, partitionId = 0) => {
+  const promises = [];
+  return new Promise((resolve, reject) => {
+    promises.push(offsetApi.getEarliestOffset(kafkaHostURI, topicName, partitionId));
+    promises.push(offsetApi.getLatestOffset(kafkaHostURI, topicName, partitionId));
+    Promise.all(promises)
+      .then(([earliestOffset, latestOffset]) => {
+        resolve(latestOffset - earliestOffset);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+};
+
+/**
+ * @param {String} kafkaHostURI URI of Kafka broker(s)
+ * @param {String} topicName Single topic to lookup
  * @param {Number} partitionId Topic partition number. Defaults to 0
  * @param {Object} mainWindow Electron window to send resulting data to
  *
@@ -117,15 +117,7 @@ adminApi.getTopicData = (kafkaHostURI, mainWindow) => {
  * as an object containing highwaterOffset and messageCount as properties.
  */
 adminApi.getPartitionData = (kafkaHostURI, topicName, partitionId = 0, mainWindow) => {
-  const client = new kafka.KafkaClient({ kafkaHostURI });
-  const admin = new kafka.Admin(client);
   const data = [];
-  const testData = [
-    { partition: 1, broker: 'test.data:9092', currentOffset: 99999, msgCount: 99999 },
-    { partition: 2, broker: 'test.data:9092', currentOffset: 99999, msgCount: 99999 },
-    { partition: 3, broker: 'test.data:9092', currentOffset: 99999, msgCount: 99999 }
-  ];
-  if (topicName === 'asdf') return testData;
 
   // DATA NEEDED: 1. Highwater Offset; 2. Total message count; 3. Current message in buffer(?)
   // 1. Determine current highwater offset
