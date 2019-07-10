@@ -205,7 +205,7 @@ adminApi.getPartitionData = (kafkaHostURI, topicName, partitionId = 0, mainWindo
     .then(result => {
       mainWindow.webContents.send('partition:getData', {
         highwaterOffset: result[0],
-        messageCount: result[1]
+        msgCount: result[1]
       });
     })
     .catch(err => console.error(err));
