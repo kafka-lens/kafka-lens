@@ -5,28 +5,12 @@ const MessageBuffer = require('./MessageBuffer');
 //const Consumer = new kafka.Consumer;
 let testStream;
 
-// Not in use
-const getLatestOffset = (kafkaHostURI, topicName, partitionId) =>
-  new Promise((resolve, reject) => {
-    const client = new kafka.KafkaClient({ kafkaHostURI });
-    const offset = new kafka.Offset(client);
-    offset.fetchLatestOffsets([{ topic: topicName, partition: partitionId }], (err, data) => {
-      if (err) reject(err);
-      console.log('result from latest offset in consumer: ', data);
-      resolve(data);
-    });
-  });
-
 const getMessagesFromTopic = async (kafkaHostURI, topicName, mainWindow) => {
   // Send back test data
   const buffer = new MessageBuffer(1000);
   let hasData = false;
   let lastChecked = Date.now();
   console.log('consumerAPI getMessagesFromTopic "topicName":', topicName)
-  // const consumer = new rdkafka.KafkaConsumer({
-  //   'group.id': 'kafkalens',
-  //   'metadata.broker.list': kafkaHostURI,
-  // });
   let consumerGroup = new kafka.ConsumerGroup(
     {
       kafkaHostURI: kafkaHostURI,
@@ -65,4 +49,4 @@ const stopDataFlow = () => {
   clearInterval(testStream);
 };
 
-module.exports = { getMessagesFromTopic, stopDataFlow, getLatestOffset };
+module.exports = { getMessagesFromTopic, stopDataFlow };

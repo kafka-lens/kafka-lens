@@ -114,7 +114,7 @@ ipcMain.on('partition:getData', (e, args) => {
     const data = {
       highwaterOffset: result[0],
       earliestOffset: result[1],
-      messageCount: result[2]
+      msgCount: result[2]
     };
     mainWindow.webContents.send('partition:getData', data);
   });
