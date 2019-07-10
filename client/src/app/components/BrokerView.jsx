@@ -1,14 +1,27 @@
 import React from 'react';
-import BrokerHeader from '../components/BrokerHeader';
-import BrokerTopicsView from './BrokerTopicsView';
+import BrokerHeader from '../components/BrokerHeader.jsx';
+import BrokerTopicsView from './BrokerTopicsView.jsx';
 
 const BrokerView = props => {
   // change background color if active is true or false
-  
+  console.log('brokerView props:', props);
+  const brokerColors = {
+    Red: '#E9573F',
+    Green: '#8CC152'
+  };
+  let backgroundColor;
+  if (props.isAlive === false) {
+    backgroundColor = brokerColors.Red;
+  } else {
+    backgroundColor = brokerColors.Green;
+  }
+
+  console.log('broker backgroundColor:', backgroundColor);
+
   return (
-    <div>
-      <BrokerHeader brokerID={props.individualBroker.brokerId} brokerURI={props.individualBroker.brokerURI} />
-      <BrokerTopicsView topics={props.individualBroker.topics} />
+    <div key={props.brokerId} style={{ backgroundColor: backgroundColor }}>
+      <BrokerHeader brokerID={props.brokerId} brokerURI={props.brokerURI} />
+      <BrokerTopicsView topics={props.topics} />
     </div>
   );
 };
