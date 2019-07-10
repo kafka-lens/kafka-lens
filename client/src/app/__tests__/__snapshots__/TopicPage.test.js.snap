@@ -13,7 +13,7 @@ exports[`TopicPage.js unit tests Should render without errors 1`] = `
     className="route-bar"
   >
     <RouteBar
-      partitionId=0
+      partitionId=""
       showPartitionInfo={false}
     />
   </div>
