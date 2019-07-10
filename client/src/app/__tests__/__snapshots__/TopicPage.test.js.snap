@@ -13,7 +13,7 @@ exports[`TopicPage.js unit tests Should render without errors 1`] = `
     className="route-bar"
   >
     <RouteBar
-      partitionNumber={-1}
+      partitionId=0
       showPartitionInfo={false}
     />
   </div>
@@ -48,7 +48,6 @@ exports[`TopicPage.js unit tests Should render without errors 1`] = `
   >
     <MessageList
       messageArray={Array []}
-      partitionNumber={-1}
       topicName=""
     />
   </div>
