@@ -41,9 +41,11 @@ class Main extends React.Component {
           topic.showPartitions = false;
         });
 
-        const filteredData = data.filter(el => {
-          return el.topic !== 'null' && el.topic !== '__consumer_offsets' && el.topic !== 'undefined'
+        const filteredData = data.filter(topic => {
+          return topic.topicName !== 'null' && topic.topicName !== '__consumer_offsets' && topic.topicName !== 'undefined'
         })
+
+        console.log('getTopics filteredData:', filteredData);
 
         this.setState({
           topics: filteredData,
