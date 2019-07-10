@@ -3,6 +3,7 @@ const path = require('path');
 const url = require('url');
 
 const adminApi = require('./kafka/adminApi');
+const offsetApi = require('./kafka/offsetApi');
 const consumerApi = require('./kafka/consumerApi');
 
 // * Disable error dialogs by overriding
@@ -83,14 +84,6 @@ ipcMain.on('topic:getTopics', (e, uri) => {
   adminApi.getTopicData(uri, mainWindow);
 });
 
-ipcMain.on('topic:getPartitions', (e, args) => {
-  adminApi.getPartitionData(args.uri, 'asdf', mainWindow);
-});
-
-ipcMain.on('partition:getTestMessages', (e, args) => {
-  consumerApi.getMessagesFromPartition('asdf', 'test1', mainWindow);
-});
-
 /**
  * @param {Object} e is event
  * @param {Object} args is an object that contains topic name, host, offset and partition are optional args
@@ -106,8 +99,8 @@ ipcMain.on('partition:stopMessages', (e, args) => {
 
 ipcMain.on('partition:getData', (e, args) => {
   const results = [];
-  results[0] = adminApi.getLatestOffset(args.kafkaHostURI, args.topicName, args.partitionId);
-  results[1] = adminApi.getEarliestOffset(args.kafkaHostURI, args.topicName, args.partitionId);
+  results[0] = offsetApi.getLatestOffset(args.kafkaHostURI, args.topicName, args.partitionId);
+  results[1] = offsetApi.getEarliestOffset(args.kafkaHostURI, args.topicName, args.partitionId);
   results[2] = adminApi.getPartitionMsgCount(args.kafkaHostURI, args.topicName, args.partitionId);
 
   Promise.all(results).then(result => {
