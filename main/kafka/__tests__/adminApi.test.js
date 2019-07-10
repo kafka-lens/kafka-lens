@@ -1,4 +1,5 @@
 import adminApi from '../adminApi';
+import offsetApi from '../offsetApi';
 
 xdescribe('adminApi unit tests', () => {
   const args = {
@@ -8,14 +9,14 @@ xdescribe('adminApi unit tests', () => {
   };
   describe('Testing getEarliestOffset', () => {
     it('Should return a number', () => {
-      adminApi.getEarliestOffset(args.kafkaHostURI, args.topicName, args.partitionId).then(num => {
+      offsetApi.getEarliestOffset(args.kafkaHostURI, args.topicName, args.partitionId).then(num => {
         expect(typeof num).toEqual('number');
       });
     });
   });
   describe('Testing getLatestOffset', () => {
     it('Should return a number', () =>
-      adminApi.getLatestOffset(args.kafkaHostURI, args.topicName, 2).then(num => {
+      offsetApi.getLatestOffset(args.kafkaHostURI, args.topicName, 2).then(num => {
         expect(typeof num).toEqual('number');
       }));
   });
