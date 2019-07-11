@@ -80,7 +80,7 @@ const addDevToolsToMenu = [
  *
  */
 
-// * Listens for Uri string from client connection page
+// * Listens for URI string from client connection page
 ipcMain.on('topic:getTopics', (e, uri) => {
   adminApi.getTopicData(uri, mainWindow);
 });
