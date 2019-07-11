@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ipcRenderer } from 'electron';
 
 import BrokerView from '../components/BrokerView.jsx';
+import '../css/Broker.scss';
 
 class Broker extends Component {
   constructor(props) {
@@ -56,7 +57,7 @@ class Broker extends Component {
     for (let i = 0; i < this.state.brokers.length; i += 1) {
       arr.push(<BrokerView key={i} {...this.state.brokers[i]} />);
     }
-    return <div>{arr}</div>;
+    return <div className="broker-grid-container" >{arr}</div>;
   }
 }
 
