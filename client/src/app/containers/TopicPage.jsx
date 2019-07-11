@@ -40,7 +40,7 @@ class TopicPage extends React.Component {
       this.setState({ messages });
     });
 
-    // This will get an object from the main process with the partition data incl. highwaterOffset, earliestOffset, and messageCount
+    // This will get an object from the main process with the partition data incl. highwaterOffset, earliestOffset, messageCount, leader, and replicas
     ipcRenderer.on('partition:getData', (e, data) => {
       this.setState({ infoBoxData: data });
     });

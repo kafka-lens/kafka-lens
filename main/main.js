@@ -103,12 +103,15 @@ ipcMain.on('partition:getData', (e, args) => {
   results[0] = offsetApi.getLatestOffset(args.kafkaHostURI, args.topicName, args.partitionId);
   results[1] = offsetApi.getEarliestOffset(args.kafkaHostURI, args.topicName, args.partitionId);
   results[2] = adminApi.getPartitionMsgCount(args.kafkaHostURI, args.topicName, args.partitionId);
+  results[3] = adminApi.getPartitionBrokers(args.kafkaHostURI, args.topicName, args.partitionId);
 
   Promise.all(results).then(result => {
     const data = {
       highwaterOffset: result[0],
       earliestOffset: result[1],
-      msgCount: result[2]
+      msgCount: result[2],
+      leader: result[3][0],
+      replicas: result[3][1]
     };
     mainWindow.webContents.send('partition:getData', data);
   });
