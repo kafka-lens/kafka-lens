@@ -109,7 +109,7 @@ brokerApi.getBrokerData = (kafkaHostURI, mainWindow) => {
               isAlive: false
             };
           }
-          brokerResult[id].topics.push({topicName: topicName, messagesPerSecond: 'num'});
+          brokerResult[id].topics.push({topicName: topicName, newMessagesPerSecond: 'num'});
         });
       });
       console.log('brokerResult:', brokerResult);
