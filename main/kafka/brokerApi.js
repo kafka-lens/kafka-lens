@@ -87,7 +87,7 @@ brokerApi.getBrokerData = (kafkaHostURI, mainWindow) => {
           brokerId: brokerData.nodeId,
           brokerURI: brokerData.port,
           topics: [],
-          active: true
+          isAlive: true
         };
       });
 
@@ -109,7 +109,7 @@ brokerApi.getBrokerData = (kafkaHostURI, mainWindow) => {
               isAlive: false
             };
           }
-          brokerResult[id].topics.push({topicName: topicName, msgsPerSec: 'num'});
+          brokerResult[id].topics.push({topicName: topicName, newMessagesPerSecond: 'num'});
         });
       });
       console.log('brokerResult:', brokerResult);
