@@ -1,10 +1,13 @@
 import { ipcRenderer } from 'electron';
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // const React = require('react');
 
 // import components here
+import Header from '../components/Header.jsx';
 import ConnectionPage from '../components/ConnectionPage.jsx';
 import TopicPage from './TopicPage.jsx';
+import Broker from './Broker.jsx';
 
 import '../css/index.scss';
 import '../css/Main.scss';
@@ -29,9 +32,8 @@ class Main extends React.Component {
     // Listener will receive response from backend main process
     // If response is an error, display error to the user in connection page
     ipcRenderer.on('topic:getTopics', (e, data) => {
-
       this.setState({ isFetching: false });
-      
+
       if (data === 'Error') {
         this.setState({
           connected: false
@@ -42,8 +44,12 @@ class Main extends React.Component {
         });
 
         const filteredData = data.filter(topic => {
-          return topic.topicName !== 'null' && topic.topicName !== '__consumer_offsets' && topic.topicName !== 'undefined'
-        })
+          return (
+            topic.topicName !== 'null' &&
+            topic.topicName !== '__consumer_offsets' &&
+            topic.topicName !== 'undefined'
+          );
+        });
 
         console.log('getTopics filteredData:', filteredData);
 
@@ -66,7 +72,6 @@ class Main extends React.Component {
     let uri = this.state.uri_input;
 
     ipcRenderer.send('topic:getTopics', uri);
-
   }
   // This function is passed to the connectionPage
   updateURI(event) {
@@ -75,15 +80,41 @@ class Main extends React.Component {
   }
 
   render() {
-    return (
-      <div className="main-div">
-        {/* Conditionally renders either the ConnectionPage or TopicPage depending on connected in state */}
+    /*{ Conditionally renders either the ConnectionPage or TopicPage depending on connected in state
         {this.state.connected === true ? (
           <TopicPage
             uri={this.state.uri_input}
             topicList={this.state.topics}
             isConnected={this.state.connected}
           />
+        ) : (
+          <ConnectionPage
+            validConnectionChecker={this.validConnectionChecker}
+            updateURI={this.updateURI}
+            connected={this.state.connected}
+            isFetching={this.state.isFetching}
+          />
+        )} }*/
+
+    return (
+      <div className="main-div">
+        {this.state.connected === true ? (
+          <Router>
+            <Header />
+            <Switch>
+              <Route
+                path="/"
+                render={() => (
+                  <TopicPage
+                    uri={this.state.uri_input}
+                    topicList={this.state.topics}
+                    isConnected={this.state.connected}
+                  />
+                )}
+              />
+              <Route path="/broker" render={props => <Broker />} />
+            </Switch>
+          </Router>
         ) : (
           <ConnectionPage
             validConnectionChecker={this.validConnectionChecker}
