@@ -29,24 +29,24 @@ class Broker extends Component {
     };
   }
 
-  // // create method to parse through our data from the backend and set our new state
-  // componentDidMount() {
-  //   // channel of listner to retain broker information from the backend and set state
-  //   console.log('Broker Component did mount');
+  // create method to parse through our data from the backend and set our new state
+  componentDidMount() {
+    // channel of listner to retain broker information from the backend and set state
+    console.log('Broker Component did mount');
 
-  //   ipcRenderer.on('broker:getBrokers', (e, { error, data }) => {
-  //     if (error) {
-  //       console.error('getBrokers ERROR:', error);
-  //     }
+    ipcRenderer.on('broker:getBrokers', (e, { error, data }) => {
+      if (error) {
+        console.error('getBrokers ERROR:', error);
+      }
 
-  //     const brokersList = Object.values(data);
-  //     this.setState({
-  //       brokers: brokersList
-  //     });
-  //   });
+      const brokersList = Object.values(data);
+      this.setState({
+        brokers: brokersList
+      });
+    });
 
-  //   ipcRenderer.send('broker:getBrokers', { kafkaHostURI: this.state.kafkaHostURI });
-  // }
+    ipcRenderer.send('broker:getBrokers', { kafkaHostURI: this.state.kafkaHostURI });
+  }
 
   render() {
     const arr = [];
