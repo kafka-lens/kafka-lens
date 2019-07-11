@@ -135,7 +135,7 @@ class TopicPage extends React.Component {
     const connected = <h5 className="connection-header">Connected</h5>;
     const disconnected = <h5 className="disconnected-header">Disconnected</h5>;
 
-    let displayUri = this.props.uri;
+    let displayURI = this.props.uri;
 
     return (
       <div className="grid-container">
@@ -185,7 +185,7 @@ class TopicPage extends React.Component {
         </div>
         <div className="connection-status">
           {isConnected === true ? connected : disconnected}
-          <div className="connection-uri">{displayUri}</div>
+          <div className="connection-uri">{displayURI}</div>
         </div>
       </div>
     );
