@@ -5,21 +5,14 @@ const offsetApi = require('../kafka/offsetApi.js')
 const brokerApi = {};
 
 
-const topics = {
-  topic: {
-    partition: {
-      lastOffset: 245,
-      timeStamp: Date.now(),
-      msgRatePerSecond: 203,
-      leader: 1, 
-    }
-  }
-}
+const topicsCache = {};
 
-brokerApi.getMsgsPerSecond = (kafkaHostURI, topicName, partitionId, leader) => {
+brokerApi.calcAndCacheMsgsPerSecond = (kafkaHostURI, topicName, partitionId, leader) => {
   // initialize in case of new topic / partition
-  const topic = topics[topicName] || {};
-  const partition = topic[partitionId] || {};
+  if (!topicsCache[topicName]) topicsCache[topicName] = {};
+  const topic = topicsCache[topicName];
+  if (!topic[partitionId]) topic[partitionId] = {};
+  const partition = topic[partitionId];
   partition.leader = leader;
 
   return new Promise((resolve, reject) => {
@@ -29,17 +22,17 @@ brokerApi.getMsgsPerSecond = (kafkaHostURI, topicName, partitionId, leader) => {
         if (partition.timeStamp === undefined) {
           partition.lastOffset = newOffset;
           partition.timeStamp = currentTime;
-          partition.msgRatePerSecond = null;
+          partition.newMessagesPerSecond = null;
           return resolve(0);
         }
 
         const newMsgsAmount = newOffset - partition.lastOffset;
         const elapsedTimeInSeconds = (currentTime - partition.timeStamp) / 1000;
         
-        partition.msgRatePerSecond = Math.floor(newMsgsAmount/elapsedTimeInSeconds)
+        partition.newMessagesPerSecond = Math.floor(newMsgsAmount/elapsedTimeInSeconds)
         partition.lastOffset = newOffset;
         partition.timeStamp = currentTime;
-        return resolve(partition.msgRatePerSecond);
+        return resolve(partition.newMessagesPerSecond);
       })
       .catch(err => reject(err));
   })
@@ -147,13 +140,13 @@ brokerApi.getBrokerData = (kafkaHostURI, mainWindow) => {
         brokerResult[broker] = {
           brokerId: brokerData.nodeId,
           brokerURI: brokerData.port,
-          topics: [],
+          topics: {},
           isAlive: true
         };
       });
 
       Object.entries(topicsMetadata).forEach(([topicName, topic]) => {
-        const getMsgsPerSecondPromises = [];
+        const calcAndCacheMsgsPerSecondPromises = [];
 
         if (topicName === '__consumer_offsets') return;
         // for each topic, find associated broker and add topic name to topic array in brokerResults
@@ -162,7 +155,7 @@ brokerApi.getBrokerData = (kafkaHostURI, mainWindow) => {
           console.log('partition:', partition);
           associatedBrokers.add(...partition.replicas)
 
-          getMsgsPerSecondPromises.push(brokerApi.getMsgsPerSecond(kafkaHostURI, topicName, partition.partition, partition.leader));
+          calcAndCacheMsgsPerSecondPromises.push(brokerApi.calcAndCacheMsgsPerSecond(kafkaHostURI, topicName, partition.partition, partition.leader));
         });
         
         associatedBrokers.forEach(id => {
@@ -170,17 +163,35 @@ brokerApi.getBrokerData = (kafkaHostURI, mainWindow) => {
             brokerResult[id] = {
               brokerId: id,
               brokerURI: 'Unknown',
-              topics: [],
+              topics: {},
               isAlive: false
             };
           }
-          brokerResult[id].topics.push({topicName: topicName, newMessagesPerSecond: null});
+          const brokerInfo = brokerResult[id];
+          brokerInfo.topics[topicName] = {topicName: topicName, newMessagesPerSecond: null};
         });
 
+        console.log('brokerResult before msgsPerSecond:', brokerResult);
+        Promise.all(calcAndCacheMsgsPerSecondPromises)
+          .then(() => {
+            console.log('topicsCache:', topicsCache);
+            Object.entries(topicsCache).forEach(([topicName, cachedPartitions]) => {
+              console.log('topicName:', topicName);
+              Object.values(cachedPartitions).forEach(cachedPartition => {
+                console.log('cachedPartition:', cachedPartition);
+                const brokerInfo = brokerResult[cachedPartition.leader];
+                console.log('broker:', brokerInfo);
+                const topic = brokerInfo.topics[topicName];
+                if (topic.newMessagesPerSecond === null) topic.newMessagesPerSecond = 0;
+                topic.newMessagesPerSecond += cachedPartition.newMessagesPerSecond;
+              })
+            })
 
+            console.log('brokerResult after msgsPerSecond:', JSON.stringify(brokerResult));
+            mainWindow.webContents.send('broker:getBrokers', { data: brokerResult });
+          })
+          .catch(err => console.error('ERROR GETTING msgsPerSecond:', err));
       });
-      console.log('brokerResult:', brokerResult);
-      mainWindow.webContents.send('broker:getBrokers', { data: brokerResult });
     });
   } catch (error) {
     mainWindow.webContents.send('broker:getBrokers', { error });
