@@ -72,13 +72,14 @@ brokerApi.getBrokerData = (kafkaHostURI, mainWindow) => {
         console.log(brokerData);
         brokerResult[broker] = {
           brokerId: brokerData.nodeId,
-          brokerUri: brokerData.port,
+          brokerURI: brokerData.port,
           topics: [],
           active: true
         };
       });
 
       Object.entries(topicsMetadata).forEach(([topicName, topic]) => {
+        if (topicName === '__consumer_offsets') return;
         // for each topic, find associated broker and add topic name to topic array in brokerResults
         const associatedBrokers = new Set();
         Object.values(topic).forEach(partition => associatedBrokers.add(...partition.replicas));
@@ -87,7 +88,7 @@ brokerApi.getBrokerData = (kafkaHostURI, mainWindow) => {
           if (!brokerResult[id]) {
             brokerResult[id] = {
               brokerId: id,
-              brokerUri: 'Unknown',
+              brokerURI: 'Unknown',
               topics: [],
               active: false
             };
