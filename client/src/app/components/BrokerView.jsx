@@ -1,6 +1,7 @@
 import React from 'react';
 import BrokerHeader from '../components/BrokerHeader.jsx';
 import BrokerTopicsView from './BrokerTopicsView.jsx';
+import '../css/BrokerView.scss';
 
 const BrokerView = props => {
   // change background color if active is true or false
@@ -19,7 +20,7 @@ const BrokerView = props => {
   console.log('broker backgroundColor:', backgroundColor);
 
   return (
-    <div key={props.brokerId} style={{ backgroundColor: backgroundColor }}>
+    <div className="brokerView" key={props.brokerId} style={{ backgroundColor: backgroundColor }}>
       <BrokerHeader brokerID={props.brokerId} brokerURI={props.brokerURI} />
       <BrokerTopicsView topics={props.topics} />
     </div>
