@@ -37,9 +37,10 @@ class Broker extends Component {
       if (error) {
         console.error('getBrokers ERROR:', error);
       }
-      console.log('getBrokers received data:', data);
+
+      const brokersList = Object.values(data);
       this.setState({
-        brokers: data
+        brokers: brokersList
       });
     });
 
