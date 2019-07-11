@@ -80,28 +80,13 @@ class Main extends React.Component {
   }
 
   render() {
-    /*{ Conditionally renders either the ConnectionPage or TopicPage depending on connected in state
-        {this.state.connected === true ? (
-          <TopicPage
-            uri={this.state.uri_input}
-            topicList={this.state.topics}
-            isConnected={this.state.connected}
-          />
-        ) : (
-          <ConnectionPage
-            validConnectionChecker={this.validConnectionChecker}
-            updateURI={this.updateURI}
-            connected={this.state.connected}
-            isFetching={this.state.isFetching}
-          />
-        )} }*/
-
     return (
       <div className="main-div">
         {this.state.connected === true ? (
           <Router>
             <Header />
             <Switch>
+              <Route path="/broker" render={props => <Broker />} />
               <Route
                 path="/"
                 render={() => (
@@ -112,7 +97,6 @@ class Main extends React.Component {
                   />
                 )}
               />
-              <Route path="/broker" render={props => <Broker />} />
             </Switch>
           </Router>
         ) : (
