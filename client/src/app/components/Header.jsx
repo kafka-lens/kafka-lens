@@ -1,6 +1,6 @@
 import React from 'react';
 import NavBar from './Navbar.jsx';
-import '../css/Header.scss';
+import '../css/navBar.scss';
 
 function Header (props) {
   return (
