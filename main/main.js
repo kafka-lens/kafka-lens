@@ -119,5 +119,6 @@ ipcMain.on('partition:getData', (e, args) => {
 
 ipcMain.on('broker:getBrokers', (e, args) => {
   console.log('broker:getBrokers received in main.js args:', args);
-  brokerApi.getBrokerData(args.kafkaHostURI, mainWindow);
+  brokerApi.getBrokerData(args.kafkaHostURI, mainWindow)
+  setInterval(() => brokerApi.getBrokerData(args.kafkaHostURI, mainWindow), 5000);  
 })

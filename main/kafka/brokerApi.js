@@ -1,14 +1,27 @@
 const kafka = require('kafka-node');
 const zookeeper = require('node-zookeeper-client');
+const offsetApi = require('../kafka/offsetApi.js')
 
 const brokerApi = {};
+let lastOffset = 0;
+
+// brokerApi.getMsgsPerSec = (lastOffset, kafkaHostURI, topicName, partitionId) => {
+//   return new Promise((resolve, reject) => {
+//     const newOffset = offsetApi.getLatestOffset(kafkaHostURI, topicName, partitionId)
+//     .then()
+//     const msgsSinceLastOffset = newOffset -;
+//     lastOffset = newOffset;
+//   })
+
+//   return Math.floor(msgsSinceLastOffset/5);
+// }
 
 /**
  * @param {String} kafkaHostURI URI of Kafka broker(s)
  * @param {String} topicName Single topic to lookup
  * @param {Number} partitionId Topic partition number. Defaults to 0
  *
- * This function will
+ * This function will check with the Zookeeper API to see if a specific broker is alive
  */
 brokerApi.checkBrokerActive = brokerId => {
   //Create connection with zookeeper API and instruct it to invoke brokerApi.checkBrokerActive when connected
@@ -82,18 +95,21 @@ brokerApi.getBrokerData = (kafkaHostURI, mainWindow) => {
         if (topicName === '__consumer_offsets') return;
         // for each topic, find associated broker and add topic name to topic array in brokerResults
         const associatedBrokers = new Set();
-        Object.values(topic).forEach(partition => associatedBrokers.add(...partition.replicas));
-        console.log('Associated Brokers Set', associatedBrokers);
+        Object.values(topic).forEach(partition => {
+          console.log(partition);
+          associatedBrokers.add(...partition.replicas)
+        });
+        
         associatedBrokers.forEach(id => {
           if (!brokerResult[id]) {
             brokerResult[id] = {
               brokerId: id,
               brokerURI: 'Unknown',
               topics: [],
-              active: false
+              isAlive: false
             };
           }
-          brokerResult[id].topics.push({ topicName: topicName, msgsPerSec: 'num' });
+          brokerResult[id].topics.push({topicName: topicName, msgsPerSec: 'num'});
         });
       });
       console.log('brokerResult:', brokerResult);
