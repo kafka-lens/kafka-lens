@@ -116,24 +116,25 @@ adminApi.getPartitionMsgCount = (kafkaHostURI, topicName, partitionId = 0) => {
  * This function returns data to the renderer process. Calls getLatestOffset and getCurrentMsgCount then sends back the result
  * as an object containing highwaterOffset and messageCount as properties.
  */
-adminApi.getPartitionData = (kafkaHostURI, topicName, partitionId = 0, mainWindow) => {
-  const data = [];
+adminApi.getPartitionBrokers = (kafkaHostURI, topicName, partitionId = 0) => {
+  const client = new kafka.KafkaClient({ kafkaHostURI });
+  const admin = new kafka.Admin(client);
+  const brokerPartitionData = [];
 
-  // DATA NEEDED: 1. Highwater Offset; 2. Total message count; 3. Current message in buffer(?)
-  // 1. Determine current highwater offset
-  data[0] = offsetApi.getLatestOffset(kafkaHostURI, topicName, partitionId);
-  // 2. Call getCurrentMsgCount to get current message count
-  data[1] = offsetApi.getPartitionMsgCount(kafkaHostURI, topicName, partitionId);
-  // 3. Maybe get current message in buffer (?????)
-
-  Promise.all(data)
-    .then(result => {
-      mainWindow.webContents.send('partition:getData', {
-        highwaterOffset: result[0],
-        msgCount: result[1]
-      });
-    })
-    .catch(err => console.error(err));
+  return new Promise((resolve, reject) => {
+    admin.listTopics((err, data) => {
+      if (err) reject(err);  // TODO: Handle listTopics error properly
+      isRunning = true;
+      // Reassign topics with only the object containing the topic info
+      // Isolate leader broker and replica brokers array into brokerPartitionData array
+      topicsMetadata = data[1].metadata;
+      const leader = topicsMetadata[topicName][partitionId].leader;
+      const replicas = topicsMetadata[topicName][partitionId].replicas.filter( b => b !== leader);
+      brokerPartitionData.push(leader);
+      brokerPartitionData.push(replicas);
+    });
+    resolve(brokerPartitionData);
+  })
 };
 
 module.exports = adminApi;
