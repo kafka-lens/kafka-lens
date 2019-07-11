@@ -4,8 +4,8 @@ import React from 'react';
 const BrokerTopic = props => {
   return (
     <div>
-        <p>Topic Name: {props.topicName}</p>
-        <p>Msg Per Second: {props.newMessagesPerSecond}</p>
+        <h1>Topic Name: {props.topicName}</h1>
+        <h1>Msg Per Second: {props.msgsPerSec}</h1>
       </div>
   );
 };
