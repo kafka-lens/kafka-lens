@@ -40,6 +40,10 @@ class Broker extends Component {
       }
 
       const brokersList = Object.values(data);
+      brokersList.forEach(broker => {
+        const brokerTopicsAsArray = Object.values(broker.topics);
+        broker.topics = brokerTopicsAsArray;
+      })
       this.setState({
         brokers: brokersList
       });

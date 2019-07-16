@@ -2,6 +2,7 @@ import React from 'react';
 import '../css/PartitionInfo.scss';
 
 const PartitionInfo = props => {
+  const replicasString = props.infoBoxData.replicas.join(', ');
   return (
     <div className="partition-details">
       {console.log(props.infoBoxData.msgCount)}
@@ -10,7 +11,7 @@ const PartitionInfo = props => {
       <p className="info-font-size">Highwater Offset: {props.infoBoxData.highwaterOffset}</p>
       <p className="info-font-size">Earliest Offset: {props.infoBoxData.earliestOffset}</p>
       <p className="info-font-size">Leader Broker: {props.infoBoxData.leader}</p>
-      <p className="info-font-size">Replica Broker(s): {props.infoBoxData.replicas}</p>
+      <p className="info-font-size">Replica Broker(s): {replicasString}</p>
     </div>
   );
 };
