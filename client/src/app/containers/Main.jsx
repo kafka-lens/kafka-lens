@@ -96,6 +96,7 @@ class Main extends React.Component {
                   />
                 )}
               />
+              <Route path='/connectionpage' onclick={ () => console.log("hello")  } render={() => <ConnectionPage />} />
             </Switch>
           </Router>
         ) : (
