@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import '../css/ConnectionPage.scss';
+ 
 
 const ConnectionPage = props => {
+
+  useEffect(() => {
+    console.log(`hello`)
+  })
+
   let loading;
   if (props.isFetching === true) {
     loading = (
@@ -13,6 +19,7 @@ const ConnectionPage = props => {
       </div>
     );
   }
+
   // This handles connection timeouts for Kafka cluster
   let errorMsg;
   if (props.connected === false) {
