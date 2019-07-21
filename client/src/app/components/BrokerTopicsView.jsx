@@ -2,9 +2,9 @@ import React from 'react';
 import BrokerTopic from './BrokerTopic.jsx';
 
 const BrokerTopicsView = props => {
-  const arr = [];
+  const brokerTopics = [];
   for (let i = 0; i < props.topics.length; i += 1) {
-    arr.push(
+    brokerTopics.push(
       <BrokerTopic
         key={i}
         topicName={props.topics[i].topicName}
@@ -13,7 +13,7 @@ const BrokerTopicsView = props => {
     );
   }
 
-  return <div>{arr}</div>;
+  return <div>{brokerTopics}</div>;
 };
 
 export default BrokerTopicsView;
