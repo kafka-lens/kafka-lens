@@ -8,24 +8,8 @@ class Broker extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      kafkaHostURI: 'localhost:9092',
-      brokers: [
-        {
-          brokerId: 1,
-          brokerURI: 'localhost:test',
-          isAlive: true,
-          topics: [{ topicName: 'testName', newMessagesPerSecond: 15 }]
-        },
-        {
-          brokerId: 2,
-          brokerURI: 'localhost:test2',
-          isAlive: false,
-          topics: [
-            { topicName: 'testTopic1', newMessagesPerSecond: 15 },
-            { topicName: 'testTopic2', newMessagesPerSecond: 2340 }
-          ]
-        }
-      ]
+      kafkaHostURI: '',
+      brokers: [],
     };
   }
 
@@ -53,11 +37,16 @@ class Broker extends Component {
   }
 
   render() {
-    const arr = [];
+    const brokerViews = [];
     for (let i = 0; i < this.state.brokers.length; i += 1) {
-      arr.push(<BrokerView key={i} {...this.state.brokers[i]} />);
+      brokerViews.push(<BrokerView key={i} {...this.state.brokers[i]} />);
     }
-    return <div className="broker-grid-container" >{arr}</div>;
+
+    return (
+      <div className="broker-grid-container" >
+        {brokerViews}
+      </div>
+    );
   }
 }
 

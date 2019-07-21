@@ -12,7 +12,7 @@ describe('App.js unit tests', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('renders a Main component', () => {
-    expect(wrapper.exists('Main')).toEqual(true);
+  it('renders a App component', () => {
+    expect(wrapper.exists('App')).toEqual(true);
   });
 });
