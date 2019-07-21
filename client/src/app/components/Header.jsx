@@ -6,7 +6,7 @@ function Header (props) {
   return (
     <header id="header">
       <div>
-      <NavBar routes={ [ { link: '/', text: "topics" }, { link: '/broker', text: "broker" }, { link: '/connectionpage', text: "Connection Page" } ] }/>
+      <NavBar restartConnectionPage={props.restartConnectionPage} routes={ [ { link: '/', text: "Topics" }, { link: '/broker', text: "Brokers" }] }/>
       </div>
     </header>
   )

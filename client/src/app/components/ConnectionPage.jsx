@@ -1,8 +1,9 @@
-import React, { useState, useEffect} from 'react';
+import React from 'react';
 import '../css/ConnectionPage.scss';
- 
 
 const ConnectionPage = props => {
+
+
   let loading;
   if (props.isFetching === true) {
     loading = (
