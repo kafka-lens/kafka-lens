@@ -120,7 +120,7 @@ brokerApi.getBrokerData = (kafkaHostURI, mainWindow) => {
   console.log('attempting connection to', kafkaHostURI);
   try {
     // Declares a new instance of client that will be used to make a connection
-    const client = new kafka.KafkaClient({ kafkaHostURI });
+    const client = new kafka.KafkaClient({ kafkaHost: kafkaHostURI });
     // Declaring a new kafka.Admin instance creates a connection to the Kafka admin API
     const admin = new kafka.Admin(client);
     const brokerResult = {};
