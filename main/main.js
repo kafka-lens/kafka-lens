@@ -82,8 +82,8 @@ const addDevToolsToMenu = [
  */
 
 // * Listens for URI string from client connection page
-ipcMain.on('topic:getTopics', (e, uri) => {
-  adminApi.getTopicData(uri, mainWindow);
+ipcMain.on('topic:getTopics', (e, kafkaHostUri) => {
+  adminApi.getTopicData(kafkaHostUri, mainWindow);
 });
 
 /**

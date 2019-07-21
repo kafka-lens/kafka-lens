@@ -1,7 +1,7 @@
 const kafka = require('kafka-node');
 const MessageBuffer = require('./MessageBuffer');
 
-// const client = new kafka.KafkaClient({ kafkaHostURI: '157.230.166.35:9092' });
+// const client = new kafka.KafkaClient({ kafkaHost: kafkaHostURI: '157.230.166.35:9092' });
 //const Consumer = new kafka.Consumer;
 let testStream;
 

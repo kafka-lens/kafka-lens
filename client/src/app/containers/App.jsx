@@ -86,7 +86,8 @@ class App extends React.Component {
   // This function is passed to the connectionPage
   updateURI(event) {
     const input = event.target.value;
-    this.setState(state => ({ uri_input: input }));
+    console.log('kafkaHostURI input:', input);
+    this.setState({ uri_input: input });
   }
 
   disconnect() {
