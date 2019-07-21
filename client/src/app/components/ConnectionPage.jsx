@@ -3,11 +3,6 @@ import '../css/ConnectionPage.scss';
  
 
 const ConnectionPage = props => {
-
-  useEffect(() => {
-    console.log(`hello`)
-  })
-
   let loading;
   if (props.isFetching === true) {
     loading = (
