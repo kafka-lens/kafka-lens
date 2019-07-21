@@ -66,6 +66,7 @@ const addDevToolsToMenu = [
       },
       {
         label: 'DevTools',
+        accelerator: process.platform === 'darwin' ? 'Command+Shift+I' : 'Ctrl+Shift+I',
         click() {
           mainWindow.webContents.openDevTools();
         }
