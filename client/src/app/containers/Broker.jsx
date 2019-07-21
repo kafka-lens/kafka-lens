@@ -9,7 +9,7 @@ class Broker extends Component {
     super(props);
     this.state = {
       kafkaHostURI: '',
-      brokers: [],
+      brokers: []
     };
   }
 
@@ -22,12 +22,13 @@ class Broker extends Component {
       if (error) {
         console.error('getBrokers ERROR:', error);
       }
+      console.log('Getting new brokers Info:', data);
 
       const brokersList = Object.values(data);
       brokersList.forEach(broker => {
         const brokerTopicsAsArray = Object.values(broker.topics);
         broker.topics = brokerTopicsAsArray;
-      })
+      });
       this.setState({
         brokers: brokersList
       });
@@ -42,11 +43,7 @@ class Broker extends Component {
       brokerViews.push(<BrokerView key={i} {...this.state.brokers[i]} />);
     }
 
-    return (
-      <div className="broker-grid-container" >
-        {brokerViews}
-      </div>
-    );
+    return <div className="broker-grid-container">{brokerViews}</div>;
   }
 }
 
