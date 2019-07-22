@@ -33,7 +33,7 @@ function getTopicData(kafkaHostURI) {
   
     // Fetch all topics from the Kafka broker
     admin.listTopics((err, data) => {
-      if (err) return reject('Error:', err);
+      if (err) return reject('Error getting list of Topics:' + err);
   
       // Reassign topics with only the object containing the topic data
       console.log('Result of admin.listTopics API call:', data)
@@ -59,7 +59,7 @@ function getTopicData(kafkaHostURI) {
           console.log('final topic Data:', result);
           return resolve(result);
         })
-        .catch(err => reject('Error:', err));
+        .catch(err => reject('Error getting all topicMsgCounts:' + err));
     });
   })
 }
