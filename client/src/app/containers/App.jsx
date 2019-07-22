@@ -44,18 +44,8 @@ class App extends React.Component {
           topic.showPartitions = false;
         });
 
-        const filteredData = data.filter(topic => {
-          return (
-            topic.topicName !== 'null' &&
-            topic.topicName !== '__consumer_offsets' &&
-            topic.topicName !== 'undefined'
-          );
-        });
-
-        console.log('getTopics filteredData:', filteredData);
-
         this.setState({
-          topics: filteredData,
+          topics: data,
           connected: true
         });
       }
@@ -87,7 +77,6 @@ class App extends React.Component {
   // This function is passed to the connectionPage
   updateURI(event) {
     const input = event.target.value;
-    console.log('kafkaHostURI input:', input);
     this.setState({ uri_input: input });
   }
 
