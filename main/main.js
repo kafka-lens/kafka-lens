@@ -52,7 +52,7 @@ app.on('activate', () => {
   }
 });
 
-// * Add Chrome dev tools menu
+// Add Chrome dev tools menu
 const addDevToolsToMenu = [
   {
     label: 'File',
@@ -83,7 +83,9 @@ const addDevToolsToMenu = [
 
 // * Listens for URI string from client connection page
 ipcMain.on('topic:getTopics', (e, kafkaHostUri) => {
-  adminApi.getTopicData(kafkaHostUri, mainWindow);
+  adminApi.getTopicData(kafkaHostUri)
+    .then(result => mainWindow.webContents.send('topic:getTopics', result))
+    .catch(error => mainWindow.webContents.send('topic:getTopics', error));
 });
 
 /**

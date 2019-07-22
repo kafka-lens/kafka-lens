@@ -5,25 +5,35 @@ const offsetApi = require('./offsetApi');
 
 const adminApi = {};
 
-
-function GetTopicDataWithTimeout() {
+function wrapInTimeout(callback, initialMsToTimeout = 15000, msIncreasePerTry = 5000, triesIncreaseCap = 1) {
   let tries = 0;
+
+  return function invokeWithTimeout(...args) {
+    return new Promise((resolve, reject) => {
+      tries = Math.min(tries + 1, triesIncreaseCap);
   
-  return function getTopicData(kafkaHostURI, mainWindow) {
-    console.log('kafkaHostURI in getTopicData:', kafkaHostURI);
-    tries += 1;
-    const msToTimeout = Math.min(tries, 2) * 5000;
-    let isTimedOut = false;
+      callback(...args)
+        .then(result => resolve(result))
+        .catch(err => reject(err));
+  
+      const msToTimeout = initialMsToTimeout + (tries - 1) * msIncreasePerTry;
+      setTimeout(() => {
+        return reject(`Error: function ${callback.name} timed out after ${msToTimeout}ms`);
+      }, msToTimeout)
+    });
+  }
+}
+
+function getTopicData(kafkaHostURI) {
+  return new Promise((resolve, reject) => {
     // Declares a new instance of client that will be used to make a connection
     const client = new kafka.KafkaClient({ kafkaHost: kafkaHostURI });
     // Declaring a new kafka.Admin instance creates a connection to the Kafka admin API
     const admin = new kafka.Admin(client);
-    let isRunning = false;
   
     // Fetch all topics from the Kafka broker
     admin.listTopics((err, data) => {
-      if (err) console.error(err);  // TODO: Handle listTopics error properly
-      isRunning = true;
+      if (err) return reject(err);
   
       // Reassign topics with only the object containing the topic data
       console.log('Result of admin.listTopics API call:', data)
@@ -34,7 +44,7 @@ function GetTopicDataWithTimeout() {
           numberOfPartitions: Object.keys(topicPartitions).length,
           topicName,
         }
-      }); 
+      });
   
       const promises = topics.map(({topicName, numberOfPartitions}) => {
         // for each topic, get # of partitions and storing that in topic partitions
@@ -43,24 +53,15 @@ function GetTopicDataWithTimeout() {
   
       Promise.all(promises)
         .then(topicMsgCounts => {
-          if (isTimedOut) return;
-          
-          tries = 0;
           const result = zipArrays(topics, topicMsgCounts)
             .map(([topicInfo, msgCount]) => Object.assign({msgCount: msgCount}, topicInfo));
   
           console.log('final topic Data:', result);
-          mainWindow.webContents.send('topic:getTopics', result);
-      });
+          return resolve(result);
+        })
+        .catch(err => reject(err));
     });
-    // needed for error handling to check if connection timed out
-    setTimeout(() => {
-      if (!isRunning) {
-        isTimedOut = true;
-        mainWindow.webContents.send('topic:getTopics', 'Error');
-      }
-    }, msToTimeout);
-  }
+  })
 }
 
 /**
@@ -70,7 +71,7 @@ function GetTopicDataWithTimeout() {
  * Makes a connection to Kafka server to fetch a list of topics
  * Transforms the data coming back from the Kafka broker into pertinent data to send back to client
  */
-adminApi.getTopicData = GetTopicDataWithTimeout();
+adminApi.getTopicData = wrapInTimeout(getTopicData, 15000, 5000, 10);
 
 /**
  * @param {String} kafkaHostURI URI of Kafka broker(s)
