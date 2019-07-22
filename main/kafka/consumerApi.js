@@ -1,7 +1,7 @@
 const kafka = require('kafka-node');
 const MessageBuffer = require('./MessageBuffer');
 
-// const client = new kafka.KafkaClient({ kafkaHostURI: '157.230.166.35:9092' });
+// const client = new kafka.KafkaClient({ kafkaHost: kafkaHostURI: '157.230.166.35:9092' });
 //const Consumer = new kafka.Consumer;
 let testStream;
 
@@ -13,10 +13,10 @@ const getMessagesFromTopic = async (kafkaHostURI, topicName, mainWindow) => {
   console.log('consumerAPI getMessagesFromTopic "topicName":', topicName)
   let consumerGroup = new kafka.ConsumerGroup(
     {
-      kafkaHostURI: kafkaHostURI,
-      groupId: 'testingLab1',
-      fromOffset: 'earliest',
-      outOfRangeOffset: 'earliest'
+      kafkaHost: kafkaHostURI,
+      groupId: 'testingLab2',
+      fromOffset: 'latest',
+      outOfRangeOffset: 'latest'
     },
     topicName
   );

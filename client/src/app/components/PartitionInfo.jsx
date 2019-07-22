@@ -1,16 +1,17 @@
 import React from 'react';
 import '../css/PartitionInfo.scss';
 
-const PartitionInfo = props => {
+const PartitionInfo = ({partitionInfo, partitionId}) => {
+  const replicasString = partitionInfo.replicas.join(', ');
   return (
     <div className="partition-details">
-      {console.log(props.infoBoxData.msgCount)}
-      <h5>Partition: {props.partitionId}</h5>
-      <p className="info-font-size">Message Count: {props.infoBoxData.msgCount}</p>
-      <p className="info-font-size">Highwater Offset: {props.infoBoxData.highwaterOffset}</p>
-      <p className="info-font-size">Earliest Offset: {props.infoBoxData.earliestOffset}</p>
-      <p className="info-font-size">Leader Broker: {props.infoBoxData.leader}</p>
-      <p className="info-font-size">Replica Broker(s): {props.infoBoxData.replicas}</p>
+      {console.log(partitionInfo.msgCount)}
+      <h5>Partition: {partitionId}</h5>
+      <p className="info-font-size">Message Count: {partitionInfo.msgCount}</p>
+      <p className="info-font-size">Highwater Offset: {partitionInfo.highwaterOffset}</p>
+      <p className="info-font-size">Earliest Offset: {partitionInfo.earliestOffset}</p>
+      <p className="info-font-size">Leader Broker: {partitionInfo.leader}</p>
+      <p className="info-font-size">Replica Broker(s): {replicasString}</p>
     </div>
   );
 };

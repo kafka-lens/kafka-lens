@@ -8,24 +8,7 @@ class Broker extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      kafkaHostURI: 'localhost:9092',
-      brokers: [
-        {
-          brokerId: 1,
-          brokerURI: 'localhost:test',
-          isAlive: true,
-          topics: [{ topicName: 'testName', newMessagesPerSecond: 15 }]
-        },
-        {
-          brokerId: 2,
-          brokerURI: 'localhost:test2',
-          isAlive: false,
-          topics: [
-            { topicName: 'testTopic1', newMessagesPerSecond: 15 },
-            { topicName: 'testTopic2', newMessagesPerSecond: 2340 }
-          ]
-        }
-      ]
+      brokers: []
     };
   }
 
@@ -38,22 +21,28 @@ class Broker extends Component {
       if (error) {
         console.error('getBrokers ERROR:', error);
       }
+      console.log('Getting new brokers Info:', data);
 
       const brokersList = Object.values(data);
+      brokersList.forEach(broker => {
+        const brokerTopicsAsArray = Object.values(broker.topics);
+        broker.topics = brokerTopicsAsArray;
+      });
       this.setState({
         brokers: brokersList
       });
     });
 
-    ipcRenderer.send('broker:getBrokers', { kafkaHostURI: this.state.kafkaHostURI });
+    ipcRenderer.send('broker:getBrokers', { kafkaHostURI: this.props.kafkaHostURI });
   }
 
   render() {
-    const arr = [];
+    const brokerViews = [];
     for (let i = 0; i < this.state.brokers.length; i += 1) {
-      arr.push(<BrokerView key={i} {...this.state.brokers[i]} />);
+      brokerViews.push(<BrokerView key={i} {...this.state.brokers[i]} />);
     }
-    return <div className="broker-grid-container" >{arr}</div>;
+
+    return <div className="broker-grid-container">{brokerViews}</div>;
   }
 }
 

@@ -1,14 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Main from '../containers/Main.jsx';
+import App from '../containers/App.jsx';
 
-describe('Main.js unit tests', () => {
+describe('App.js unit tests', () => {
   let wrapper;
 
   // * MOUNT MAIN COMPONENT BEFORE ALL TESTS
   beforeAll(() => {
-    wrapper = shallow(<Main />);
+    wrapper = shallow(<App />);
   });
 
   it('should render without errors', () => {

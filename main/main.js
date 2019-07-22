@@ -52,7 +52,7 @@ app.on('activate', () => {
   }
 });
 
-// * Add Chrome dev tools menu
+// Add Chrome dev tools menu
 const addDevToolsToMenu = [
   {
     label: 'File',
@@ -66,6 +66,7 @@ const addDevToolsToMenu = [
       },
       {
         label: 'DevTools',
+        accelerator: process.platform === 'darwin' ? 'Command+Shift+I' : 'Ctrl+Shift+I',
         click() {
           mainWindow.webContents.openDevTools();
         }
@@ -81,8 +82,10 @@ const addDevToolsToMenu = [
  */
 
 // * Listens for URI string from client connection page
-ipcMain.on('topic:getTopics', (e, uri) => {
-  adminApi.getTopicData(uri, mainWindow);
+ipcMain.on('topic:getTopics', (e, kafkaHostUri) => {
+  adminApi.getTopicData(kafkaHostUri)
+    .then(result => mainWindow.webContents.send('topic:getTopics', result))
+    .catch(error => mainWindow.webContents.send('topic:getTopics', error));
 });
 
 /**
@@ -119,6 +122,12 @@ ipcMain.on('partition:getData', (e, args) => {
 
 ipcMain.on('broker:getBrokers', (e, args) => {
   console.log('broker:getBrokers received in main.js args:', args);
-  brokerApi.getBrokerData(args.kafkaHostURI, mainWindow)
-  setInterval(() => brokerApi.getBrokerData(args.kafkaHostURI, mainWindow), 5000);  
+  brokerApi.getBrokerData(args.kafkaHostURI)
+    .then(data => mainWindow.webContents.send('broker:getBrokers', data))
+    .catch(err => mainWindow.webContents.send('broker:getBrokers', err))
+  setInterval(() => {
+    brokerApi.getBrokerData(args.kafkaHostURI)
+      .then(data => mainWindow.webContents.send('broker:getBrokers', data))
+      .catch(err => mainWindow.webContents.send('broker:getBrokers', err))
+  }, 10000);  
 })

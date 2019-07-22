@@ -5,6 +5,80 @@ const offsetApi = require('./offsetApi');
 
 const adminApi = {};
 
+function wrapInTimeout(callback, initialMsToTimeout = 15000, msIncreasePerTry = 5000, triesIncreaseCap = 1) {
+  let tries = 0;
+
+  return function invokeWithTimeout(...args) {
+    return new Promise((resolve, reject) => {
+      tries = Math.min(tries + 1, triesIncreaseCap);
+  
+      callback(...args)
+        .then(result => resolve(result))
+        .catch(err => reject(err));
+  
+      const msToTimeout = initialMsToTimeout + (tries - 1) * msIncreasePerTry;
+      setTimeout(() => {
+        return reject(`Error: function ${callback.name} timed out after ${msToTimeout}ms`);
+      }, msToTimeout)
+    });
+  }
+}
+
+function getTopicData(kafkaHostURI) {
+  const topicNamesToIgnore = [
+    '__consumer_offsets',
+    'null',
+    'undefined',
+  ]
+
+  return new Promise((resolve, reject) => {
+    // Declares a new instance of client that will be used to make a connection
+    const client = new kafka.KafkaClient({ kafkaHost: kafkaHostURI });
+    // Declaring a new kafka.Admin instance creates a connection to the Kafka admin API
+    const admin = new kafka.Admin(client);
+  
+    // Fetch all topics from the Kafka broker
+    admin.listTopics((err, data) => {
+      if (err) return reject('Error getting list of Topics:' + err);
+  
+      // Reassign topics with only the object containing the topic data
+      console.log('Result of admin.listTopics API call:', data)
+      topicsMetadata = data[1].metadata;
+  
+      console.log('topicsMetadata obtained:', topicsMetadata);
+
+      const topics = Object.entries(topicsMetadata)
+        .filter(([topicName]) => !topicNamesToIgnore.includes(topicName))
+        .map(([topicName, topicPartitions]) => {
+          return {
+            numberOfPartitions: Object.keys(topicPartitions).length,
+            topicName,
+          }
+        });
+  
+      const promises = topics.map(({topicName, numberOfPartitions}) => {
+        // for each topic, get # of partitions and storing that in topic partitions
+        return adminApi.getTopicMsgCount(kafkaHostURI, topicName, numberOfPartitions);
+      });
+  
+      Promise.all(promises)
+        .then(topicMsgCounts => {
+          const result = zipArrays(topics, topicMsgCounts)
+            .map(([topicInfo, msgCount]) => Object.assign({msgCount: msgCount}, topicInfo));
+  
+          console.log('final topic Data:', result);
+          client.close();
+          return resolve(result);
+        })
+        .catch(err => {
+          console.error('Error getting all topicMsgCounts:', err);
+          client.close();
+          return reject('Error getting all topicMsgCounts:' + err);
+        });
+    });
+  })
+}
+
 /**
  * @param {String} kafkaHostURI the connection uri that the user types into connection input
  * @param {Electron Window} mainWindow Main window that gets data
@@ -12,51 +86,7 @@ const adminApi = {};
  * Makes a connection to Kafka server to fetch a list of topics
  * Transforms the data coming back from the Kafka broker into pertinent data to send back to client
  */
-adminApi.getTopicData = (kafkaHostURI, mainWindow) => {
-  // Declares a new instance of client that will be used to make a connection
-  const client = new kafka.KafkaClient({ kafkaHostURI });
-  // Declaring a new kafka.Admin instance creates a connection to the Kafka admin API
-  const admin = new kafka.Admin(client);
-  let isRunning = false;
-
-  // Fetch all topics from the Kafka broker
-  admin.listTopics((err, data) => {
-    if (err) console.error(err);  // TODO: Handle listTopics error properly
-    
-    isRunning = true;
-
-    // Reassign topics with only the object containing the topic data
-    console.log('Result of admin.listTopics API call:', data)
-    topicsMetadata = data[1].metadata;
-
-    const topics = Object.entries(topicsMetadata).map(([topicName, topicPartitions]) => {
-      return {
-        numberOfPartitions: Object.keys(topicPartitions).length,
-        topicName,
-      }
-    }); 
-
-    const promises = topics.map(({topicName, numberOfPartitions}) => {
-      // for each topic, get # of partitions and storing that in topic partitions
-      return adminApi.getTopicMsgCount(kafkaHostURI, topicName, numberOfPartitions);
-    });
-
-    Promise.all(promises)
-      .then(topicMsgCounts => {
-        const result = zipArrays(topics, topicMsgCounts)
-          .map(([topicInfo, msgCount]) => Object.assign({msgCount: msgCount}, topicInfo));
-
-        console.log('final topic Data:', result);
-        mainWindow.webContents.send('topic:getTopics', result);
-    });
-  });
-  // needed for error handling to check if connection timed out
-  setTimeout(() => {
-    if (!isRunning) {
-      mainWindow.webContents.send('topic:getTopics', 'Error');
-    }
-  }, 3000);
-};
+adminApi.getTopicData = wrapInTimeout(getTopicData, 100000, 5000, 10);
 
 /**
  * @param {String} kafkaHostURI URI of Kafka broker(s)
@@ -118,7 +148,7 @@ adminApi.getPartitionMsgCount = (kafkaHostURI, topicName, partitionId = 0) => {
  * as an object containing highwaterOffset and messageCount as properties.
  */
 adminApi.getPartitionBrokers = (kafkaHostURI, topicName, partitionId = 0) => {
-  const client = new kafka.KafkaClient({ kafkaHostURI });
+  const client = new kafka.KafkaClient({ kafkaHost: kafkaHostURI });
   const admin = new kafka.Admin(client);
   const brokerPartitionData = [];
 
@@ -133,8 +163,10 @@ adminApi.getPartitionBrokers = (kafkaHostURI, topicName, partitionId = 0) => {
       const replicas = topicsMetadata[topicName][partitionId].replicas.filter( b => b !== leader);
       brokerPartitionData.push(leader);
       brokerPartitionData.push(replicas);
+
+      client.close();
+      resolve(brokerPartitionData);
     });
-    resolve(brokerPartitionData);
   })
 };
 
