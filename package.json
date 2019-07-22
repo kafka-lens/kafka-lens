@@ -30,7 +30,7 @@
     ]
   },
   "scripts": {
-    "start": "electron .",
+    "start": "electron . --inspect=5858",
     "start:dev": "webpack-dev-server --open",
     "webpack": "webpack",
     "test": "jest",
@@ -56,10 +56,11 @@
   "dependencies": {
     "jest-css-modules-transform": "^2.1.1",
     "kafka-node": "^4.0.1",
-    "node-rdkafka": "^2.5.1",
     "node-sass": "^4.11.0",
+    "node-zookeeper-client": "^1.0.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
+    "react-router-dom": "^5.0.1",
     "sass-loader": "^7.1.0"
   },
   "devDependencies": {
