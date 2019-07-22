@@ -34,7 +34,7 @@ class App extends React.Component {
     ipcRenderer.on('topic:getTopics', (e, data) => {
       this.setState({ isFetching: false });
 
-      if (data === 'Error') {
+      if (typeof data === 'string' && data.startsWith('Error')) {
         this.setState({
           connected: false
         });
