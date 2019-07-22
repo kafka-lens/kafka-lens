@@ -59,7 +59,10 @@ function getTopicData(kafkaHostURI) {
           console.log('final topic Data:', result);
           return resolve(result);
         })
-        .catch(err => reject('Error getting all topicMsgCounts:' + err));
+        .catch(err => {
+          console.error('Error getting all topicMsgCounts:', err);
+          reject('Error getting all topicMsgCounts:' + err);
+        });
     });
   })
 }
