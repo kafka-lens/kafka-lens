@@ -5,6 +5,9 @@ testFile.js
 Launch-application/
 .DS_Store
 .vscode/
+build/
+dist/
+Kafka-Lens-linux-x64/
 
 # Logs
 logs

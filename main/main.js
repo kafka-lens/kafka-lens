@@ -3,7 +3,9 @@ const path = require('path');
 const url = require('url');
 
 const adminApi = require('./kafka/adminApi');
+const offsetApi = require('./kafka/offsetApi');
 const consumerApi = require('./kafka/consumerApi');
+const brokerApi = require('./kafka/brokerApi');
 
 // * Disable error dialogs by overriding
 // * FIX: https://goo.gl/YsDdsS
@@ -12,7 +14,7 @@ dialog.showErrorBox = function(title, content) {
 };
 
 // * Stores reference to active consumers for disconnecting when needed
-const consumers = {};
+let currConsumerGroupShutdownMethod;
 
 // * Creates a new window
 let mainWindow;
@@ -50,7 +52,7 @@ app.on('activate', () => {
   }
 });
 
-// * Add Chrome dev tools menu
+// Add Chrome dev tools menu
 const addDevToolsToMenu = [
   {
     label: 'File',
@@ -60,6 +62,13 @@ const addDevToolsToMenu = [
         accelerator: process.platform === 'darwin' ? 'Command+Q' : 'Ctrl+Q',
         click() {
           app.quit();
+        }
+      },
+      {
+        label: 'DevTools',
+        accelerator: process.platform === 'darwin' ? 'Command+Shift+I' : 'Ctrl+Shift+I',
+        click() {
+          mainWindow.webContents.openDevTools();
         }
       }
     ]
@@ -72,17 +81,14 @@ const addDevToolsToMenu = [
  *
  */
 
-// * Listens for Uri string from client connection page
-ipcMain.on('topic:getTopics', (e, uri) => {
-  adminApi.getTopicData(uri, mainWindow);
-});
-
-ipcMain.on('topic:getPartitions', (e, args) => {
-  adminApi.getPartitionData(args.uri, 'asdf', mainWindow);
-});
-
-ipcMain.on('partition:getTestMessages', (e, args) => {
-  consumerApi.getMessagesFromPartition('asdf', 'test1', mainWindow);
+// * Listens for URI string from client connection page
+ipcMain.on('topic:getTopics', (e, kafkaHostUri) => {
+  adminApi.getTopicData(kafkaHostUri)
+    .then(result => mainWindow.webContents.send('topic:getTopics', result))
+    .catch(error => {
+      if (error === 'ignore') return console.log('ignored getTopicData');
+      mainWindow.webContents.send('topic:getTopics', error);
+    });
 });
 
 /**
@@ -91,25 +97,37 @@ ipcMain.on('partition:getTestMessages', (e, args) => {
  */
 ipcMain.on('partition:getMessages', (e, args) => {
   console.log('get msg request received', args);
-  consumers[args.topic] = consumerApi.getMessagesFromTopic(args.host, args.topic, mainWindow);
-});
-
-ipcMain.on('partition:stopMessages', (e, args) => {
-  consumers[args.topic].disconnect();
+  if (currConsumerGroupShutdownMethod) currConsumerGroupShutdownMethod();
+  currConsumerGroupShutdownMethod = consumerApi.getMessagesFromTopic(args.host, args.topicName, mainWindow);
 });
 
 ipcMain.on('partition:getData', (e, args) => {
   const results = [];
-  results[0] = adminApi.getLatestOffset(args.kafkaHost, args.topic, args.partition);
-  results[1] = adminApi.getEarliestOffset(args.kafkaHost, args.topic, args.partition);
-  results[2] = adminApi.getCurrentMsgCount(args.kafkaHost, args.topic, args.partition);
+  results[0] = offsetApi.getLatestOffset(args.kafkaHostURI, args.topicName, args.partitionId);
+  results[1] = offsetApi.getEarliestOffset(args.kafkaHostURI, args.topicName, args.partitionId);
+  results[2] = adminApi.getPartitionMsgCount(args.kafkaHostURI, args.topicName, args.partitionId);
+  results[3] = adminApi.getPartitionBrokers(args.kafkaHostURI, args.topicName, args.partitionId);
 
   Promise.all(results).then(result => {
     const data = {
       highwaterOffset: result[0],
       earliestOffset: result[1],
-      messageCount: result[2]
+      msgCount: result[2],
+      leader: result[3][0],
+      replicas: result[3][1]
     };
     mainWindow.webContents.send('partition:getData', data);
   });
 });
+
+ipcMain.on('broker:getBrokers', (e, args) => {
+  console.log('broker:getBrokers received in main.js args:', args);
+  brokerApi.getBrokerData(args.kafkaHostURI)
+    .then(data => mainWindow.webContents.send('broker:getBrokers', data))
+    .catch(err => mainWindow.webContents.send('broker:getBrokers', err))
+  setInterval(() => {
+    brokerApi.getBrokerData(args.kafkaHostURI)
+      .then(data => mainWindow.webContents.send('broker:getBrokers', data))
+      .catch(err => mainWindow.webContents.send('broker:getBrokers', err))
+  }, 10000);  
+})

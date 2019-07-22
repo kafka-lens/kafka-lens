@@ -2,13 +2,12 @@ import React from 'react';
 import Message from './Message.jsx';
 import '../css/MessageList.scss';
 
-const MessageList = props => {
-  const messageArray = props.messageArray;
+const MessageList = ({ messageArray }) => {
   const renderMessages = [];
 
   messageArray.forEach((msg, i) => {
     renderMessages.push(
-      <Message key={i} id={i} message={messageArray[i].value} offset={messageArray[i].offset} />
+      <Message key={i} id={i} message={msg.value} offset={msg.offset} />
     );
   });
 
