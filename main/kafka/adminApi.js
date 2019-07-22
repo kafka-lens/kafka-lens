@@ -67,11 +67,13 @@ function getTopicData(kafkaHostURI) {
             .map(([topicInfo, msgCount]) => Object.assign({msgCount: msgCount}, topicInfo));
   
           console.log('final topic Data:', result);
+          client.close();
           return resolve(result);
         })
         .catch(err => {
           console.error('Error getting all topicMsgCounts:', err);
-          reject('Error getting all topicMsgCounts:' + err);
+          client.close();
+          return reject('Error getting all topicMsgCounts:' + err);
         });
     });
   })
@@ -161,8 +163,10 @@ adminApi.getPartitionBrokers = (kafkaHostURI, topicName, partitionId = 0) => {
       const replicas = topicsMetadata[topicName][partitionId].replicas.filter( b => b !== leader);
       brokerPartitionData.push(leader);
       brokerPartitionData.push(replicas);
+
+      client.close();
+      resolve(brokerPartitionData);
     });
-    resolve(brokerPartitionData);
   })
 };
 
