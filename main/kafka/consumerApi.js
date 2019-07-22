@@ -14,9 +14,9 @@ const getMessagesFromTopic = async (kafkaHostURI, topicName, mainWindow) => {
   let consumerGroup = new kafka.ConsumerGroup(
     {
       kafkaHost: kafkaHostURI,
-      groupId: 'testingLab1',
-      fromOffset: 'earliest',
-      outOfRangeOffset: 'earliest'
+      groupId: 'testingLab2',
+      fromOffset: 'latest',
+      outOfRangeOffset: 'latest'
     },
     topicName
   );
