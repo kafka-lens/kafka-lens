@@ -8,7 +8,6 @@ class Broker extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      kafkaHostURI: '',
       brokers: []
     };
   }
@@ -34,7 +33,7 @@ class Broker extends Component {
       });
     });
 
-    ipcRenderer.send('broker:getBrokers', { kafkaHostURI: this.state.kafkaHostURI });
+    ipcRenderer.send('broker:getBrokers', { kafkaHostURI: this.props.kafkaHostURI });
   }
 
   render() {
