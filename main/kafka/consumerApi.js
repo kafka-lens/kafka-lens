@@ -31,7 +31,7 @@ consumerApi.getMessagesFromTopic = (kafkaHostURI, topicName, mainWindow) => {
         partitionId: message.partition,
         key: message.key,
         offset: message.offset,
-        timestamp: message.timestamp,
+        timestamp: message.timestamp || 'None',
       }
       console.log('message:', message);
       console.log('formatedMessage:', formatedMessage);

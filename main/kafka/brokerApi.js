@@ -108,6 +108,7 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
 
         if (topicName === '__consumer_offsets') return;
         // for each topic, find associated broker and add topic name to topic array in brokerResults
+        
         const associatedBrokers = new Set();
         Object.values(topic).forEach(partition => {
           console.log('partition:', partition);
