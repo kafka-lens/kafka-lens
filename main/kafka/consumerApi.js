@@ -13,7 +13,7 @@ const getMessagesFromTopic = async (kafkaHostURI, topicName, mainWindow) => {
   console.log('consumerAPI getMessagesFromTopic "topicName":', topicName)
   let consumerGroup = new kafka.ConsumerGroup(
     {
-      kafkaHostURI: kafkaHostURI,
+      kafkaHost: kafkaHostURI,
       groupId: 'testingLab1',
       fromOffset: 'earliest',
       outOfRangeOffset: 'earliest'

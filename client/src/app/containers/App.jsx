@@ -91,7 +91,11 @@ class App extends React.Component {
           <Router>
             <Header restartConnectionPage={this.restartConnectionPage} />
             <Switch>
-              <Route path="/broker" render={props => <Broker />} />
+              <Route path="/broker" render={() => (
+                <Broker
+                  kafkaHostURI={this.state.uri_input}
+                />
+              )} />
               <Route
                 path="/"
                 render={() => (

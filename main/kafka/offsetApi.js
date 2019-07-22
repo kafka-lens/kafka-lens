@@ -16,6 +16,7 @@ offsetApi.getEarliestOffset = (kafkaHostURI, topicName, partitionId) => {
   const offset = new kafka.Offset(client);
   return new Promise((resolve, reject) => {
     offset.fetchEarliestOffsets([topicName], (err, data) => {
+      client.close();
       if (err) reject(err);
       else {
         console.log(`result from getEarliestOffset for topic ${topicName} - partition ${partitionId}:`, data);
@@ -39,6 +40,7 @@ offsetApi.getLatestOffset = (kafkaHostURI, topicName, partitionId) => {
   const offset = new kafka.Offset(client);
   return new Promise((resolve, reject) => {
     offset.fetchLatestOffsets([topicName], (err, data) => {
+      client.close();
       if (err) reject(err);
       else {
         console.log(`result from getLatestOffset for topic ${topicName} - partition ${partitionId}:`, data);
