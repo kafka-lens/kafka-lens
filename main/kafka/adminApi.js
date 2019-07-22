@@ -25,6 +25,12 @@ function wrapInTimeout(callback, initialMsToTimeout = 15000, msIncreasePerTry = 
 }
 
 function getTopicData(kafkaHostURI) {
+  const topicNamesToIgnore = [
+    '__consumer_offsets',
+    'null',
+    'undefined',
+  ]
+
   return new Promise((resolve, reject) => {
     // Declares a new instance of client that will be used to make a connection
     const client = new kafka.KafkaClient({ kafkaHost: kafkaHostURI });
@@ -39,12 +45,16 @@ function getTopicData(kafkaHostURI) {
       console.log('Result of admin.listTopics API call:', data)
       topicsMetadata = data[1].metadata;
   
-      const topics = Object.entries(topicsMetadata).map(([topicName, topicPartitions]) => {
-        return {
-          numberOfPartitions: Object.keys(topicPartitions).length,
-          topicName,
-        }
-      });
+      console.log('topicsMetadata obtained:', topicsMetadata);
+
+      const topics = Object.entries(topicsMetadata)
+        .filter(([topicName]) => !topicNamesToIgnore.includes(topicName))
+        .map(([topicName, topicPartitions]) => {
+          return {
+            numberOfPartitions: Object.keys(topicPartitions).length,
+            topicName,
+          }
+        });
   
       const promises = topics.map(({topicName, numberOfPartitions}) => {
         // for each topic, get # of partitions and storing that in topic partitions
@@ -59,7 +69,10 @@ function getTopicData(kafkaHostURI) {
           console.log('final topic Data:', result);
           return resolve(result);
         })
-        .catch(err => reject('Error getting all topicMsgCounts:' + err));
+        .catch(err => {
+          console.error('Error getting all topicMsgCounts:', err);
+          reject('Error getting all topicMsgCounts:' + err);
+        });
     });
   })
 }
@@ -71,7 +84,7 @@ function getTopicData(kafkaHostURI) {
  * Makes a connection to Kafka server to fetch a list of topics
  * Transforms the data coming back from the Kafka broker into pertinent data to send back to client
  */
-adminApi.getTopicData = wrapInTimeout(getTopicData, 15000, 5000, 10);
+adminApi.getTopicData = wrapInTimeout(getTopicData, 100000, 5000, 10);
 
 /**
  * @param {String} kafkaHostURI URI of Kafka broker(s)
