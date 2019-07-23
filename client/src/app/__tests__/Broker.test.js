@@ -19,7 +19,7 @@ describe('Broker.js unit tests', () => {
 
   it('should render <BrokerViews/>', () => {
     const instance = wrapper.instance();
-    // console.log('instance -> ', instance.state.brokers);
+    // console.log('instance -> ', instance);
     expect(instance.state.brokers).toEqual([]);
     instance.setState({
       brokers: [{ broker: 'test1' }, { broker: 'test2' }, { broker: 'test3' }]
