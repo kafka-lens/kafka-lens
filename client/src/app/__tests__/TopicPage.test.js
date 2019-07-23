@@ -8,13 +8,13 @@ describe('TopicPage.js unit tests', () => {
   const props = {
     topicList: []
   };
+
   beforeAll(() => {
     wrapper = shallow(<TopicPage {...props} />);
   });
 
   it('Should render without errors', () => {
     expect(wrapper).toMatchSnapshot();
-    console.log('wrapppererereprerperper', wrapper);
   });
 
   it('Should render Topic components if there are topics in state', () => {
