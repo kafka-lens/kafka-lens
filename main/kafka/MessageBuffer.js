@@ -7,7 +7,7 @@ class MessageBuffer {
    */
   constructor(size) {
     this.maxSize = size;
-    this.array = { 0: null };
+    this.array = { 0: '' };
     this.length = 0;
     this.hiIndex = -1;
     this.loIndex = 0;
