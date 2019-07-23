@@ -36,7 +36,7 @@ consumerApi.getMessagesFromTopic = (kafkaHostURI, topicName, mainWindow, partiti
       console.log('message:', message);
       console.log('formatedMessage:', formatedMessage);
       hasData = Date.now();
-      console.log(`message.partition: ${message.partition}, partitionId: ${partitionId}`);
+      console.log(`message.partition: ${formatedMessage.partitionId}, partitionId: ${partitionId}`);
       if(typeof partitionId !== 'number' || partitionId === formatedMessage.partitionId){
         buffer.queue(formatedMessage);
       }
