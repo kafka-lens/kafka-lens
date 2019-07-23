@@ -133,7 +133,7 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
             };
           }
           const brokerInfo = brokerResult[id];
-          brokerInfo.topics[topicName] = { topicName: topicName, newMessagesPerSecond: null };
+          brokerInfo.topics[topicName] = { topicName: topicName, newMessagesPerSecond: null, isLeader: false };
         });
 
         console.log('brokerResult before msgsPerSecond:', brokerResult);
@@ -147,6 +147,7 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
                 const brokerInfo = brokerResult[cachedPartition.leader];
                 console.log('broker:', brokerInfo);
                 const topic = brokerInfo.topics[topicName];
+                topic.isLeader = true;
                 if (topic.newMessagesPerSecond === null) topic.newMessagesPerSecond = 0;
                 topic.newMessagesPerSecond += cachedPartition.newMessagesPerSecond;
               });
