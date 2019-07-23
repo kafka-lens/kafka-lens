@@ -6,7 +6,7 @@ const MessageBuffer = require('./MessageBuffer');
 
 const consumerApi = {};
 
-consumerApi.getMessagesFromTopic = (kafkaHostURI, topicName, mainWindow) => {
+consumerApi.getMessagesFromTopic = (kafkaHostURI, topicName, mainWindow, partitionId) => {
   // Send back test data
   const buffer = new MessageBuffer(1000);
   let hasData = false;
@@ -36,7 +36,10 @@ consumerApi.getMessagesFromTopic = (kafkaHostURI, topicName, mainWindow) => {
       console.log('message:', message);
       console.log('formatedMessage:', formatedMessage);
       hasData = Date.now();
-      buffer.queue(formatedMessage);
+      console.log(`message.partition: ${message.partition}, partitionId: ${partitionId}`);
+      if(typeof partitionId !== 'number' || partitionId === formatedMessage.partitionId){
+        buffer.queue(formatedMessage);
+      }
     });
 
   const sendBufferIntervalId = setInterval(() => {
