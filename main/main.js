@@ -98,7 +98,7 @@ ipcMain.on('topic:getTopics', (e, kafkaHostUri) => {
 ipcMain.on('partition:getMessages', (e, args) => {
   console.log('get msg request received', args);
   if (currConsumerGroupShutdownMethod) currConsumerGroupShutdownMethod();
-  currConsumerGroupShutdownMethod = consumerApi.getMessagesFromTopic(args.host, args.topicName, mainWindow);
+  currConsumerGroupShutdownMethod = consumerApi.getMessagesFromTopic(args.kafkaHostURI, args.topicName, mainWindow, args.partitionId);
 });
 
 ipcMain.on('partition:getData', (e, args) => {
