@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Broker.js unit tests Should render without errors 1`] = `
+<div
+  className="broker-grid-container"
+/>
+`;
