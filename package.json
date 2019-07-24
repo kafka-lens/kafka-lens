@@ -31,14 +31,22 @@
   },
   "scripts": {
     "start": "electron . --inspect=5858",
+    "pack": "build --dir",
+    "dist": "build",
     "start:dev": "webpack-dev-server --open",
     "webpack": "webpack",
     "test": "jest",
     "package": "",
     "build": "electron-packager . Kafka-Lens",
+    "build-win": "electron-packager . kafka-lens --platform win32 --arch x64 --out dist/",
+    "setup-win": "electron-installer-windows --src dist/kafka-lens-win32-x64/ --dest dist/installers/",
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=Launch-application",
     "package-win": "electron-packager . Kafka-Lens --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=Launch-application --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Kafka Lens\"",
     "package-linux": "electron-packager . Kafka-Lens --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/icon.png --prune=true --out=Launch-application"
+  },
+  "build": {
+    "appId": "kafka lens",
+    "productName": "Kafka Lens"
   },
   "repository": {
     "type": "git",
@@ -71,8 +79,10 @@
     "babel-loader": "^8.0.5",
     "css-loader": "^2.1.0",
     "electron": "^4.0.4",
-    "electron-builder": "^20.38.5",
-    "electron-packager": "^13.1.0",
+    "electron-builder": "^20.44.4",
+    "electron-installer-windows": "^2.0.0",
+    "electron-packager": "^13.1.1",
+    "electron-prebuilt": "^1.4.13",
     "electron-rebuild": "^1.8.4",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.9.1",
