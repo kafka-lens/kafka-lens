@@ -7,9 +7,22 @@ const adminApi = {};
 
 function wrapInTimeout(callback, initialMsToTimeout = 15000, msIncreasePerTry = 5000, triesIncreaseCap = 1) {
   let tries = 0;
+  let currentTimeoutId;
+  let currentReject;
 
   return function invokeWithTimeout(...args) {
+    if (currentTimeoutId) {
+      clearTimeout(currentTimeoutId);
+      currentTimeoutId = null;
+    }
+
+    if (currentReject) {
+      currentReject('ignore');
+      currentReject = null;
+    }
+
     return new Promise((resolve, reject) => {
+      currentReject = reject.bind(this);
       tries = Math.min(tries + 1, triesIncreaseCap);
   
       callback(...args)
@@ -17,7 +30,8 @@ function wrapInTimeout(callback, initialMsToTimeout = 15000, msIncreasePerTry = 
         .catch(err => reject(err));
   
       const msToTimeout = initialMsToTimeout + (tries - 1) * msIncreasePerTry;
-      setTimeout(() => {
+      currentTimeoutId = setTimeout(() => {
+        currentTimeoutId = null;
         return reject(`Error: function ${callback.name} timed out after ${msToTimeout}ms`);
       }, msToTimeout)
     });

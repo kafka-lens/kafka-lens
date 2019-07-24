@@ -3,9 +3,10 @@ const MessageBuffer = require('./MessageBuffer');
 
 // const client = new kafka.KafkaClient({ kafkaHost: kafkaHostURI: '157.230.166.35:9092' });
 //const Consumer = new kafka.Consumer;
-let testStream;
 
-const getMessagesFromTopic = async (kafkaHostURI, topicName, mainWindow) => {
+const consumerApi = {};
+
+consumerApi.getMessagesFromTopic = (kafkaHostURI, topicName, mainWindow, partitionId) => {
   // Send back test data
   const buffer = new MessageBuffer(1000);
   let hasData = false;
@@ -20,6 +21,7 @@ const getMessagesFromTopic = async (kafkaHostURI, topicName, mainWindow) => {
     },
     topicName
   );
+
   consumerGroup.connect();
   consumerGroup
     .on('message', message => {
@@ -29,24 +31,34 @@ const getMessagesFromTopic = async (kafkaHostURI, topicName, mainWindow) => {
         partitionId: message.partition,
         key: message.key,
         offset: message.offset,
-        timestamp: message.timestamp,
+        timestamp: message.timestamp || 'None',
       }
       console.log('message:', message);
       console.log('formatedMessage:', formatedMessage);
       hasData = Date.now();
-      buffer.queue(formatedMessage);
+      console.log(`message.partition: ${formatedMessage.partitionId}, partitionId: ${partitionId}`);
+      if(typeof partitionId !== 'number' || partitionId === formatedMessage.partitionId){
+        buffer.queue(formatedMessage);
+      }
     });
-  const sendBuffer = setInterval(() => {
+
+  const sendBufferIntervalId = setInterval(() => {
     if (lastChecked < hasData) {
       lastChecked = Date.now();
       buffer.getNextSegment(mainWindow);
     }
   }, 50);
-  return { consumerGroup, sendBuffer };
+
+  const shutdownConsumerGroup = () => {
+    console.log(`shutting down consumerGroup for topic ${topicName} - memberId ${consumerGroup.memberId}`)
+    clearInterval(sendBufferIntervalId);
+    consumerGroup.close((err) => {
+      if (err) console.log('error closing consumerGroup connection:', err);
+      else console.log('consumerGroup connection successfully shut down');
+    });
+  }
+
+  return shutdownConsumerGroup;
 };
 
-const stopDataFlow = () => {
-  clearInterval(testStream);
-};
-
-module.exports = { getMessagesFromTopic, stopDataFlow };
+module.exports = consumerApi;

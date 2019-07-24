@@ -14,7 +14,7 @@ dialog.showErrorBox = function(title, content) {
 };
 
 // * Stores reference to active consumers for disconnecting when needed
-const consumers = {};
+let currConsumerGroupShutdownMethod;
 
 // * Creates a new window
 let mainWindow;
@@ -85,7 +85,10 @@ const addDevToolsToMenu = [
 ipcMain.on('topic:getTopics', (e, kafkaHostUri) => {
   adminApi.getTopicData(kafkaHostUri)
     .then(result => mainWindow.webContents.send('topic:getTopics', result))
-    .catch(error => mainWindow.webContents.send('topic:getTopics', error));
+    .catch(error => {
+      if (error === 'ignore') return console.log('ignored getTopicData');
+      mainWindow.webContents.send('topic:getTopics', error);
+    });
 });
 
 /**
@@ -94,11 +97,8 @@ ipcMain.on('topic:getTopics', (e, kafkaHostUri) => {
  */
 ipcMain.on('partition:getMessages', (e, args) => {
   console.log('get msg request received', args);
-  consumers[args.topicName] = consumerApi.getMessagesFromTopic(args.host, args.topicName, mainWindow);
-});
-
-ipcMain.on('partition:stopMessages', (e, args) => {
-  consumers[args.topicName].disconnect();
+  if (currConsumerGroupShutdownMethod) currConsumerGroupShutdownMethod();
+  currConsumerGroupShutdownMethod = consumerApi.getMessagesFromTopic(args.kafkaHostURI, args.topicName, mainWindow, args.partitionId);
 });
 
 ipcMain.on('partition:getData', (e, args) => {

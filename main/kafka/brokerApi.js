@@ -108,6 +108,7 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
 
         if (topicName === '__consumer_offsets') return;
         // for each topic, find associated broker and add topic name to topic array in brokerResults
+        
         const associatedBrokers = new Set();
         Object.values(topic).forEach(partition => {
           console.log('partition:', partition);
@@ -133,7 +134,7 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
             };
           }
           const brokerInfo = brokerResult[id];
-          brokerInfo.topics[topicName] = { topicName: topicName, newMessagesPerSecond: null };
+          brokerInfo.topics[topicName] = { topicName: topicName, newMessagesPerSecond: null, isLeader: false };
         });
 
         console.log('brokerResult before msgsPerSecond:', brokerResult);
@@ -147,6 +148,7 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
                 const brokerInfo = brokerResult[cachedPartition.leader];
                 console.log('broker:', brokerInfo);
                 const topic = brokerInfo.topics[topicName];
+                topic.isLeader = true;
                 if (topic.newMessagesPerSecond === null) topic.newMessagesPerSecond = 0;
                 topic.newMessagesPerSecond += cachedPartition.newMessagesPerSecond;
               });

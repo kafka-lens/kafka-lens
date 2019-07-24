@@ -9,6 +9,7 @@ const BrokerTopicsView = props => {
         key={i}
         topicName={props.topics[i].topicName}
         newMessagesPerSecond={props.topics[i].newMessagesPerSecond}
+        isLeader = {props.topics[i].isLeader}
       />
     );
   }

@@ -58,7 +58,7 @@ class TopicPage extends React.Component {
     }
     
     ipcRenderer.send('partition:getMessages', {
-      host: this.props.uri,
+      kafkaHostURI: this.props.uri,
       topicName,
     });
 
@@ -77,6 +77,7 @@ class TopicPage extends React.Component {
     const topicName = event.target.getAttribute('topicname');
     console.log('topicName from the partition div:',topicName);
     const partitionId = parseInt(event.target.id);
+    console.log('partitionId:', partitionId);
 
     let element = event.target;
     let lastElement = this.state.lastElement;
@@ -87,6 +88,12 @@ class TopicPage extends React.Component {
       if (lastElement !== '') {
         lastElement.classList.remove('highlight-this');
       }
+
+      ipcRenderer.send('partition:getMessages', {
+        kafkaHostURI,
+        topicName,
+        partitionId,
+      });
 
       ipcRenderer.send('partition:getData', {
         kafkaHostURI,

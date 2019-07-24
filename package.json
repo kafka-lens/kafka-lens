@@ -64,7 +64,6 @@
   "dependencies": {
     "jest-css-modules-transform": "^2.1.1",
     "kafka-node": "^4.0.1",
-    "node-rdkafka": "^2.5.1",
     "node-sass": "^4.11.0",
     "node-zookeeper-client": "^1.0.0",
     "react": "^16.8.1",
