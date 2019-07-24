@@ -5,7 +5,7 @@ import '../css/BrokerView.scss';
 
 const BrokerView = props => {
   // change background color if active is true or false
-  console.log('brokerView props:', props);
+  // console.log('brokerView props:', props);
   const brokerColors = {
     Red: '#E9573F',
     Green: '#8CC152'
@@ -17,7 +17,7 @@ const BrokerView = props => {
     backgroundColor = brokerColors.Green;
   }
 
-  console.log('broker backgroundColor:', backgroundColor);
+  // console.log('broker backgroundColor:', backgroundColor);
 
   return (
     <div className="brokerView" key={props.brokerId} style={{ backgroundColor: backgroundColor }}>

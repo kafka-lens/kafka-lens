@@ -14,7 +14,6 @@ describe('App.js unit tests', () => {
   it('should render without errors', () => {
     expect(wrapper.exists('.main-div')).toEqual(true);
     expect(wrapper).toMatchSnapshot();
-    console.log(wrapper.debug());
   });
 
   it('should render a single div with class: main-div', () => {

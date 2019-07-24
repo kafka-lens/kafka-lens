@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BrokerView.js unit tests Should render without errors 1`] = `
+<div
+  className="brokerView"
+  style={
+    Object {
+      "backgroundColor": "#E9573F",
+    }
+  }
+>
+  <BrokerHeader />
+  <BrokerTopicsView />
+</div>
+`;
