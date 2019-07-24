@@ -14,12 +14,15 @@ dialog.showErrorBox = function(title, content) {
 };
 
 // * Stores reference to active consumers for disconnecting when needed
-let currConsumerGroupShutdownMethod;
+const consumers = {};
 
 // * Creates a new window
 let mainWindow;
 function createWindow() {
-  mainWindow = new BrowserWindow({ show: false });
+  mainWindow = new BrowserWindow({
+    show: false,
+    icon: __dirname + '../assets/icons/mac/icon.icns'
+  });
   mainWindow.maximize();
   mainWindow.show();
   mainWindow.loadURL(
@@ -83,12 +86,10 @@ const addDevToolsToMenu = [
 
 // * Listens for URI string from client connection page
 ipcMain.on('topic:getTopics', (e, kafkaHostUri) => {
-  adminApi.getTopicData(kafkaHostUri)
+  adminApi
+    .getTopicData(kafkaHostUri)
     .then(result => mainWindow.webContents.send('topic:getTopics', result))
-    .catch(error => {
-      if (error === 'ignore') return console.log('ignored getTopicData');
-      mainWindow.webContents.send('topic:getTopics', error);
-    });
+    .catch(error => mainWindow.webContents.send('topic:getTopics', error));
 });
 
 /**
@@ -97,8 +98,15 @@ ipcMain.on('topic:getTopics', (e, kafkaHostUri) => {
  */
 ipcMain.on('partition:getMessages', (e, args) => {
   console.log('get msg request received', args);
-  if (currConsumerGroupShutdownMethod) currConsumerGroupShutdownMethod();
-  currConsumerGroupShutdownMethod = consumerApi.getMessagesFromTopic(args.kafkaHostURI, args.topicName, mainWindow, args.partitionId);
+  consumers[args.topicName] = consumerApi.getMessagesFromTopic(
+    args.host,
+    args.topicName,
+    mainWindow
+  );
+});
+
+ipcMain.on('partition:stopMessages', (e, args) => {
+  consumers[args.topicName].disconnect();
 });
 
 ipcMain.on('partition:getData', (e, args) => {
@@ -122,12 +130,14 @@ ipcMain.on('partition:getData', (e, args) => {
 
 ipcMain.on('broker:getBrokers', (e, args) => {
   console.log('broker:getBrokers received in main.js args:', args);
-  brokerApi.getBrokerData(args.kafkaHostURI)
+  brokerApi
+    .getBrokerData(args.kafkaHostURI)
     .then(data => mainWindow.webContents.send('broker:getBrokers', data))
-    .catch(err => mainWindow.webContents.send('broker:getBrokers', err))
+    .catch(err => mainWindow.webContents.send('broker:getBrokers', err));
   setInterval(() => {
-    brokerApi.getBrokerData(args.kafkaHostURI)
+    brokerApi
+      .getBrokerData(args.kafkaHostURI)
       .then(data => mainWindow.webContents.send('broker:getBrokers', data))
-      .catch(err => mainWindow.webContents.send('broker:getBrokers', err))
-  }, 10000);  
-})
+      .catch(err => mainWindow.webContents.send('broker:getBrokers', err));
+  }, 10000);
+});
