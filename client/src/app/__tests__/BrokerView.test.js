@@ -44,7 +44,7 @@ describe('BrokerView.js unit tests', () => {
       isAlive: true
     });
     // console.log(`entire div -> `, wrapper.props());
-    // console.log(`just brokerView -> `, wrapper.find('.brokerView').get(0));
+    // console.log(`just brokerView -> `, wrapper.find('.brokerView').get(0)); 
     expect(wrapper.find('.brokerView')).toHaveLength(1);
     expect(wrapper.find('.brokerView').get(0).props.style).toHaveProperty(
       'backgroundColor',
