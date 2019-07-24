@@ -14,6 +14,15 @@ describe('Topic.js unit tests', () => {
       numberOfPartitions: 5
     }
   };
+
+  const partitionInfoPropWithShowPartitionsTrue = {
+    topicInfo: {
+      showPartitions: true,
+      topicName: 'test1',
+      numberOfPartitions: 5
+    }
+  };
+
   beforeAll(() => {
     wrapper = shallow(<Topic {...props} />);
   });
@@ -41,13 +50,7 @@ describe('Topic.js unit tests', () => {
   });
 
   it('Should render PartitionList when showMessages = true', () => {
-    wrapper.setProps({
-      topicInfo: {
-        showPartitions: true,
-        topicName: 'test1',
-        numberOfPartitions: 5
-      }
-    });
+    wrapper.setProps(partitionInfoPropWithShowPartitionsTrue);
     expect(wrapper.exists('PartitionList')).toEqual(true);
   });
 });
