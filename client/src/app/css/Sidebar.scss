@@ -1,15 +1,11 @@
 .sidebar {
-  height: 100%;
-  width: 0;
-  position: fixed;
+  width: 30vw;
+  position: relative;
   z-index: 1;
-  top: 0;
-  right: 0;
-  background-color: #000000;
+  background-color: #388a98;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
-  opacity: 0.5;
 }
 
 .sidebar .closebtn {
