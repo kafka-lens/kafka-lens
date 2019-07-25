@@ -65,11 +65,13 @@
   },
   "homepage": "https://github.com/teampandawhale/kafka-lens#readme",
   "dependencies": {
+    "chart.js": "^2.8.0",
     "jest-css-modules-transform": "^2.1.1",
     "kafka-node": "^4.0.1",
     "node-sass": "^4.11.0",
     "node-zookeeper-client": "^1.0.0",
     "react": "^16.8.1",
+    "react-chartjs-2": "^2.7.6",
     "react-dom": "^16.8.1",
     "react-router-dom": "^5.0.1",
     "sass-loader": "^7.1.0"
