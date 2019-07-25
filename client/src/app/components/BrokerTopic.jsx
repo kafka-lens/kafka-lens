@@ -6,8 +6,8 @@ const BrokerTopic = props => {
   let newMessagesPerSecondCount = typeof(props.newMessagesPerSecond) === 'number' ? props.newMessagesPerSecond : props.isLeader ? <LoadingData /> : 'Follower';
   return (
     <div>
-        <p>Topic Name: {props.topicName}</p>
-        <p>Msg Per Second: {newMessagesPerSecondCount}</p>
+        <p> <b> Topic Name: </b> {props.topicName}</p>
+        <p> <b> Msg Per Second: </b> {newMessagesPerSecondCount}</p>
       </div>
   );
 };

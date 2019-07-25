@@ -116,7 +116,6 @@ const LineChart = ({ topicsData }) => {
     <div>
       <h1> Line Chart </h1>
       <Line data={data} />
-      {/* <Line data2={data} /> */}
     </div>
   );
 };
