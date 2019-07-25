@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
+import '../css/Sidebar.scss'
 
 function getRandomColor() {
   const red = Math.floor(Math.random() * 255);
@@ -35,7 +36,7 @@ function createDataset(topicName, msgsPerSecondArray) {
   };
 }
 
-const LineChart = ({ timeStamps, topicsData }) => {
+const LineChart = ({ timeStamps, topicsData, brokerId }) => {
   const datasets = Object.entries(topicsData).map(([topicName, msgsPerSecondArray]) => {
     return createDataset(topicName, msgsPerSecondArray);
   });
@@ -48,7 +49,7 @@ const LineChart = ({ timeStamps, topicsData }) => {
   };
   return (
     <div>
-      <h1> Line Chart </h1>
+      <h1 className='brokerId'> Broker ID #{brokerId} History </h1>
       <Line data={data} />
     </div>
   );

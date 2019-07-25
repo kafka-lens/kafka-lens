@@ -7,7 +7,7 @@ const BrokerTopic = ({ topicName, isLeader, newMessagesPerSecond }) => {
       <p>
         <b>Topic Name:</b> {topicName}
       </p>
-      {isLeader && typeof newMessagesPerSecond !== 'number' ? (
+      {isLeader && typeof (newMessagesPerSecond) !== 'number' ? (
         <p>
           <b>Msg Per Second:</b> {newMessagesPerSecond || 'Follower'}
         </p>
