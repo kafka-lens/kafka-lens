@@ -111,6 +111,7 @@ class Broker extends Component {
           isSideBarOpen={this.state.isSideBarOpen}
           closeSideBar={this.closeSidebar}
           brokerGraphData={brokerGraphData}
+          brokerId = {this.state.selectedBrokerId}
         />
       </div>
     );
