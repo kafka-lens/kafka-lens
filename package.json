@@ -1,6 +1,6 @@
 {
   "name": "kafka-lens",
-  "version": "2.0",
+  "version": "2.0.0",
   "description": "A tool for visualizing a Kafka cluster's brokers, topics, partitions, and message flow.",
   "main": "main/main.js",
   "babel": {
