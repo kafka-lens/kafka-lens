@@ -12,20 +12,21 @@ const offsetApi = {};
  */
 offsetApi.getEarliestOffset = (kafkaHostURI, topicName, partitionId) => {
   console.log(`invoking getEarliestOffset for topic ${topicName} - partition ${partitionId}`);
-  const client = new kafka.KafkaClient({ kafkaHost: kafkaHostURI });
-  const offset = new kafka.Offset(client);
+  const { client, offset } = getOffsetAndClient(kafkaHostURI);
+
   return new Promise((resolve, reject) => {
     offset.fetchEarliestOffsets([topicName], (err, data) => {
       client.close();
-      if (err) reject(err);
-      else {
-        console.log(`result from getEarliestOffset for topic ${topicName} - partition ${partitionId}:`, data);
-        resolve(data[topicName][partitionId]);
-      }
+      if (err) return reject(err);
+      console.log(
+        `result from getEarliestOffset for topic ${topicName} - partition ${partitionId}:`,
+        data
+      );
+      resolve(data[topicName][partitionId]);
     });
   });
 };
-  
+
 /**
  * @param {String} kafkaHostURI URI of Kafka broker(s)
  * @param {String} topicName Single topic to lookup
@@ -36,18 +37,27 @@ offsetApi.getEarliestOffset = (kafkaHostURI, topicName, partitionId) => {
  */
 offsetApi.getLatestOffset = (kafkaHostURI, topicName, partitionId) => {
   console.log(`invoking getLatestOffset for topic ${topicName} - partition ${partitionId}`);
-  const client = new kafka.KafkaClient({ kafkaHost: kafkaHostURI });
-  const offset = new kafka.Offset(client);
+  const { client, offset } = getOffsetAndClient(kafkaHostURI);
+
   return new Promise((resolve, reject) => {
     offset.fetchLatestOffsets([topicName], (err, data) => {
       client.close();
       if (err) reject(err);
       else {
-        console.log(`result from getLatestOffset for topic ${topicName} - partition ${partitionId}:`, data);
+        console.log(
+          `result from getLatestOffset for topic ${topicName} - partition ${partitionId}:`,
+          data
+        );
         resolve(data[topicName][partitionId]);
       }
     });
   });
 };
+
+function getOffsetAndClient(kafkaHostURI) {
+  const client = new kafka.KafkaClient({ kafkaHost: kafkaHostURI });
+  console.log('client:', client);
+  return { client, offset: new kafka.Offset(client) };
+}
 
 module.exports = offsetApi;
