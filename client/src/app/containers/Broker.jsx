@@ -45,7 +45,38 @@ class Broker extends Component {
     ipcRenderer.send('broker:getBrokers', { kafkaHostURI: this.props.kafkaHostURI });
   }
 
-  getBrokerGraphData(brokerId) {}
+  getBrokerGraphData(brokerId) {
+    const timeStamps = [];
+    const topicsDataResult = {};
+
+    for (let i = 0; i < this.state.brokersSnapshots.length; i++) {
+      const snapshot = this.state.brokersSnapshots[i];
+      const brokerData = snapshot.filter(broker => broker.brokerId === brokerId)[0];
+      console.log(`brokerData for brokerId ${brokerId}`, brokerData);
+
+      const elapsedTime = i * 10; // NOT ACCURATE!! Not taking into account the asynchronicity of fetching the data
+      timeStamps.push(elapsedTime);
+
+      const topicsSnapshots = brokerData.topics;
+
+      for (let j = 0; j < topicsSnapshots.length; j++) {
+        const topicSnapshot = topicsSnapshots[j];
+
+        if (!topicsDataResult.hasOwnProperty(topicSnapshot.topicName))
+          topicsDataResult[topicSnapshot.topicName] = [];
+        const msgsPerSecondOrNull =
+          typeof topicSnapshot.newMessagesPerSecond === 'number'
+            ? topicSnapshot.newMessagesPerSecond
+            : null;
+        topicsDataResult[topicSnapshot.topicName].push(msgsPerSecondOrNull);
+      }
+    }
+
+    return {
+      timeStamps,
+      topicsData: topicsDataResult
+    };
+  }
 
   openSideBar() {
     this.setState({ sideBarWidth: '550px' });
@@ -65,10 +96,16 @@ class Broker extends Component {
       brokerViews.push(<BrokerView key={i} openSideBar={this.openSideBar} {...brokerObj} />);
     }
 
+    const brokerGraphData = this.getBrokerGraphData(1);
+
     return (
       <div>
         <div className="broker-grid-container">{brokerViews}</div>
-        <SideBar widthSideBar={this.state.sideBarWidth} closeSideBar={this.closeSidebar} />
+        <SideBar
+          widthSideBar={this.state.sideBarWidth}
+          closeSideBar={this.closeSidebar}
+          brokerGraphData={brokerGraphData}
+        />
       </div>
     );
   }
