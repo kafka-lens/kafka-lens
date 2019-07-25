@@ -96,7 +96,7 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
       Object.entries(brokerMetadata).forEach(([broker, brokerData]) => {
         brokerResult[broker] = {
           brokerId: brokerData.nodeId,
-          brokerURI: brokerData.port,
+          brokerURI: brokerData.host + ':' + brokerData.port,
           topics: {},
           isAlive: true
         };
