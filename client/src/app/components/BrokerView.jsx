@@ -22,7 +22,7 @@ const BrokerView = ({ isAlive, openSideBar, brokerId, brokerURI, topics }) => {
   return (
     <div
       className="brokerView"
-      onClick={openSideBar}
+      onClick={() => openSideBar(brokerId)}
       key={brokerId}
       style={{ backgroundColor: backgroundColor }}
     >
