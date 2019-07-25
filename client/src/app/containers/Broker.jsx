@@ -20,6 +20,7 @@ class Broker extends Component {
     ipcRenderer.on('broker:getBrokers', (e, { error, data }) => {
       if (error) {
         console.error('getBrokers ERROR:', error);
+        return;
       }
       console.log('Getting new brokers Info:', data);
 
@@ -45,8 +46,8 @@ class Broker extends Component {
   render() {
     const brokerViews = [];
 
-    const latestSnapshot = this.state.brokersSnapshots[this.state.brokersSnapshots.length - 1];
-    for (let i = 0; i < this.state.brokers.length; i += 1) {
+    const latestSnapshot = this.state.brokersSnapshots[this.state.brokersSnapshots.length - 1] || [];
+    for (let i = 0; i < latestSnapshot.length; i += 1) {
       const brokerObj = latestSnapshot[i];
       brokerViews.push(<BrokerView key={i} {...brokerObj} />);
     }
