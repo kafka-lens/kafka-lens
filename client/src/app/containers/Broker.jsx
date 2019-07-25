@@ -10,7 +10,7 @@ class Broker extends Component {
     super(props);
     this.state = {
       brokersSnapshots: [],
-      sideBarWidth: '0px',
+      isSideBarOpen: false,
       selectedBrokerId: null
     };
 
@@ -80,11 +80,11 @@ class Broker extends Component {
   }
 
   openSideBar(brokerId) {
-    this.setState({ sideBarWidth: '550px', selectedBrokerId: brokerId });
+    this.setState({ isSideBarOpen: true, selectedBrokerId: brokerId });
   }
 
   closeSideBar() {
-    this.setState({ sideBarWidth: '0px', selectedBrokerId: null });
+    this.setState({ isSideBarOpen: false, selectedBrokerId: null });
   }
 
   render() {
@@ -102,11 +102,13 @@ class Broker extends Component {
         ? this.getBrokerGraphData(this.state.selectedBrokerId)
         : null;
 
+    const gridMinWidth = this.state.isSideBarOpen ? '70vw' : '100vw';
+
     return (
-      <div>
-        <div className="broker-grid-container">{brokerViews}</div>
+      <div style={{ display: 'flex', backgroundColor: '#143546' }}>
+        <div className="broker-grid-container" style={{minWidth:  gridMinWidth}}>{brokerViews}</div>
         <SideBar
-          widthSideBar={this.state.sideBarWidth}
+          isSideBarOpen={this.state.isSideBarOpen}
           closeSideBar={this.closeSidebar}
           brokerGraphData={brokerGraphData}
         />
