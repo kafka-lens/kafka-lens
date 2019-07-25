@@ -3,7 +3,7 @@
 .broker-grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(265px, 0.5fr));
-  grid-template-rows: 0.2fr 0.2fr 1fr 0.3fr 2fr 2.3fr 1fr;
+  grid-template-rows: auto;
   grid-template-areas: 'title-bar title-bar title-bar title-bar' 'logo-box route-bar route-bar route-bar' 'logo-box partition-info message-box message-box' 'topics-header partition-info message-box message-box' 'list-display partition-info message-box message-box' 'list-display message-info message-box message-box' 'connection-status message-info message-box message-box';
   min-width: 100vw;
   min-height: 100vh;
