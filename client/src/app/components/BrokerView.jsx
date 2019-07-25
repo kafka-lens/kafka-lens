@@ -20,7 +20,7 @@ const BrokerView = props => {
   // console.log('broker backgroundColor:', backgroundColor);
 
   return (
-    <div className="brokerView" key={props.brokerId} style={{ backgroundColor: backgroundColor }}>
+    <div className="brokerView" onClick={props.openSideBar} key={props.brokerId} style={{ backgroundColor: backgroundColor }}>
       <BrokerHeader brokerID={props.brokerId} brokerURI={props.brokerURI} />
       <BrokerTopicsView topics={props.topics} />
     </div>
