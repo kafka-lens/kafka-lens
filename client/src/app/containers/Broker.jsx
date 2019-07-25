@@ -10,7 +10,8 @@ class Broker extends Component {
     super(props);
     this.state = {
       brokersSnapshots: [],
-      sideBarWidth: '0px'
+      sideBarWidth: '0px',
+      selectedBrokerId: null
     };
 
     this.openSideBar = this.openSideBar.bind(this);
@@ -78,12 +79,12 @@ class Broker extends Component {
     };
   }
 
-  openSideBar() {
-    this.setState({ sideBarWidth: '550px' });
+  openSideBar(brokerId) {
+    this.setState({ sideBarWidth: '550px', selectedBrokerId: brokerId });
   }
 
   closeSideBar() {
-    this.setState({ sideBarWidth: '0px' });
+    this.setState({ sideBarWidth: '0px', selectedBrokerId: null });
   }
 
   render() {
@@ -96,7 +97,10 @@ class Broker extends Component {
       brokerViews.push(<BrokerView key={i} openSideBar={this.openSideBar} {...brokerObj} />);
     }
 
-    const brokerGraphData = this.getBrokerGraphData(1);
+    const brokerGraphData =
+      this.state.selectedBrokerId !== null
+        ? this.getBrokerGraphData(this.state.selectedBrokerId)
+        : null;
 
     return (
       <div>

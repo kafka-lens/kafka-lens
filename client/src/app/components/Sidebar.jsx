@@ -8,7 +8,8 @@ const SideBar = ({ widthSideBar, brokerId, closeSideBar, brokerGraphData }) => {
       <div className="closebtn" key={brokerId} onClick={closeSideBar} style={{ color: '#51b3b5' }}>
         Close
       </div>
-      <LineChart {...brokerGraphData} />
+      <div>Displaying: broker {brokerId}</div>
+      {brokerGraphData && <LineChart {...brokerGraphData} />}
     </div>
   );
 };
