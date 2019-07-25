@@ -56,7 +56,6 @@ offsetApi.getLatestOffset = (kafkaHostURI, topicName, partitionId) => {
 
 function getOffsetAndClient(kafkaHostURI) {
   const client = new kafka.KafkaClient({ kafkaHost: kafkaHostURI });
-  console.log('client:', client);
   return { client, offset: new kafka.Offset(client) };
 }
 
