@@ -1,15 +1,15 @@
 import React from 'react';
 import BrokerTopic from './BrokerTopic.jsx';
 
-const BrokerTopicsView = props => {
+const BrokerTopicsView = ({ topics }) => {
   const brokerTopics = [];
-  for (let i = 0; i < props.topics.length; i += 1) {
+  for (let i = 0; i < topics.length; i += 1) {
     brokerTopics.push(
       <BrokerTopic
         key={i}
-        topicName={props.topics[i].topicName}
-        newMessagesPerSecond={props.topics[i].newMessagesPerSecond}
-        isLeader = {props.topics[i].isLeader}
+        topicName={topics[i].topicName}
+        newMessagesPerSecond={topics[i].newMessagesPerSecond}
+        isLeader={topics[i].isLeader}
       />
     );
   }
