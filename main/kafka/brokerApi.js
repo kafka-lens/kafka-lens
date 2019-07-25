@@ -94,7 +94,6 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
       console.log('Object Entries of brokerMetadata', Object.entries(brokerMetadata));
 
       Object.entries(brokerMetadata).forEach(([broker, brokerData]) => {
-        console.log('brokerData:', brokerData);
         brokerResult[broker] = {
           brokerId: brokerData.nodeId,
           brokerURI: brokerData.port,
@@ -112,7 +111,12 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
         const associatedBrokers = new Set();
         Object.values(topic).forEach(partition => {
           console.log('partition:', partition);
-          associatedBrokers.add(...partition.replicas);
+          for (let i = 0; i < partition.replicas.length; i++) {
+            const partitionId = partition.replicas[i];
+            associatedBrokers.add(partitionId);
+          }
+
+          console.log(`associated Brokers for topic ${topicName}:`, associatedBrokers);
 
           calcAndCacheMsgsPerSecondPromises.push(
             brokerApi.calcAndCacheMsgsPerSecond(
@@ -124,8 +128,10 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
           );
         });
 
+        console.log(`associated Brokers for topic ${topicName}:`, associatedBrokers);
+
         associatedBrokers.forEach(id => {
-          if (!brokerResult[id]) {
+          if (!brokerResult.hasOwnProperty(id)) {
             brokerResult[id] = {
               brokerId: id,
               brokerURI: 'Unknown',
@@ -146,7 +152,7 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
               Object.values(cachedPartitions).forEach(cachedPartition => {
                 console.log('cachedPartition:', cachedPartition);
                 const brokerInfo = brokerResult[cachedPartition.leader];
-                console.log('broker:', brokerInfo);
+                console.log('brokerInfo:', brokerInfo);
                 const topic = brokerInfo.topics[topicName];
                 topic.isLeader = true;
                 if (topic.newMessagesPerSecond === null) topic.newMessagesPerSecond = 0;
