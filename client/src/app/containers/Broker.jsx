@@ -8,7 +8,7 @@ class Broker extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      brokers: []
+      brokersSnapshots: []
     };
   }
 
@@ -28,8 +28,14 @@ class Broker extends Component {
         const brokerTopicsAsArray = Object.values(broker.topics);
         broker.topics = brokerTopicsAsArray;
       });
+
+      const newBrokersSnapshots = 
+        this.state.brokersSnapshots.slice();
+
+      newBrokersSnapshots.push(brokersList);
+
       this.setState({
-        brokers: brokersList
+        brokersSnapshots: newBrokersSnapshots
       });
     });
 
@@ -38,11 +44,15 @@ class Broker extends Component {
 
   render() {
     const brokerViews = [];
+
+    const latestSnapshot = this.state.brokersSnapshots[this.state.brokersSnapshots.length - 1];
     for (let i = 0; i < this.state.brokers.length; i += 1) {
-      brokerViews.push(<BrokerView key={i} {...this.state.brokers[i]} />);
+      const brokerObj = latestSnapshot[i];
+      brokerViews.push(<BrokerView key={i} {...brokerObj} />);
     }
 
     return <div className="broker-grid-container">{brokerViews}</div>;
+    // <BrokerHistoricalGraph {... } />
   }
 }
 
