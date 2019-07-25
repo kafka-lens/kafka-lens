@@ -3,7 +3,7 @@ import { ipcRenderer } from 'electron';
 import BrokerView from '../components/BrokerView.jsx';
 import SideBar from '../components/Sidebar.jsx';
 import '../css/Broker.scss';
-import '../css/Sidebar.scss'
+import '../css/Sidebar.scss';
 
 class Broker extends Component {
   constructor(props) {
@@ -20,8 +20,6 @@ class Broker extends Component {
   // create method to parse through our data from the backend and set our new state
   componentDidMount() {
     // channel of listner to retain broker information from the backend and set state
-    console.log('Broker Component did mount');
-
     ipcRenderer.on('broker:getBrokers', (e, { error, data }) => {
       if (error) {
         console.error('getBrokers ERROR:', error);
@@ -35,8 +33,7 @@ class Broker extends Component {
         broker.topics = brokerTopicsAsArray;
       });
 
-      const newBrokersSnapshots = 
-        this.state.brokersSnapshots.slice();
+      const newBrokersSnapshots = this.state.brokersSnapshots.slice();
 
       newBrokersSnapshots.push(brokersList);
 
@@ -48,21 +45,21 @@ class Broker extends Component {
     ipcRenderer.send('broker:getBrokers', { kafkaHostURI: this.props.kafkaHostURI });
   }
 
-  openSideBar(){
-    console.log('this from Broker:', this);
-    console.log('width -> ', this.state.sideBarWidth)
-    this.setState({ sideBarWidth: '550px'})
+  getBrokerGraphData(brokerId) {}
+
+  openSideBar() {
+    this.setState({ sideBarWidth: '550px' });
   }
 
-  closeSideBar(){
-    console.log('this from Broker:', this);
-    this.setState({ sideBarWidth: '0px'})
+  closeSideBar() {
+    this.setState({ sideBarWidth: '0px' });
   }
 
   render() {
     const brokerViews = [];
 
-    const latestSnapshot = this.state.brokersSnapshots[this.state.brokersSnapshots.length - 1] || [];
+    const latestSnapshot =
+      this.state.brokersSnapshots[this.state.brokersSnapshots.length - 1] || [];
     for (let i = 0; i < latestSnapshot.length; i += 1) {
       const brokerObj = latestSnapshot[i];
       brokerViews.push(<BrokerView key={i} openSideBar={this.openSideBar} {...brokerObj} />);
@@ -71,9 +68,9 @@ class Broker extends Component {
     return (
       <div>
         <div className="broker-grid-container">{brokerViews}</div>
-        <SideBar widthSideBar={this.state.sideBarWidth} closeSideBar={this.closeSidebar}/>
+        <SideBar widthSideBar={this.state.sideBarWidth} closeSideBar={this.closeSidebar} />
       </div>
-    )
+    );
   }
 }
 
