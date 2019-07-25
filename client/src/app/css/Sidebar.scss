@@ -2,7 +2,7 @@
   width: 30vw;
   position: relative;
   z-index: 1;
-  background-color: #388a98;
+  background-color: #ffffff;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
@@ -14,6 +14,12 @@
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
+}
+
+.brokerId {
+  font-size: 2em;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 @media screen and (max-height: 450px) {
