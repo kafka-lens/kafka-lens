@@ -74,7 +74,6 @@ class Broker extends Component {
         <SideBar widthSideBar={this.state.sideBarWidth} closeSideBar={this.closeSidebar}/>
       </div>
     )
-    // <BrokerHistoricalGraph {... } />
   }
 }
 
