@@ -1,5 +1,4 @@
 import React from 'react';
-
 import '../css/ConnectionPage.scss';
 import lensIcon from '../../../../assets/images/lens-icon.png';
 
