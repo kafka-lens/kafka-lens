@@ -1,5 +1,6 @@
 import React from 'react';
 import '../css/ConnectionPage.scss';
+import lensIcon from '../../../../assets/images/lens-icon.png';
 
 const ConnectionPage = props => {
 
@@ -43,6 +44,10 @@ const ConnectionPage = props => {
       </div>
       {/* Loading bars here */}
       <div className="loading-bars">{loading}</div>
+      <footer className="footer">
+        <img style={ {height: '150px', width: '150px'} } src={lensIcon} alt="" />
+        <p class='FooterText'>© Kafka Lens Version 2.0 </p>
+      </footer>
     </div>
   );
 };

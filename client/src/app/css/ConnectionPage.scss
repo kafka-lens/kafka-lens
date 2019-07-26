@@ -17,6 +17,8 @@
 #label-instructions {
   font-size: 16px;
   color: $base-font-color;
+  vertical-align: middle;
+  position: absolute;
 }
 
 #uri-input {
@@ -78,3 +80,18 @@
     transform: scale(1);
   }
 }
+
+.FooterText {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  color: antiquewhite
+}
+
+img {
+  top: 0;
+  vertical-align: middle; 
+  position: relateive;
+}
+
+
