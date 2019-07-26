@@ -1,15 +1,11 @@
 .sidebar {
-  height: 100%;
-  width: 0;
-  position: fixed;
+  width: 30vw;
+  position: relative;
   z-index: 1;
-  top: 0;
-  right: 0;
-  background-color: #000000;
+  background-color: #ffffff;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
-  opacity: 0.5;
 }
 
 .sidebar .closebtn {
@@ -18,6 +14,12 @@
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
+}
+
+.brokerId {
+  font-size: 2em;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 @media screen and (max-height: 450px) {

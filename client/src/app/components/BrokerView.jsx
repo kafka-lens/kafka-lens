@@ -3,7 +3,7 @@ import BrokerHeader from '../components/BrokerHeader.jsx';
 import BrokerTopicsView from './BrokerTopicsView.jsx';
 import '../css/BrokerView.scss';
 
-const BrokerView = props => {
+const BrokerView = ({ isAlive, openSideBar, brokerId, brokerURI, topics }) => {
   // change background color if active is true or false
   // console.log('brokerView props:', props);
   const brokerColors = {
@@ -11,7 +11,7 @@ const BrokerView = props => {
     Green: '#8CC152'
   };
   let backgroundColor;
-  if (props.isAlive === false) {
+  if (isAlive === false) {
     backgroundColor = brokerColors.Red;
   } else {
     backgroundColor = brokerColors.Green;
@@ -20,9 +20,14 @@ const BrokerView = props => {
   // console.log('broker backgroundColor:', backgroundColor);
 
   return (
-    <div className="brokerView" onClick={props.openSideBar} key={props.brokerId} style={{ backgroundColor: backgroundColor }}>
-      <BrokerHeader brokerID={props.brokerId} brokerURI={props.brokerURI} />
-      <BrokerTopicsView topics={props.topics} />
+    <div
+      className="brokerView"
+      onClick={() => openSideBar(brokerId)}
+      key={brokerId}
+      style={{ backgroundColor: backgroundColor }}
+    >
+      <BrokerHeader brokerID={brokerId} brokerURI={brokerURI} />
+      <BrokerTopicsView topics={topics} />
     </div>
   );
 };

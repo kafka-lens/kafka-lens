@@ -1,14 +1,20 @@
 import React from 'react';
 import LoadingData from './LoadingData.jsx';
 
-
-const BrokerTopic = props => {
-  let newMessagesPerSecondCount = typeof(props.newMessagesPerSecond) === 'number' ? props.newMessagesPerSecond : props.isLeader ? <LoadingData /> : 'Follower';
+const BrokerTopic = ({ topicName, isLeader, newMessagesPerSecond }) => {
   return (
     <div>
-        <p> <b> Topic Name: </b> {props.topicName}</p>
-        <p> <b> Msg Per Second: </b> {newMessagesPerSecondCount}</p>
-      </div>
+      <p>
+        <b>Topic Name:</b> {topicName}
+      </p>
+      {isLeader && typeof (newMessagesPerSecond) !== 'number' ? (
+        <p>
+          <b>Msg Per Second:</b> {newMessagesPerSecond || 'Follower'}
+        </p>
+      ) : (
+        <LoadingData />
+      )}
+    </div>
   );
 };
 

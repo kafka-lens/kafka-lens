@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
+import '../css/Sidebar.scss'
 
 function getRandomColor() {
   const red = Math.floor(Math.random() * 255);
@@ -9,7 +10,7 @@ function getRandomColor() {
   return `rgba(${red}, ${green}, ${blue}, 0.2)`;
 }
 
-function createDataset({ topicName, msgsPerSecondArray }) {
+function createDataset(topicName, msgsPerSecondArray) {
   const lineColor = getRandomColor();
 
   return {
@@ -35,86 +36,20 @@ function createDataset({ topicName, msgsPerSecondArray }) {
   };
 }
 
-const LineChart = ({ topicsData }) => {
-  // const datasets = [];
+const LineChart = ({ timeStamps, topicsData, brokerId }) => {
+  const datasets = Object.entries(topicsData).map(([topicName, msgsPerSecondArray]) => {
+    return createDataset(topicName, msgsPerSecondArray);
+  });
 
-  // for (let i = 0; i < topicsData.length; i++) {
-  //   const topicData = topicsData[i];
-  //   const dataset = createDataset(topicData);
-  //   datasets.push(dataset)
-  // }
+  console.log('datasets:', datasets);
 
   const data = {
-    labels: ['1 sec', '2 secs', '3 secs', '4 secs', '5 secs'],
-    datasets: [
-      {
-        label: 'Topic 1',
-        fill: false,
-        lineTension: 0.1,
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgba(255, 99, 132, 0.2)',
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        pointBorderColor: 'rgba(75,192,192,1)',
-        pointBackgroundColor: '#fff',
-        pointBorderWidth: 1,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-        pointHoverBorderColor: 'rgba(220,220,220,1)',
-        pointHoverBorderWidth: 2,
-        pointRadius: 1,
-        pointHitRadius: 10,
-        data: [10, 20, 30, 40, 50]
-      },
-      {
-        label: 'Topic 2',
-        fill: false,
-        lineTension: 0.1,
-        backgroundColor: 'rgba(75,192,192,0.4)',
-        borderColor: 'rgba(75,192,192,1)',
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        pointBorderColor: 'rgba(75,192,192,1)',
-        pointBackgroundColor: '#fff',
-        pointBorderWidth: 1,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-        pointHoverBorderColor: 'rgba(220,220,220,1)',
-        pointHoverBorderWidth: 2,
-        pointRadius: 1,
-        pointHitRadius: 10,
-        data: [50, 40, 30, 20, 10]
-      },
-      {
-        label: 'Topic 3',
-        fill: false,
-        lineTension: 0.1,
-        backgroundColor: 'rgba(255, 206, 86, 0.2)',
-        borderColor: 'rgba(255, 206, 86, 0.2)',
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        pointBorderColor: 'rgba(255, 206, 86, 0.2)',
-        pointBackgroundColor: '#fff',
-        pointBorderWidth: 1,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-        pointHoverBorderColor: 'rgba(220,220,220,1)',
-        pointHoverBorderWidth: 2,
-        pointRadius: 1,
-        pointHitRadius: 10,
-        data: [30, 30, 30, 30, 30]
-      }
-    ]
+    labels: timeStamps,
+    datasets: datasets
   };
   return (
     <div>
-      <h1> Line Chart </h1>
+      <h1 className='brokerId'> Broker ID #{brokerId} History </h1>
       <Line data={data} />
     </div>
   );
