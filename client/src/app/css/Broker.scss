@@ -4,8 +4,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(265px, 0.5fr));
   grid-template-rows: 1fr;
-  min-width: 100vw;
-  min-height: 100vh;
+  // min-width: 100vw;
+  // min-height: 100vh;
   grid-column-gap: 0.5em;
   justify-items: center;
   border-color: black;
