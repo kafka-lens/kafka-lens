@@ -12,7 +12,8 @@ class Broker extends Component {
     this.state = {
       brokersSnapshots: [],
       isSideBarOpen: false,
-      selectedBrokerId: null
+      selectedBrokerId: null,
+      selectedBrokerTopics: []
     };
 
     this.openSideBar = this.openSideBar.bind(this);
@@ -80,12 +81,12 @@ class Broker extends Component {
     };
   }
 
-  openSideBar(brokerId) {
-    this.setState({ isSideBarOpen: true, selectedBrokerId: brokerId });
+  openSideBar(brokerId, topics) {
+    this.setState({ isSideBarOpen: true, selectedBrokerId: brokerId, selectedBrokerTopics: topics });
   }
 
   closeSideBar() {
-    this.setState({ isSideBarOpen: false, selectedBrokerId: null });
+    this.setState({ isSideBarOpen: false, selectedBrokerId: null, selectedBrokerTopics: [] });
   }
 
   render() {
@@ -113,6 +114,7 @@ class Broker extends Component {
           closeSideBar={this.closeSidebar}
           brokerGraphData={brokerGraphData}
           brokerId = {this.state.selectedBrokerId}
+          brokerTopics = {this.state.selectedBrokerTopics}
         />
       </div>
     );
