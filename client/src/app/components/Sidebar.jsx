@@ -1,8 +1,9 @@
 import React from 'react';
 import '../css/Sidebar.scss';
 import LineChart from './LineChart.jsx';
+import BrokerTopicsSideView from './BrokerTopicsSideView.jsx';
 
-const SideBar = ({ isSideBarOpen, brokerId, closeSideBar, brokerGraphData }) => {
+const SideBar = ({ isSideBarOpen, brokerId, brokerTopics, closeSideBar, brokerGraphData }) => {
   const sideBarRigth = isSideBarOpen ? '0' : '-30vw';
 
   return (
@@ -11,6 +12,7 @@ const SideBar = ({ isSideBarOpen, brokerId, closeSideBar, brokerGraphData }) => 
         Close
       </div>
       {brokerGraphData && <LineChart {...brokerGraphData} brokerId={brokerId}/>}
+      <BrokerTopicsSideView topics={brokerTopics} brokerID={brokerId}/>
     </div>
   );
 };
