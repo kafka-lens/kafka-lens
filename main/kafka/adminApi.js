@@ -1,6 +1,7 @@
 const kafka = require('kafka-node');
 const { zipArrays } = require('../utils/arrayHelper');
 const offsetApi = require('./offsetApi');
+const logger = require('../utils/logger');
 
 
 const adminApi = {};
@@ -56,10 +57,10 @@ function getTopicData(kafkaHostURI) {
       if (err) return reject('Error getting list of Topics:' + err);
   
       // Reassign topics with only the object containing the topic data
-      console.log('Result of admin.listTopics API call:', data)
+      logger.log('Result of admin.listTopics API call:', data)
       topicsMetadata = data[1].metadata;
   
-      console.log('topicsMetadata obtained:', topicsMetadata);
+      logger.log('topicsMetadata obtained:', topicsMetadata);
 
       const topics = Object.entries(topicsMetadata)
         .filter(([topicName]) => !topicNamesToIgnore.includes(topicName))
@@ -80,12 +81,12 @@ function getTopicData(kafkaHostURI) {
           const result = zipArrays(topics, topicMsgCounts)
             .map(([topicInfo, msgCount]) => Object.assign({msgCount: msgCount}, topicInfo));
   
-          console.log('final topic Data:', result);
+          logger.log('final topic Data:', result);
           client.close();
           return resolve(result);
         })
         .catch(err => {
-          console.error('Error getting all topicMsgCounts:', err);
+          logger.error('Error getting all topicMsgCounts:', err);
           client.close();
           return reject('Error getting all topicMsgCounts:' + err);
         });
