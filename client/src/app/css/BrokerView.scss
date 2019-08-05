@@ -1,11 +1,41 @@
 .brokerView {
-  // display: grid;
-  // align-items: center;
-  // justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  text-align: center;
+  height: 500px;
+  overflow: hidden;
   padding: 20px;
   opacity: 0.5;
+  font-size: 20px;
 }
 
 .brokerView:hover {
   opacity: 1;
+}
+
+.broker-topic-view-bold {
+  font-weight: bold;
+}
+
+.broker-topic-inner-container{
+  display: flex;
+  align-items: flex-start;
+}
+.broker-topic {
+  display: flex;
+
+  * {
+    flex-basis: 25%;
+  }
+  :first-child {
+    flex-grow: 4;
+    text-align: right;
+  }
+
+  :last-child {
+    text-align: left;
+    padding-left: 10px;
+    flex-grow: 1;
+  }
 }

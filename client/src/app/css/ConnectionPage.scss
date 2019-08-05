@@ -17,13 +17,14 @@
 #label-instructions {
   font-size: 16px;
   color: $base-font-color;
+  vertical-align: middle;
+  position: absolute;
 }
 
 #uri-input {
   color: $off-white-color;
   font-size: 33px;
-  padding-bottom: 15px;
-  padding-top: 12px;
+  padding-top: 40px;
 }
 
 #connect-button {
@@ -79,12 +80,19 @@
   }
 }
 
-.footer{
-  float:right;
+.FooterText {
+  position: fixed;
+  bottom: 0;
+  right: 25px;
+  color: antiquewhite
 }
 
 img {
-  align-items: center;
+  // top: 0;
+  height: 175px;
+  width: 175px;
+  vertical-align: middle; 
+  position: relative;
 }
 
 
