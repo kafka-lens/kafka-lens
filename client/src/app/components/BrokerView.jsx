@@ -7,8 +7,8 @@ const BrokerView = ({ isAlive, openSideBar, brokerId, brokerURI, topics }) => {
   // change background color if active is true or false
   // console.log('brokerView props:', props);
   const brokerColors = {
-    Red: '#E9573F',
-    Green: '#8CC152'
+    Red: '#DC143C',
+    Green: '#90EE90'
   };
   let backgroundColor;
   if (isAlive === false) {
