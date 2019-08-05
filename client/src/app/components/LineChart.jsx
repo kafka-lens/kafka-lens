@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
+import logger from '../../utils/logger'
 import '../css/Sidebar.scss'
 
 function getRandomColor() {
@@ -41,7 +42,7 @@ const LineChart = ({ timeStamps, topicsData, brokerId }) => {
     return createDataset(topicName, msgsPerSecondArray);
   });
 
-  console.log('datasets:', datasets);
+  logger.log('datasets:', datasets);
 
   const data = {
     labels: timeStamps,

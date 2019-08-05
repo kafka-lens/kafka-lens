@@ -10,6 +10,7 @@ import { ipcRenderer } from 'electron';
 import '../css/TopicPage.scss';
 import '../css/PartitionList.scss';
 import lens_src from '../../../../assets/images/lens-icon.png';
+import logger from '../../utils/logger'
 
 class TopicPage extends React.Component {
   constructor(props) {
@@ -75,9 +76,9 @@ class TopicPage extends React.Component {
 
   showMessages(event) {
     const topicName = event.target.getAttribute('topicname');
-    console.log('topicName from the partition div:',topicName);
+    logger.log('topicName from the partition div:',topicName);
     const partitionId = parseInt(event.target.id);
-    console.log('partitionId:', partitionId);
+    logger.log('partitionId:', partitionId);
 
     let element = event.target;
     let lastElement = this.state.lastElement;
@@ -139,7 +140,7 @@ class TopicPage extends React.Component {
       <div className="grid-container">
         <div className="title-bar">Kafka Lens</div>
         <div className="route-bar">
-          {console.log('topicInfo:', this.state.topicInfo)}
+          {logger.log('topicInfo:', this.state.topicInfo)}
           <RouteBar
             partitionId={this.state.partitionId}
             topicName={this.state.topicInfo.topicName}
@@ -166,7 +167,7 @@ class TopicPage extends React.Component {
             ''
           )}
         </div>
-        {console.log('this.state.messages:', this.state.messages)}
+        {logger.log('this.state.messages:', this.state.messages)}
         <div className="message-info">
           {this.state.showPartitionInfo === true && this.state.messages.length > 0 ? (
             <MessageInfo lastMessage={this.state.messages[0]} />

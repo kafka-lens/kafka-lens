@@ -1,5 +1,7 @@
 const kafka = require('kafka-node');
 const MessageBuffer = require('./MessageBuffer');
+const logger = require('../utils/logger');
+
 
 // const client = new kafka.KafkaClient({ kafkaHost: kafkaHostURI: '157.230.166.35:9092' });
 //const Consumer = new kafka.Consumer;
@@ -11,7 +13,7 @@ consumerApi.getMessagesFromTopic = (kafkaHostURI, topicName, mainWindow, partiti
   const buffer = new MessageBuffer(1000);
   let hasData = false;
   let lastChecked = Date.now();
-  console.log('consumerAPI getMessagesFromTopic "topicName":', topicName)
+  logger.log('consumerAPI getMessagesFromTopic "topicName":', topicName)
   let consumerGroup = new kafka.ConsumerGroup(
     {
       kafkaHost: kafkaHostURI,
@@ -33,10 +35,10 @@ consumerApi.getMessagesFromTopic = (kafkaHostURI, topicName, mainWindow, partiti
         offset: message.offset,
         timestamp: message.timestamp || 'None',
       }
-      console.log('message:', message);
-      console.log('formatedMessage:', formatedMessage);
+      logger.log('message:', message);
+      logger.log('formatedMessage:', formatedMessage);
       hasData = Date.now();
-      console.log(`message.partition: ${formatedMessage.partitionId}, partitionId: ${partitionId}`);
+      logger.log(`message.partition: ${formatedMessage.partitionId}, partitionId: ${partitionId}`);
       if(typeof partitionId !== 'number' || partitionId === formatedMessage.partitionId){
         buffer.queue(formatedMessage);
       }
@@ -50,11 +52,11 @@ consumerApi.getMessagesFromTopic = (kafkaHostURI, topicName, mainWindow, partiti
   }, 50);
 
   const shutdownConsumerGroup = () => {
-    console.log(`shutting down consumerGroup for topic ${topicName} - memberId ${consumerGroup.memberId}`)
+    logger.log(`shutting down consumerGroup for topic ${topicName} - memberId ${consumerGroup.memberId}`)
     clearInterval(sendBufferIntervalId);
     consumerGroup.close((err) => {
-      if (err) console.log('error closing consumerGroup connection:', err);
-      else console.log('consumerGroup connection successfully shut down');
+      if (err) logger.log('error closing consumerGroup connection:', err);
+      else logger.log('consumerGroup connection successfully shut down');
     });
   }
 

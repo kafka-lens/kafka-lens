@@ -1,5 +1,6 @@
 const kafka = require('kafka-node');
 const offsetApi = require('../kafka/offsetApi.js');
+const logger = require('../utils/logger');
 
 const brokerApi = {};
 
@@ -70,7 +71,7 @@ brokerApi.calcAndCacheMsgsPerSecond = (kafkaHostURI, topicName, partitionId, lea
  *       }} object of this type of objects
  */
 brokerApi.getBrokerData = (kafkaHostURI) => {
-  console.log('attempting connection to uri', kafkaHostURI);
+  logger.log('attempting connection to uri', kafkaHostURI);
   return new Promise((resolve, reject) => {
     // Declares a new instance of client that will be used to make a connection
     const client = new kafka.KafkaClient({ kafkaHost: kafkaHostURI });
@@ -81,17 +82,17 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
     // Fetch all topics from the Kafka broker
     admin.listTopics((err, data) => {
       if (err) {
-        console.error(err);
+        logger.error(err);
         client.close();
         return reject({error: err});
       }
 
       // Reassign topics with only the object containing the topic data
-      //console.log('brokerMetadata IN BROKER API:', data[0]);
+      //logger.log('brokerMetadata IN BROKER API:', data[0]);
       const brokerMetadata = data[0];
       const topicsMetadata = data[1].metadata;
 
-      console.log('Object Entries of brokerMetadata', Object.entries(brokerMetadata));
+      logger.log('Object Entries of brokerMetadata', Object.entries(brokerMetadata));
 
       Object.entries(brokerMetadata).forEach(([broker, brokerData]) => {
         brokerResult[broker] = {
@@ -110,13 +111,13 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
         
         const associatedBrokers = new Set();
         Object.values(topic).forEach(partition => {
-          console.log('partition:', partition);
+          logger.log('partition:', partition);
           for (let i = 0; i < partition.replicas.length; i++) {
             const partitionId = partition.replicas[i];
             associatedBrokers.add(partitionId);
           }
 
-          console.log(`associated Brokers for topic ${topicName}:`, associatedBrokers);
+          logger.log(`associated Brokers for topic ${topicName}:`, associatedBrokers);
 
           calcAndCacheMsgsPerSecondPromises.push(
             brokerApi.calcAndCacheMsgsPerSecond(
@@ -128,7 +129,7 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
           );
         });
 
-        console.log(`associated Brokers for topic ${topicName}:`, associatedBrokers);
+        logger.log(`associated Brokers for topic ${topicName}:`, associatedBrokers);
 
         associatedBrokers.forEach(id => {
           if (!brokerResult.hasOwnProperty(id)) {
@@ -143,16 +144,16 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
           brokerInfo.topics[topicName] = { topicName: topicName, newMessagesPerSecond: null, isLeader: false };
         });
 
-        console.log('brokerResult before msgsPerSecond:', brokerResult);
+        logger.log('brokerResult before msgsPerSecond:', brokerResult);
         Promise.all(calcAndCacheMsgsPerSecondPromises)
           .then(() => {
-            console.log('topicsCache:', topicsCache);
+            logger.log('topicsCache:', topicsCache);
             Object.entries(topicsCache).forEach(([topicName, cachedPartitions]) => {
-              console.log('topicName:', topicName);
+              logger.log('topicName:', topicName);
               Object.values(cachedPartitions).forEach(cachedPartition => {
-                console.log('cachedPartition:', cachedPartition);
+                logger.log('cachedPartition:', cachedPartition);
                 const brokerInfo = brokerResult[cachedPartition.leader];
-                console.log('brokerInfo:', brokerInfo);
+                logger.log('brokerInfo:', brokerInfo);
                 const topic = brokerInfo.topics[topicName];
                 topic.isLeader = true;
                 if (topic.newMessagesPerSecond === null) topic.newMessagesPerSecond = 0;
@@ -160,12 +161,12 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
               });
             });
 
-            console.log('brokerResult after msgsPerSecond:', JSON.stringify(brokerResult));
+            logger.log('brokerResult after msgsPerSecond:', JSON.stringify(brokerResult));
             client.close();
             return resolve({ data: brokerResult });
           })
           .catch(err => {
-            console.error('ERROR GETTING msgsPerSecond:', err);
+            logger.error('ERROR GETTING msgsPerSecond:', err);
             client.close();
             return reject({ error: err });
           });

@@ -6,11 +6,15 @@ const adminApi = require('./kafka/adminApi');
 const offsetApi = require('./kafka/offsetApi');
 const consumerApi = require('./kafka/consumerApi');
 const brokerApi = require('./kafka/brokerApi');
+const logger = require('./utils/logger');
+
+process.env.DEBUG = false;
+
 
 // * Disable error dialogs by overriding
 // * FIX: https://goo.gl/YsDdsS
 dialog.showErrorBox = function(title, content) {
-  console.log(`${title}\n${content}`);
+  logger.log(`${title}\n${content}`);
 };
 
 // * Stores reference to active consumers for disconnecting when needed
@@ -86,7 +90,7 @@ ipcMain.on('topic:getTopics', (e, kafkaHostUri) => {
   adminApi.getTopicData(kafkaHostUri)
     .then(result => mainWindow.webContents.send('topic:getTopics', result))
     .catch(error => {
-      if (error === 'ignore') return console.log('ignored getTopicData');
+      if (error === 'ignore') return logger.log('ignored getTopicData');
       mainWindow.webContents.send('topic:getTopics', error);
     });
 });
@@ -96,7 +100,7 @@ ipcMain.on('topic:getTopics', (e, kafkaHostUri) => {
  * @param {Object} args is an object that contains topic name, host, offset and partition are optional args
  */
 ipcMain.on('partition:getMessages', (e, args) => {
-  console.log('get msg request received', args);
+  logger.log('get msg request received', args);
   if (currConsumerGroupShutdownMethod) currConsumerGroupShutdownMethod();
   currConsumerGroupShutdownMethod = consumerApi.getMessagesFromTopic(args.kafkaHostURI, args.topicName, mainWindow, args.partitionId);
 });
@@ -121,7 +125,7 @@ ipcMain.on('partition:getData', (e, args) => {
 });
 
 ipcMain.on('broker:getBrokers', (e, args) => {
-  console.log('broker:getBrokers received in main.js args:', args);
+  logger.log('broker:getBrokers received in main.js args:', args);
   brokerApi.getBrokerData(args.kafkaHostURI)
     .then(data => mainWindow.webContents.send('broker:getBrokers', data))
     .catch(err => mainWindow.webContents.send('broker:getBrokers', err))

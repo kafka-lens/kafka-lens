@@ -1,14 +1,16 @@
+const logger = require('./logger');
+
 const arrayHelper = {
   zipArrays(...arrays) {
     if (!Array.isArray(arrays)) {
-      console.error('error zipping Arrays: Invalid argument/s', arrays);
+      logger.error('error zipping Arrays: Invalid argument/s', arrays);
       return [];
     }
     
     const firstArray = arrays[0];
     const zippedArrayLength = firstArray.length;
     if (!firstArray || !arrays.every(arr => arr.length === zippedArrayLength)) {
-      console.error('error zipping Arrays: All arrays should be of same length');
+      logger.error('error zipping Arrays: All arrays should be of same length');
       return [];
     }
   

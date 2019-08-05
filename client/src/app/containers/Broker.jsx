@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ipcRenderer } from 'electron';
 import BrokerView from '../components/BrokerView.jsx';
+import logger from '../../utils/logger'
 import SideBar from '../components/Sidebar.jsx';
 import '../css/Broker.scss';
 import '../css/Sidebar.scss';
@@ -23,10 +24,10 @@ class Broker extends Component {
     // channel of listner to retain broker information from the backend and set state
     ipcRenderer.on('broker:getBrokers', (e, { error, data }) => {
       if (error) {
-        console.error('getBrokers ERROR:', error);
+        logger.error('getBrokers ERROR:', error);
         return;
       }
-      console.log('Getting new brokers Info:', data);
+      logger.log('Getting new brokers Info:', data);
 
       const brokersList = Object.values(data);
       brokersList.forEach(broker => {
@@ -53,7 +54,7 @@ class Broker extends Component {
     for (let i = 0; i < this.state.brokersSnapshots.length; i++) {
       const snapshot = this.state.brokersSnapshots[i];
       const brokerData = snapshot.filter(broker => broker.brokerId === brokerId)[0];
-      console.log(`brokerData for brokerId ${brokerId}`, brokerData);
+      logger.log(`brokerData for brokerId ${brokerId}`, brokerData);
 
       const elapsedTime = i * 10; // NOT ACCURATE!! Not taking into account the asynchronicity of fetching the data
       timeStamps.push(elapsedTime);

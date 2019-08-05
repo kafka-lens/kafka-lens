@@ -35,7 +35,7 @@ class App extends React.Component {
       this.setState({ isFetching: false });
 
       if (typeof data === 'string' && data.startsWith('Error')) {
-        console.warn('getTopics Error:', data);
+        logger.error('getTopics Error:', data);
         this.setState({
           connected: false
         });

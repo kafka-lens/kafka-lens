@@ -1,4 +1,5 @@
 const kafka = require('kafka-node');
+const logger = require('../utils/logger');
 
 const offsetApi = {};
 
@@ -11,14 +12,14 @@ const offsetApi = {};
  * Will resolve the number of the earliest offset in the topic partition.
  */
 offsetApi.getEarliestOffset = (kafkaHostURI, topicName, partitionId) => {
-  console.log(`invoking getEarliestOffset for topic ${topicName} - partition ${partitionId}`);
+  logger.log(`invoking getEarliestOffset for topic ${topicName} - partition ${partitionId}`);
   const { client, offset } = getOffsetAndClient(kafkaHostURI);
 
   return new Promise((resolve, reject) => {
     offset.fetchEarliestOffsets([topicName], (err, data) => {
       client.close();
       if (err) return reject(err);
-      console.log(
+      logger.log(
         `result from getEarliestOffset for topic ${topicName} - partition ${partitionId}:`,
         data
       );
@@ -36,7 +37,7 @@ offsetApi.getEarliestOffset = (kafkaHostURI, topicName, partitionId) => {
  * Will resolve the number of the latest offset in the topic partition.
  */
 offsetApi.getLatestOffset = (kafkaHostURI, topicName, partitionId) => {
-  console.log(`invoking getLatestOffset for topic ${topicName} - partition ${partitionId}`);
+  logger.log(`invoking getLatestOffset for topic ${topicName} - partition ${partitionId}`);
   const { client, offset } = getOffsetAndClient(kafkaHostURI);
 
   return new Promise((resolve, reject) => {
@@ -44,7 +45,7 @@ offsetApi.getLatestOffset = (kafkaHostURI, topicName, partitionId) => {
       client.close();
       if (err) reject(err);
       else {
-        console.log(
+        logger.log(
           `result from getLatestOffset for topic ${topicName} - partition ${partitionId}:`,
           data
         );
