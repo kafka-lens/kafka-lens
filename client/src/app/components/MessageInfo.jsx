@@ -1,8 +1,9 @@
 import React from 'react';
 import '../css/MessageInfo.scss';
+import logger from '../../utils/logger'
 
 const MessageInfo = ({ lastMessage }) => {
-  console.log('lastMessage:', lastMessage);
+  logger.log('lastMessage:', lastMessage);
   return (
     <div className="message-details">
       <h5>Last Message</h5>

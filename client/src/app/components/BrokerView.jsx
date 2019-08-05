@@ -4,8 +4,6 @@ import BrokerTopicsView from './BrokerTopicsView.jsx';
 import '../css/BrokerView.scss';
 
 const BrokerView = ({ isAlive, openSideBar, brokerId, brokerURI, topics }) => {
-  // change background color if active is true or false
-  // console.log('brokerView props:', props);
   const brokerColors = {
     Red: '#DC143C',
     Green: '#90EE90'
@@ -17,7 +15,6 @@ const BrokerView = ({ isAlive, openSideBar, brokerId, brokerURI, topics }) => {
     backgroundColor = brokerColors.Green;
   }
 
-  // console.log('broker backgroundColor:', backgroundColor);
 
   return (
     <div
