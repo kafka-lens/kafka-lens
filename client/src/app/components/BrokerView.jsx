@@ -5,8 +5,8 @@ import '../css/BrokerView.scss';
 
 const BrokerView = ({ isAlive, openSideBar, brokerId, brokerURI, topics }) => {
   const brokerColors = {
-    Red: '#E9573F',
-    Green: '#8CC152'
+    Red: '#DC143C',
+    Green: '#90EE90'
   };
   let backgroundColor;
   if (isAlive === false) {

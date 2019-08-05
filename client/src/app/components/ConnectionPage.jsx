@@ -45,7 +45,7 @@ const ConnectionPage = props => {
       {/* Loading bars here */}
       <div className="loading-bars">{loading}</div>
       <footer className="footer">
-        <img style={ {height: '150px', width: '150px'} } src={lensIcon} alt="" />
+        <img src={lensIcon} alt="" />
         <p class='FooterText'>© Kafka Lens Version 2.0 </p>
       </footer>
     </div>

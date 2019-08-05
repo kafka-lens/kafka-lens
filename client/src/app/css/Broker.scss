@@ -1,18 +1,23 @@
 @import 'theme';
 
 .broker-grid-container {
+  min-height: 100vh;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(265px, 0.5fr));
-  grid-template-rows: 1fr;
-  // min-width: 100vw;
-  // min-height: 100vh;
-  grid-column-gap: 0.5em;
-  justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 350px));
+  column-gap: 0.5em;
+  row-gap: 0.5em;
+  align-items: start;
   border-color: black;
   border-style: solid;
-  text-align: center;
+  overflow-y: scroll;
 }
 
 p {
   font-size: 20px;
+}
+
+.broker-header {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
 }
