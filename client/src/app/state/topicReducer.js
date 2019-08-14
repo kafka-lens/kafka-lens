@@ -11,4 +11,3 @@ function brokerReduce(state=initialState, action) {
 };
 
 export default brokerReducer;
-
