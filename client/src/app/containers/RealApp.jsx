@@ -21,3 +21,5 @@ const App = () => {
     </StateProvider>
   );
 }
+
+export default App;
