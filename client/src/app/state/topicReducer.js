@@ -2,7 +2,7 @@ export const initialState = {
   topics: [],
 };
 
-function topicReducer(state=initialState, action) {
+export const topicReducer = (state=initialState, action) => {
   switch (action.type) {
     case 'SET_TOPICS':
       return {
@@ -13,5 +13,3 @@ function topicReducer(state=initialState, action) {
       return state;
   }
 };
-
-export const topicReducer = topicReducer;
