@@ -1,125 +1,29 @@
-import { ipcRenderer } from 'electron';
-import React, { useContext } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React from 'react';
 
-// import components here
-import Header from '../components/Header.jsx';
-import ConnectionPage from '../components/ConnectionPage.jsx';
-import TopicPage from './TopicPage.jsx';
-import Broker from './Broker.jsx';
+import Main from './Main.jsx';
+import TopicsPage from './TopicsPage.jsx';
 
-import '../css/index.scss';
-import '../css/App.scss';
+import { StateProvider } from '../state/state.jsx';
+import { brokerReducer, initialState as brokerReducerInitialState } from '../state/brokerReducer';
+import { topicReducer , initialState as topicReducerInitialState } from '../state/topicReducer';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      connected: null,
-      uri_input: '',
-      topics: [],
-      isFetching: false
-    };
-
-    // bind methods here
-    this.validConnectionChecker = this.validConnectionChecker.bind(this);
-    this.updateURI = this.updateURI.bind(this);
-    this.restartConnectionPage = this.restartConnectionPage.bind(this);
+const App = () => {
+  const initialState = {
+    topics: topicReducerInitialState,
+    brokers: brokerReducerInitialState,
   }
 
-  // Lifecycle methods
-  componentWillMount() {
-    // Listener will receive response from backend main process
-    // If response is an error, display error to the user in connection page
-    ipcRenderer.on('topic:getTopics', (e, data) => {
-      this.setState({ isFetching: false });
+  const mainReducer = ({topics, brokers}, action) => ({
+    topics: topicReducer(topics, action),
+    brokers: brokerReducer(brokers, action),
+  });
 
-      if (typeof data === 'string' && data.startsWith('Error')) {
-        logger.error('getTopics Error:', data);
-        this.setState({
-          connected: false
-        });
-      } else {
-        data.forEach(topic => {
-          topic.showPartitions = false;
-        });
-
-        this.setState({
-          topics: data,
-          connected: true
-        });
-      }
-    });
-  }
-
-  // create function to setState connected to null
-  restartConnectionPage(event) {
-    this.setState({
-      connected: false,
-      uri_input: '',
-      topics: [],
-      isFetching: false
-    });
-  }
-
-  // This function is passed to the connection page to send the connection
-  // url to the main process to connect to the Kafka cluster
-  validConnectionChecker(event) {
-    event.preventDefault();
-    this.setState({
-      isFetching: true
-    });
-
-    let uri = this.state.uri_input;
-
-    ipcRenderer.send('topic:getTopics', uri);
-  }
-  // This function is passed to the connectionPage
-  updateURI(event) {
-    const input = event.target.value;
-    this.setState({ uri_input: input });
-  }
-
-  disconnect() {
-    this.setState({ connected: null });
-  }
-
-  render() {
-    return (
-      <div className="main-div">
-        {this.state.connected === true ? (
-          <Router>
-            <Header restartConnectionPage={this.restartConnectionPage} />
-            <Switch>
-              <Route path="/broker" render={() => (
-                <Broker
-                  kafkaHostURI={this.state.uri_input}
-                />
-              )} />
-              <Route
-                path="/"
-                render={() => (
-                  <TopicPage
-                    uri={this.state.uri_input}
-                    topicList={this.state.topics}
-                    isConnected={this.state.connected}
-                  />
-                )}
-              />
-              <Route path="/connectionpage" render={() => <ConnectionPage />} />
-            </Switch>
-          </Router>
-        ) : (
-          <ConnectionPage
-            validConnectionChecker={this.validConnectionChecker}
-            updateURI={this.updateURI}
-            connected={this.state.connected}
-            isFetching={this.state.isFetching}
-          />
-        )}
-      </div>
-    );
-  }
+  return (
+    <StateProvider initialState={initialState} reducer={mainReducer}>
+      <Main />
+      <TopicsPage />
+    </StateProvider>
+  );
 }
 
 export default App;
