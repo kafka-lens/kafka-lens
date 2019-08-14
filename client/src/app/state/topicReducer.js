@@ -1,8 +1,8 @@
-const initialState = {
+export const initialState = {
   //...
 };
 
-function brokerReduce(state=initialState, action) {
+function topicReducer(state=initialState, action) {
   switch (action.type) {
     //...
     default:
@@ -10,4 +10,4 @@ function brokerReduce(state=initialState, action) {
   }
 };
 
-export default brokerReducer;
+export const topicReducer = topicReducer;

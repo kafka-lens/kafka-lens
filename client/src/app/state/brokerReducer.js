@@ -1,14 +1,12 @@
-const initialState = {
+export const initialState = {
   //...
 };
 
-function brokerReduce(state=initialState, action) {
+export const brokerReducer = function brokerReduce(state, action) {
   switch (action.type) {
     //...
     default:
       return state;
   }
 };
-
-export default brokerReducer;
 
