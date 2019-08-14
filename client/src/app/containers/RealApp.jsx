@@ -7,7 +7,7 @@ import { topicReducer , initialState as topicReducerInitialState } from '../stat
 const App = () => {
   const initialState = {
     topics: topicReducerInitialState,
-    broker: brokerReducerInitialState,
+    brokers: brokerReducerInitialState,
   }
 
   const mainReducer = ({topics, brokers}, action) => ({
