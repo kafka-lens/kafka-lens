@@ -15,3 +15,5 @@ function TopicsPage(props) {
     </div>
   )
 }
+
+export default TopicsPage;
