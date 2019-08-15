@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Main from './Main.jsx';
-import TopicsPage from './TopicsPage.jsx';
+import Main from './Main';
+import TopicsPage from './TopicsPage';
 
-import { StateProvider } from '../state/state.jsx';
+import { StateProvider } from '../state/state';
 import { brokerReducer, initialState as brokerReducerInitialState } from '../state/brokerReducer';
 import { topicReducer , initialState as topicReducerInitialState } from '../state/topicReducer';
 

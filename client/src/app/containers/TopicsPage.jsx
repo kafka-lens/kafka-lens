@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getState } from '../state/state.jsx';
+import { getState } from '../state/state';
 
 function TopicsPage(props) {
   const [state, dispatch] = getState();

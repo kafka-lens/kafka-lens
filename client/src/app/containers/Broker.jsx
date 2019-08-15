@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { ipcRenderer } from 'electron';
-import BrokerView from '../components/BrokerView.jsx';
-import logger from '../../utils/logger'
-import SideBar from '../components/Sidebar.jsx';
+import BrokerView from '../components/BrokerView';
+import logger from '../../utils/logger';
+import SideBar from '../components/Sidebar';
 import '../css/Broker.scss';
 import '../css/Sidebar.scss';
 
