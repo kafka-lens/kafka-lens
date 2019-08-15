@@ -1,4 +1,6 @@
-const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron');
+const {
+  app, BrowserWindow, Menu, ipcMain, dialog,
+} = require('electron');
 const path = require('path');
 const url = require('url');
 
@@ -13,7 +15,7 @@ process.env.DEBUG = false;
 
 // * Disable error dialogs by overriding
 // * FIX: https://goo.gl/YsDdsS
-dialog.showErrorBox = function(title, content) {
+dialog.showErrorBox = function (title, content) {
   logger.log(`${title}\n${content}`);
 };
 
@@ -30,8 +32,8 @@ function createWindow() {
     url.format({
       pathname: path.join(__dirname, '../client/dist/index.html'),
       protocol: 'file',
-      slashes: true
-    })
+      slashes: true,
+    }),
   );
   mainWindow.on('closed', () => app.quit());
 
@@ -66,17 +68,17 @@ const addDevToolsToMenu = [
         accelerator: process.platform === 'darwin' ? 'Command+Q' : 'Ctrl+Q',
         click() {
           app.quit();
-        }
+        },
       },
       {
         label: 'DevTools',
         accelerator: process.platform === 'darwin' ? 'Command+Shift+I' : 'Ctrl+Shift+I',
         click() {
           mainWindow.webContents.openDevTools();
-        }
-      }
-    ]
-  }
+        },
+      },
+    ],
+  },
 ];
 
 /*
@@ -88,8 +90,8 @@ const addDevToolsToMenu = [
 // * Listens for URI string from client connection page
 ipcMain.on('topic:getTopics', (e, kafkaHostUri) => {
   adminApi.getTopicData(kafkaHostUri)
-    .then(result => mainWindow.webContents.send('topic:getTopics', result))
-    .catch(error => {
+    .then((result) => mainWindow.webContents.send('topic:getTopics', result))
+    .catch((error) => {
       if (error === 'ignore') return logger.log('ignored getTopicData');
       mainWindow.webContents.send('topic:getTopics', error);
     });
@@ -112,13 +114,13 @@ ipcMain.on('partition:getData', (e, args) => {
   results[2] = adminApi.getPartitionMsgCount(args.kafkaHostURI, args.topicName, args.partitionId);
   results[3] = adminApi.getPartitionBrokers(args.kafkaHostURI, args.topicName, args.partitionId);
 
-  Promise.all(results).then(result => {
+  Promise.all(results).then((result) => {
     const data = {
       highwaterOffset: result[0],
       earliestOffset: result[1],
       msgCount: result[2],
       leader: result[3][0],
-      replicas: result[3][1]
+      replicas: result[3][1],
     };
     mainWindow.webContents.send('partition:getData', data);
   });
@@ -127,11 +129,11 @@ ipcMain.on('partition:getData', (e, args) => {
 ipcMain.on('broker:getBrokers', (e, args) => {
   logger.log('broker:getBrokers received in main.js args:', args);
   brokerApi.getBrokerData(args.kafkaHostURI)
-    .then(data => mainWindow.webContents.send('broker:getBrokers', data))
-    .catch(err => mainWindow.webContents.send('broker:getBrokers', err))
+    .then((data) => mainWindow.webContents.send('broker:getBrokers', data))
+    .catch((err) => mainWindow.webContents.send('broker:getBrokers', err));
   setInterval(() => {
     brokerApi.getBrokerData(args.kafkaHostURI)
-      .then(data => mainWindow.webContents.send('broker:getBrokers', data))
-      .catch(err => mainWindow.webContents.send('broker:getBrokers', err))
-  }, 10000);  
-})
+      .then((data) => mainWindow.webContents.send('broker:getBrokers', data))
+      .catch((err) => mainWindow.webContents.send('broker:getBrokers', err));
+  }, 10000);
+});

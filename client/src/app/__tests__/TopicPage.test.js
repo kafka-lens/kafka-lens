@@ -6,7 +6,7 @@ import TopicPage from '../containers/TopicPage';
 describe('TopicPage.js unit tests', () => {
   let wrapper;
   const props = {
-    topicList: []
+    topicList: [],
   };
 
   beforeAll(() => {
@@ -20,7 +20,7 @@ describe('TopicPage.js unit tests', () => {
   it('Should render Topic components if there are topics in state', () => {
     expect(wrapper.exists('Topic')).toBe(false);
     wrapper.setProps({
-      topicList: [{ message: 'test1' }, { message: 'test2' }, { message: 'test3' }]
+      topicList: [{ message: 'test1' }, { message: 'test2' }, { message: 'test3' }],
     });
     expect(wrapper.exists('Topic')).toBe(true);
   });
@@ -29,22 +29,22 @@ describe('TopicPage.js unit tests', () => {
     const instance = wrapper.instance();
     expect(
       wrapper.containsMatchingElement(
-        <div class="spinner">
-          <div class="bounce1" />
-          <div class="bounce2" />
-          <div class="bounce3" />
-        </div>
-      )
+        <div className="spinner">
+          <div className="bounce1" />
+          <div className="bounce2" />
+          <div className="bounce3" />
+        </div>,
+      ),
     ).toBeFalsy();
     instance.setState({ messages: [1, 2, 3, 4, 5] });
     expect(
       wrapper.containsMatchingElement(
-        <div class="spinner">
-          <div class="bounce1" />
-          <div class="bounce2" />
-          <div class="bounce3" />
-        </div>
-      )
+        <div className="spinner">
+          <div className="bounce1" />
+          <div className="bounce2" />
+          <div className="bounce3" />
+        </div>,
+      ),
     ).toBeTruthy();
   });
 });

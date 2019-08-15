@@ -19,7 +19,7 @@ class Main extends React.Component {
       connected: null,
       uri_input: '',
       topics: [],
-      isFetching: false
+      isFetching: false,
     };
 
     // bind methods here
@@ -38,16 +38,16 @@ class Main extends React.Component {
       if (typeof data === 'string' && data.startsWith('Error')) {
         logger.error('getTopics Error:', data);
         this.setState({
-          connected: false
+          connected: false,
         });
       } else {
-        data.forEach(topic => {
+        data.forEach((topic) => {
           topic.showPartitions = false;
         });
 
         this.setState({
           topics: data,
-          connected: true
+          connected: true,
         });
       }
     });
@@ -59,7 +59,7 @@ class Main extends React.Component {
       connected: false,
       uri_input: '',
       topics: [],
-      isFetching: false
+      isFetching: false,
     });
   }
 
@@ -68,13 +68,14 @@ class Main extends React.Component {
   validConnectionChecker(event) {
     event.preventDefault();
     this.setState({
-      isFetching: true
+      isFetching: true,
     });
 
-    let uri = this.state.uri_input;
+    const uri = this.state.uri_input;
 
     ipcRenderer.send('topic:getTopics', uri);
   }
+
   // This function is passed to the connectionPage
   updateURI(event) {
     const input = event.target.value;
@@ -92,11 +93,14 @@ class Main extends React.Component {
           <Router>
             <Header restartConnectionPage={this.restartConnectionPage} />
             <Switch>
-              <Route path="/broker" render={() => (
-                <Broker
-                  kafkaHostURI={this.state.uri_input}
-                />
-              )} />
+              <Route
+                path="/broker"
+                render={() => (
+                  <Broker
+                    kafkaHostURI={this.state.uri_input}
+                  />
+                )}
+              />
               <Route
                 path="/"
                 render={() => (

@@ -7,7 +7,7 @@ describe('Message.jsx unit tests', () => {
   let wrapper;
   const props = {
     offset: '5',
-    message: 'Test'
+    message: 'Test',
   };
   beforeAll(() => {
     wrapper = shallow(<Message {...props} />);

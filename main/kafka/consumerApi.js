@@ -4,7 +4,7 @@ const logger = require('../utils/logger');
 
 
 // const client = new kafka.KafkaClient({ kafkaHost: kafkaHostURI: '157.230.166.35:9092' });
-//const Consumer = new kafka.Consumer;
+// const Consumer = new kafka.Consumer;
 
 const consumerApi = {};
 
@@ -13,20 +13,20 @@ consumerApi.getMessagesFromTopic = (kafkaHostURI, topicName, mainWindow, partiti
   const buffer = new MessageBuffer(1000);
   let hasData = false;
   let lastChecked = Date.now();
-  logger.log('consumerAPI getMessagesFromTopic "topicName":', topicName)
-  let consumerGroup = new kafka.ConsumerGroup(
+  logger.log('consumerAPI getMessagesFromTopic "topicName":', topicName);
+  const consumerGroup = new kafka.ConsumerGroup(
     {
       kafkaHost: kafkaHostURI,
       groupId: 'testingLab2',
       fromOffset: 'latest',
-      outOfRangeOffset: 'latest'
+      outOfRangeOffset: 'latest',
     },
-    topicName
+    topicName,
   );
 
   consumerGroup.connect();
   consumerGroup
-    .on('message', message => {
+    .on('message', (message) => {
       const formatedMessage = {
         value: message.value.toString('utf8'),
         topicName: message.topic,
@@ -34,12 +34,12 @@ consumerApi.getMessagesFromTopic = (kafkaHostURI, topicName, mainWindow, partiti
         key: message.key,
         offset: message.offset,
         timestamp: message.timestamp || 'None',
-      }
+      };
       logger.log('message:', message);
       logger.log('formatedMessage:', formatedMessage);
       hasData = Date.now();
       logger.log(`message.partition: ${formatedMessage.partitionId}, partitionId: ${partitionId}`);
-      if(typeof partitionId !== 'number' || partitionId === formatedMessage.partitionId){
+      if (typeof partitionId !== 'number' || partitionId === formatedMessage.partitionId) {
         buffer.queue(formatedMessage);
       }
     });
@@ -52,13 +52,13 @@ consumerApi.getMessagesFromTopic = (kafkaHostURI, topicName, mainWindow, partiti
   }, 50);
 
   const shutdownConsumerGroup = () => {
-    logger.log(`shutting down consumerGroup for topic ${topicName} - memberId ${consumerGroup.memberId}`)
+    logger.log(`shutting down consumerGroup for topic ${topicName} - memberId ${consumerGroup.memberId}`);
     clearInterval(sendBufferIntervalId);
     consumerGroup.close((err) => {
       if (err) logger.log('error closing consumerGroup connection:', err);
       else logger.log('consumerGroup connection successfully shut down');
     });
-  }
+  };
 
   return shutdownConsumerGroup;
 };
