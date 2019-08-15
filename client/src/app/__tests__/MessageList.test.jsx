@@ -6,9 +6,14 @@ import MessageList from '../components/MessageList';
 describe('MessageList.js unit tests', () => {
   let wrapper;
   const props = {
-    messageArray: [1, 2, 3, 4, 5],
+    messageArray: [],
+    topicName: 'first',
   };
+
   beforeAll(() => {
+    for (let i = 0; i < 5; i++) {
+      props.messageArray.push({ offset: i, message: i });
+    }
     wrapper = shallow(<MessageList {...props} />);
   });
 
