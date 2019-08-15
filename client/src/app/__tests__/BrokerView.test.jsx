@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import BrokerView from '../components/BrokerView';
-import BrokerHeader from '../components/BrokerHeader';
 
 describe('BrokerView.js unit tests', () => {
   let wrapper;

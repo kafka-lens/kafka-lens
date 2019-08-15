@@ -15,20 +15,9 @@ describe('offsetApi unit tests', () => {
   });
 
   describe('Testing getLatestOffset', () => {
-    let data;
-
-    beforeAll(async () => {
-      data = await offsetApi.getLatestOffset(args.kafkaHostURI, args.topicName, args.partitionId);
-    });
-
-    it('Should return a number', async () => {
-      // const data = await offsetApi.getLatestOffset(args.kafkaHostURI, args.topicName, args.partitionId);
-      expect(typeof data).toBe('number');
-    });
-
-    it('Should return a number', async () => {
-      // const data = await offsetApi.getLatestOffset(args.kafkaHostURI, args.topicName, args.partitionId);
-      expect(typeof data).toBe('number');
+    it('Should return a number', () => {
+      offsetApi.getLatestOffset(args.kafkaHostURI, args.topicName, args.partitionId)
+        .then((data) => expect(typeof data).toBe('number'));
     });
   });
 });
