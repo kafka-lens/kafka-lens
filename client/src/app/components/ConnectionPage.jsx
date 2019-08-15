@@ -2,9 +2,7 @@ import React from 'react';
 import '../css/ConnectionPage.scss';
 import lensIcon from '../../../../assets/images/lens-icon.png';
 
-const ConnectionPage = props => {
-
-
+const ConnectionPage = (props) => {
   let loading;
   if (props.isFetching === true) {
     loading = (
@@ -46,7 +44,7 @@ const ConnectionPage = props => {
       <div className="loading-bars">{loading}</div>
       <footer className="footer">
         <img src={lensIcon} alt="" />
-        <p className='FooterText'>© Kafka Lens Version 2.0 </p>
+        <p className="FooterText">© Kafka Lens Version 2.0 </p>
       </footer>
     </div>
   );

@@ -8,7 +8,7 @@ describe('Parition.js unit tests', () => {
   const props = {
     id: '5',
     showMessages: jest.fn(),
-    topicName: 'Test'
+    topicName: 'Test',
   };
 
   beforeAll(() => {

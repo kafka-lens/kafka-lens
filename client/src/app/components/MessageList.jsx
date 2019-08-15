@@ -7,7 +7,7 @@ const MessageList = ({ messageArray }) => {
 
   messageArray.forEach((msg, i) => {
     renderMessages.push(
-      <Message key={i} id={i} message={msg.value} offset={msg.offset} />
+      <Message key={i} id={i} message={msg.value} offset={msg.offset} />,
     );
   });
 

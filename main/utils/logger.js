@@ -5,5 +5,5 @@ module.exports = {
 
   error(...args) {
     if (process.env.DEBUG !== 'false') console.error(...args);
-  }
-}
+  },
+};

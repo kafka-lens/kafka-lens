@@ -38,6 +38,7 @@
     "start:dev": "webpack-dev-server --open",
     "webpack": "webpack",
     "lint": "eslint '**/*.{js,jsx}'" ,
+    "lint:fix": "eslint --fix '**/*.{js,jsx}'" ,
     "test": "jest",
     "test:frontend": "jest client",
     "test:backend": "jest main",

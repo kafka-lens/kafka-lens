@@ -21,7 +21,7 @@ offsetApi.getEarliestOffset = (kafkaHostURI, topicName, partitionId) => {
       if (err) return reject(err);
       logger.log(
         `result from getEarliestOffset for topic ${topicName} - partition ${partitionId}:`,
-        data
+        data,
       );
       resolve(data[topicName][partitionId]);
     });
@@ -47,7 +47,7 @@ offsetApi.getLatestOffset = (kafkaHostURI, topicName, partitionId) => {
       else {
         logger.log(
           `result from getLatestOffset for topic ${topicName} - partition ${partitionId}:`,
-          data
+          data,
         );
         resolve(data[topicName][partitionId]);
       }

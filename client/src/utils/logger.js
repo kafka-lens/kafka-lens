@@ -7,5 +7,5 @@ export default {
 
   error(...args) {
     if (DEBUG) console.error(...args);
-  }
-}
+  },
+};

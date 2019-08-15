@@ -4,9 +4,9 @@ describe('offsetApi unit tests', () => {
   const args = {
     kafkaHostURI: 'k2.tpw.made.industries:9092',
     topicName: 'swipes',
-    partitionId: 0
+    partitionId: 0,
   };
-  
+
   describe('Testing getEarliestOffset', () => {
     it('Should return a number', async () => {
       const data = await offsetApi.getEarliestOffset(args.kafkaHostURI, args.topicName, args.partitionId);
@@ -31,4 +31,4 @@ describe('offsetApi unit tests', () => {
       expect(typeof data).toBe('number');
     });
   });
-})
+});

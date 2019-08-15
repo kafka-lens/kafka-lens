@@ -6,7 +6,7 @@ import MessageList from '../components/MessageList';
 describe('MessageList.js unit tests', () => {
   let wrapper;
   const props = {
-    messageArray: [1, 2, 3, 4, 5]
+    messageArray: [1, 2, 3, 4, 5],
   };
   beforeAll(() => {
     wrapper = shallow(<MessageList {...props} />);

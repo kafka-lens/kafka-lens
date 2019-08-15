@@ -1,12 +1,14 @@
 import React from 'react';
-import BrokerHeader from '../components/BrokerHeader.jsx';
+import BrokerHeader from './BrokerHeader.jsx';
 import BrokerTopicsView from './BrokerTopicsView.jsx';
 import '../css/BrokerView.scss';
 
-const BrokerView = ({ isAlive, openSideBar, brokerId, brokerURI, topics }) => {
+const BrokerView = ({
+  isAlive, openSideBar, brokerId, brokerURI, topics,
+}) => {
   const brokerColors = {
     Red: '#DC143C',
-    Green: '#90EE90'
+    Green: '#90EE90',
   };
   let backgroundColor;
   if (isAlive === false) {
@@ -21,7 +23,7 @@ const BrokerView = ({ isAlive, openSideBar, brokerId, brokerURI, topics }) => {
       className="brokerView"
       onClick={() => openSideBar(brokerId, topics)}
       key={brokerId}
-      style={{ backgroundColor: backgroundColor }}
+      style={{ backgroundColor }}
     >
       <BrokerHeader brokerID={brokerId} brokerURI={brokerURI} />
       <BrokerTopicsView topics={topics} />

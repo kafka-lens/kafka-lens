@@ -11,16 +11,16 @@ describe('Topic.js unit tests', () => {
     topicInfo: {
       showPartitions: false,
       topicName: 'test1',
-      numberOfPartitions: 5
-    }
+      numberOfPartitions: 5,
+    },
   };
 
   const partitionInfoPropWithShowPartitionsTrue = {
     topicInfo: {
       showPartitions: true,
       topicName: 'test1',
-      numberOfPartitions: 5
-    }
+      numberOfPartitions: 5,
+    },
   };
 
   beforeAll(() => {
@@ -45,7 +45,7 @@ describe('Topic.js unit tests', () => {
       wrapper
         .find('div')
         .at(0)
-        .text()
+        .text(),
     ).toEqual('test1');
   });
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { ipcRenderer } from 'electron';
 import Topic from '../components/Topic';
 import PartitionInfo from '../components/PartitionInfo';
 import RouteBar from '../components/RouteBar';
@@ -6,11 +7,10 @@ import MessageInfo from '../components/MessageInfo';
 import MessageList from '../components/MessageList';
 import LoadingData from '../components/LoadingData';
 
-import { ipcRenderer } from 'electron';
 import '../css/TopicPage.scss';
 import '../css/PartitionList.scss';
 import lens_src from '../../../../assets/images/lens-icon.png';
-import logger from '../../utils/logger'
+import logger from '../../utils/logger';
 
 class TopicPage extends React.Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class TopicPage extends React.Component {
       lastElement: '',
       partitionInfo: {},
       showPartitionInfo: false,
-      loadingData: false
+      loadingData: false,
     };
 
     this.showPartitions = this.showPartitions.bind(this);
@@ -47,17 +47,17 @@ class TopicPage extends React.Component {
 
   // Called when topic is clicked in order to show partitions
   showPartitions(event) {
-    const topicList = this.props.topicList;
+    const { topicList } = this.props;
     const topicName = event.target.getAttribute('topicname');
     const topicIndex = parseInt(event.target.id);
-    const topicInfo = topicList[topicIndex]
+    const topicInfo = topicList[topicIndex];
 
     if (topicInfo.showPartitions == true) {
       topicInfo.showPartitions = false;
     } else {
       topicInfo.showPartitions = true;
     }
-    
+
     ipcRenderer.send('partition:getMessages', {
       kafkaHostURI: this.props.uri,
       topicName,
@@ -76,14 +76,14 @@ class TopicPage extends React.Component {
 
   showMessages(event) {
     const topicName = event.target.getAttribute('topicname');
-    logger.log('topicName from the partition div:',topicName);
+    logger.log('topicName from the partition div:', topicName);
     const partitionId = parseInt(event.target.id);
     logger.log('partitionId:', partitionId);
 
-    let element = event.target;
-    let lastElement = this.state.lastElement;
+    const element = event.target;
+    const { lastElement } = this.state;
 
-    let kafkaHostURI = this.props.uri;
+    const kafkaHostURI = this.props.uri;
 
     if (lastElement !== element) {
       if (lastElement !== '') {
@@ -102,7 +102,7 @@ class TopicPage extends React.Component {
         topicName,
       });
       this.setState({
-        lastElement: element
+        lastElement: element,
       });
 
       element.classList.add('highlight-this');
@@ -111,9 +111,9 @@ class TopicPage extends React.Component {
     if (partitionId !== this.state.partitionId || topicName !== this.state.topicName) {
       this.setState({
         messages: [],
-        topicName: topicName,
-        partitionId: partitionId,
-        showPartitionInfo: true
+        topicName,
+        partitionId,
+        showPartitionInfo: true,
       });
     }
   }
@@ -130,11 +130,11 @@ class TopicPage extends React.Component {
       />
     ));
 
-    let isConnected = this.props.isConnected;
+    const { isConnected } = this.props;
     const connected = <h5 className="connection-header">Connected</h5>;
     const disconnected = <h5 className="disconnected-header">Disconnected</h5>;
 
-    let displayURI = this.props.uri;
+    const displayURI = this.props.uri;
 
     return (
       <div className="grid-container">
@@ -160,12 +160,12 @@ class TopicPage extends React.Component {
           {this.state.showPartitionInfo === true
            && Object.keys(this.state.partitionInfo).length > 1
            && this.state.messages.length > 0 ? (
-            <PartitionInfo
-              partitionInfo={this.state.partitionInfo}
-            />
-          ) : (
-            ''
-          )}
+             <PartitionInfo
+                partitionInfo={this.state.partitionInfo}
+              />
+            ) : (
+              ''
+            )}
         </div>
         {logger.log('this.state.messages:', this.state.messages)}
         <div className="message-info">

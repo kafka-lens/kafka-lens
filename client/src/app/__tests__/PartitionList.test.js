@@ -7,8 +7,8 @@ describe('ParitionList unit tests', () => {
   let wrapper;
   const props = {
     topicInfo: {
-      numberOfPartitions: 8
-    }
+      numberOfPartitions: 8,
+    },
   };
   beforeAll(() => {
     wrapper = shallow(<PartitionList {...props} />);

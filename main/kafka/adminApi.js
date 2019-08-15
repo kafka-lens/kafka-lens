@@ -25,18 +25,18 @@ function wrapInTimeout(callback, initialMsToTimeout = 15000, msIncreasePerTry = 
     return new Promise((resolve, reject) => {
       currentReject = reject.bind(this);
       tries = Math.min(tries + 1, triesIncreaseCap);
-  
+
       callback(...args)
-        .then(result => resolve(result))
-        .catch(err => reject(err));
-  
+        .then((result) => resolve(result))
+        .catch((err) => reject(err));
+
       const msToTimeout = initialMsToTimeout + (tries - 1) * msIncreasePerTry;
       currentTimeoutId = setTimeout(() => {
         currentTimeoutId = null;
         return reject(`Error: function ${callback.name} timed out after ${msToTimeout}ms`);
-      }, msToTimeout)
+      }, msToTimeout);
     });
-  }
+  };
 }
 
 function getTopicData(kafkaHostURI) {
@@ -44,54 +44,51 @@ function getTopicData(kafkaHostURI) {
     '__consumer_offsets',
     'null',
     'undefined',
-  ]
+  ];
 
   return new Promise((resolve, reject) => {
     // Declares a new instance of client that will be used to make a connection
     const client = new kafka.KafkaClient({ kafkaHost: kafkaHostURI });
     // Declaring a new kafka.Admin instance creates a connection to the Kafka admin API
     const admin = new kafka.Admin(client);
-  
+
     // Fetch all topics from the Kafka broker
     admin.listTopics((err, data) => {
-      if (err) return reject('Error getting list of Topics:' + err);
-  
+      if (err) return reject(`Error getting list of Topics:${err}`);
+
       // Reassign topics with only the object containing the topic data
-      logger.log('Result of admin.listTopics API call:', data)
+      logger.log('Result of admin.listTopics API call:', data);
       topicsMetadata = data[1].metadata;
-  
+
       logger.log('topicsMetadata obtained:', topicsMetadata);
 
       const topics = Object.entries(topicsMetadata)
         .filter(([topicName]) => !topicNamesToIgnore.includes(topicName))
-        .map(([topicName, topicPartitions]) => {
-          return {
-            numberOfPartitions: Object.keys(topicPartitions).length,
-            topicName,
-          }
-        });
-  
-      const promises = topics.map(({topicName, numberOfPartitions}) => {
+        .map(([topicName, topicPartitions]) => ({
+          numberOfPartitions: Object.keys(topicPartitions).length,
+          topicName,
+        }));
+
+      const promises = topics.map(({ topicName, numberOfPartitions }) =>
         // for each topic, get # of partitions and storing that in topic partitions
-        return adminApi.getTopicMsgCount(kafkaHostURI, topicName, numberOfPartitions);
-      });
-  
+        adminApi.getTopicMsgCount(kafkaHostURI, topicName, numberOfPartitions));
+
       Promise.all(promises)
-        .then(topicMsgCounts => {
+        .then((topicMsgCounts) => {
           const result = zipArrays(topics, topicMsgCounts)
-            .map(([topicInfo, msgCount]) => Object.assign({msgCount: msgCount}, topicInfo));
-  
+            .map(([topicInfo, msgCount]) => ({ msgCount, ...topicInfo }));
+
           logger.log('final topic Data:', result);
           client.close();
           return resolve(result);
         })
-        .catch(err => {
+        .catch((err) => {
           logger.error('Error getting all topicMsgCounts:', err);
           client.close();
-          return reject('Error getting all topicMsgCounts:' + err);
+          return reject(`Error getting all topicMsgCounts:${err}`);
         });
     });
-  })
+  });
 }
 
 /**
@@ -123,11 +120,11 @@ adminApi.getTopicMsgCount = (kafkaHostURI, topicName, numberOfPartitions) => {
     }
     // Resolve promise when promise all resolves all promises from array sending back a single number
     Promise.all(promises)
-      .then(partitionMsgsCount => {
+      .then((partitionMsgsCount) => {
         const topicMsgsCount = partitionMsgsCount.reduce((total, curr) => (total += curr), 0);
         resolve(topicMsgsCount);
       })
-      .catch(err => reject(err));
+      .catch((err) => reject(err));
   });
 };
 
@@ -147,7 +144,7 @@ adminApi.getPartitionMsgCount = (kafkaHostURI, topicName, partitionId = 0) => {
       .then(([earliestOffset, latestOffset]) => {
         resolve(latestOffset - earliestOffset);
       })
-      .catch(error => {
+      .catch((error) => {
         reject(error);
       });
   });
@@ -169,20 +166,20 @@ adminApi.getPartitionBrokers = (kafkaHostURI, topicName, partitionId = 0) => {
 
   return new Promise((resolve, reject) => {
     admin.listTopics((err, data) => {
-      if (err) reject(err);  // TODO: Handle listTopics error properly
+      if (err) reject(err); // TODO: Handle listTopics error properly
       isRunning = true;
       // Reassign topics with only the object containing the topic info
       // Isolate leader broker and replica brokers array into brokerPartitionData array
       topicsMetadata = data[1].metadata;
-      const leader = topicsMetadata[topicName][partitionId].leader;
-      const replicas = topicsMetadata[topicName][partitionId].replicas.filter( b => b !== leader);
+      const { leader } = topicsMetadata[topicName][partitionId];
+      const replicas = topicsMetadata[topicName][partitionId].replicas.filter((b) => b !== leader);
       brokerPartitionData.push(leader);
       brokerPartitionData.push(replicas);
 
       client.close();
       resolve(brokerPartitionData);
     });
-  })
+  });
 };
 
 module.exports = adminApi;

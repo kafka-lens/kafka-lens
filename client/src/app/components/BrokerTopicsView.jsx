@@ -13,19 +13,23 @@ const BrokerTopicsView = ({ topics }) => {
         topicName={topics[i].topicName}
         newMessagesPerSecond={topics[i].newMessagesPerSecond}
         isLeader={topics[i].isLeader}
-      />
+      />,
     );
   }
 
   return (
-  <div className="broker-topic-view">
-    <p className="broker-topic-view-bold">Total Messages Per Second: {isNaN(totalNewMessagesPerSecond) ? 'Calculating': totalNewMessagesPerSecond}</p>
-    <p className="broker-topic-view-bold">Messages Per Second by Topic</p>
-    <div className="broker-topics-inner-container">
-      {brokerTopics}
+    <div className="broker-topic-view">
+      <p className="broker-topic-view-bold">
+Total Messages Per Second:
+        {isNaN(totalNewMessagesPerSecond) ? 'Calculating' : totalNewMessagesPerSecond}
+      </p>
+      <p className="broker-topic-view-bold">Messages Per Second by Topic</p>
+      <div className="broker-topics-inner-container">
+        {brokerTopics}
+      </div>
+
     </div>
-  
-  </div>);
+  );
 };
 
 export default BrokerTopicsView;

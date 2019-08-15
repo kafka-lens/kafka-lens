@@ -6,7 +6,7 @@ import Broker from '../containers/Broker.jsx';
 describe('Broker.js unit tests', () => {
   let wrapper;
   const props = {
-    kafkaHostURI: 'localhost:9092'
+    kafkaHostURI: 'localhost:9092',
   };
 
   beforeAll(() => {
@@ -21,7 +21,7 @@ describe('Broker.js unit tests', () => {
     const instance = wrapper.instance();
     expect(instance.state.brokers).toEqual([]);
     instance.setState({
-      brokers: [{ broker: 'test1' }, { broker: 'test2' }, { broker: 'test3' }]
+      brokers: [{ broker: 'test1' }, { broker: 'test2' }, { broker: 'test3' }],
     });
     expect(wrapper.exists('BrokerView')).toEqual(true);
   });

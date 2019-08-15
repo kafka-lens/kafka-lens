@@ -10,8 +10,8 @@ describe('BrokerView.js unit tests', () => {
     isAlive: false,
     brokerColors: {
       Red: '#E9573F',
-      Green: '#8CC152'
-    }
+      Green: '#8CC152',
+    },
   };
 
   beforeAll(() => {
@@ -35,18 +35,18 @@ describe('BrokerView.js unit tests', () => {
   it('If Broker is inactive, then color should be red', () => {
     expect(wrapper.find('.brokerView').get(0).props.style).toHaveProperty(
       'backgroundColor',
-      '#E9573F'
+      '#E9573F',
     );
   });
 
   it('If Broker is active, then color should be green', () => {
     wrapper.setProps({
-      isAlive: true
+      isAlive: true,
     });
     expect(wrapper.find('.brokerView')).toHaveLength(1);
     expect(wrapper.find('.brokerView').get(0).props.style).toHaveProperty(
       'backgroundColor',
-      '#8CC152'
+      '#8CC152',
     );
   });
 });

@@ -9,7 +9,7 @@ describe('Connection.js unit tests', () => {
     connected: null,
     isFetching: false,
     updateURI: jest.fn(),
-    validConnectionChecker: jest.fn()
+    validConnectionChecker: jest.fn(),
   };
   beforeAll(() => {
     wrapper = shallow(<ConnectionPage {...props} />);
@@ -28,8 +28,8 @@ describe('Connection.js unit tests', () => {
           onClick={props.validConnectionChecker}
         >
           Connect
-        </button>
-      )
+        </button>,
+      ),
     ).toBeTruthy();
   });
 
@@ -53,8 +53,8 @@ describe('Connection.js unit tests', () => {
     wrapper.setProps({ connected: false });
     expect(
       wrapper.containsMatchingElement(
-        <p id="error-message">Connection timed out, please check your connection URI.</p>
-      )
+        <p id="error-message">Connection timed out, please check your connection URI.</p>,
+      ),
     ).toBeTruthy();
   });
 
@@ -62,8 +62,8 @@ describe('Connection.js unit tests', () => {
     wrapper.setProps({ connected: null });
     expect(
       wrapper.containsMatchingElement(
-        <p id="error-message">Connection timed out, please check your connection URI.</p>
-      )
+        <p id="error-message">Connection timed out, please check your connection URI.</p>,
+      ),
     ).toBeFalsy();
   });
 
@@ -75,8 +75,8 @@ describe('Connection.js unit tests', () => {
           <div className="loading-bar" />
           <div className="loading-bar" />
           <div className="loading-bar" />
-        </div>
-      )
+        </div>,
+      ),
     ).toBeFalsy();
   });
 
@@ -89,8 +89,8 @@ describe('Connection.js unit tests', () => {
           <div className="loading-bar" />
           <div className="loading-bar" />
           <div className="loading-bar" />
-        </div>
-      )
+        </div>,
+      ),
     ).toBeTruthy();
   });
 });
