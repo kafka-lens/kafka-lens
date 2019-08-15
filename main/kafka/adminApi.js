@@ -6,7 +6,12 @@ const logger = require('../utils/logger');
 
 const adminApi = {};
 
-function wrapInTimeout(callback, initialMsToTimeout = 15000, msIncreasePerTry = 5000, triesIncreaseCap = 1) {
+function wrapInTimeout(
+  callback,
+  initialMsToTimeout = 15000,
+  msIncreasePerTry = 5000,
+  triesIncreaseCap = 1,
+) {
   let tries = 0;
   let currentTimeoutId;
   let currentReject;
@@ -33,7 +38,7 @@ function wrapInTimeout(callback, initialMsToTimeout = 15000, msIncreasePerTry = 
       const msToTimeout = initialMsToTimeout + (tries - 1) * msIncreasePerTry;
       currentTimeoutId = setTimeout(() => {
         currentTimeoutId = null;
-        return reject(`Error: function ${callback.name} timed out after ${msToTimeout}ms`);
+        return reject(new Error(`Error: ${callback.name} timed out after ${msToTimeout}ms`));
       }, msToTimeout);
     });
   };
@@ -54,11 +59,11 @@ function getTopicData(kafkaHostURI) {
 
     // Fetch all topics from the Kafka broker
     admin.listTopics((err, data) => {
-      if (err) return reject(`Error getting list of Topics:${err}`);
+      if (err) return reject(new Error(`Error getting list of Topics:${err}`));
 
       // Reassign topics with only the object containing the topic data
       logger.log('Result of admin.listTopics API call:', data);
-      topicsMetadata = data[1].metadata;
+      const topicsMetadata = data[1].metadata;
 
       logger.log('topicsMetadata obtained:', topicsMetadata);
 
@@ -69,11 +74,12 @@ function getTopicData(kafkaHostURI) {
           topicName,
         }));
 
-      const promises = topics.map(({ topicName, numberOfPartitions }) =>
-        // for each topic, get # of partitions and storing that in topic partitions
-        adminApi.getTopicMsgCount(kafkaHostURI, topicName, numberOfPartitions));
+      // for each topic, get # of partitions and storing that in topic partitions
+      const promises = topics.map(({ topicName, numberOfPartitions }) => (
+        adminApi.getTopicMsgCount(kafkaHostURI, topicName, numberOfPartitions)
+      ));
 
-      Promise.all(promises)
+      return Promise.all(promises)
         .then((topicMsgCounts) => {
           const result = zipArrays(topics, topicMsgCounts)
             .map(([topicInfo, msgCount]) => ({ msgCount, ...topicInfo }));
@@ -82,10 +88,10 @@ function getTopicData(kafkaHostURI) {
           client.close();
           return resolve(result);
         })
-        .catch((err) => {
-          logger.error('Error getting all topicMsgCounts:', err);
+        .catch((error) => {
+          logger.error('Error getting all topicMsgCounts:', error);
           client.close();
-          return reject(`Error getting all topicMsgCounts:${err}`);
+          return reject(new Error(`Error getting all topicMsgCounts:${error}`));
         });
     });
   });
@@ -93,7 +99,7 @@ function getTopicData(kafkaHostURI) {
 
 /**
  * @param {String} kafkaHostURI the connection uri that the user types into connection input
- * @param {Electron Window} mainWindow Main window that gets data
+ * @param {*} mainWindow Main window that gets data
  *
  * Makes a connection to Kafka server to fetch a list of topics
  * Transforms the data coming back from the Kafka broker into pertinent data to send back to client
@@ -115,13 +121,12 @@ adminApi.getTopicMsgCount = (kafkaHostURI, topicName, numberOfPartitions) => {
   return new Promise((resolve, reject) => {
     // Create for loop with limit of n-partition iterations
     for (let i = 0; i < numberOfPartitions; i += 1) {
-      // Push a promise from call to getCurrentMsgCount with the arguments of host, topic, and ith-partition number into array
       promises.push(adminApi.getPartitionMsgCount(kafkaHostURI, topicName, i));
     }
-    // Resolve promise when promise all resolves all promises from array sending back a single number
+    // Resolves when all promises from array are resolved (with a single number)
     Promise.all(promises)
       .then((partitionMsgsCount) => {
-        const topicMsgsCount = partitionMsgsCount.reduce((total, curr) => (total += curr), 0);
+        const topicMsgsCount = partitionMsgsCount.reduce((total, curr) => (total + curr), 0);
         resolve(topicMsgsCount);
       })
       .catch((err) => reject(err));
@@ -133,7 +138,7 @@ adminApi.getTopicMsgCount = (kafkaHostURI, topicName, numberOfPartitions) => {
  * @param {String} topicName Single topic to lookup
  * @param {Number} partitionId Topic partition number. Defaults to 0
  *
- * This function will return a promise which will resolve to the number of messages in a specific partition
+ * @returns {Promise} Resolves to the number of messages in a specific partition
  */
 adminApi.getPartitionMsgCount = (kafkaHostURI, topicName, partitionId = 0) => {
   const promises = [];
@@ -154,9 +159,9 @@ adminApi.getPartitionMsgCount = (kafkaHostURI, topicName, partitionId = 0) => {
  * @param {String} kafkaHostURI URI of Kafka broker(s)
  * @param {String} topicName Single topic to lookup
  * @param {Number} partitionId Topic partition number. Defaults to 0
- * @param {Object} mainWindow Electron window to send resulting data to
  *
- * This function returns data to the renderer process. Calls getLatestOffset and getCurrentMsgCount then sends back the result
+ * This function returns data to the renderer process.
+ * Calls getLatestOffset and getCurrentMsgCount, then sends back the result
  * as an object containing highwaterOffset and messageCount as properties.
  */
 adminApi.getPartitionBrokers = (kafkaHostURI, topicName, partitionId = 0) => {
@@ -167,10 +172,9 @@ adminApi.getPartitionBrokers = (kafkaHostURI, topicName, partitionId = 0) => {
   return new Promise((resolve, reject) => {
     admin.listTopics((err, data) => {
       if (err) reject(err); // TODO: Handle listTopics error properly
-      isRunning = true;
       // Reassign topics with only the object containing the topic info
       // Isolate leader broker and replica brokers array into brokerPartitionData array
-      topicsMetadata = data[1].metadata;
+      const topicsMetadata = data[1].metadata;
       const { leader } = topicsMetadata[topicName][partitionId];
       const replicas = topicsMetadata[topicName][partitionId].replicas.filter((b) => b !== leader);
       brokerPartitionData.push(leader);

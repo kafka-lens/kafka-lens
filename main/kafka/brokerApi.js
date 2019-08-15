@@ -63,12 +63,16 @@ brokerApi.calcAndCacheMsgsPerSecond = (kafkaHostURI, topicName, partitionId, lea
  *   }
  * ]
  *
- * @returns {{
- *         brokerId: Number,
- *         brokerURI: Number,
- *         topics: [],
- *         isAlive: Boolean,
- *       }} object of this type of objects
+ * will return an object of this type of objects:
+ *
+ * {{
+ *   brokerId: Number,
+ *   brokerURI: Number,
+ *   topics: [],
+ *   isAlive: Boolean,
+ * }}
+ *
+ * @returns (Promise)
  */
 brokerApi.getBrokerData = (kafkaHostURI) => {
   logger.log('attempting connection to uri', kafkaHostURI);
@@ -103,7 +107,7 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
         };
       });
 
-      Object.entries(topicsMetadata).forEach(([topicName, topic]) => {
+      return Object.entries(topicsMetadata).forEach(([topicName, topic]) => {
         const calcAndCacheMsgsPerSecondPromises = [];
 
         if (topicName === '__consumer_offsets') return;
@@ -132,7 +136,7 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
         logger.log(`associated Brokers for topic ${topicName}:`, associatedBrokers);
 
         associatedBrokers.forEach((id) => {
-          if (!brokerResult.hasOwnProperty(id)) {
+          if (!Object.hasOwnProperty.call(brokerResult, id)) {
             brokerResult[id] = {
               brokerId: id,
               brokerURI: 'Unknown',
@@ -148,16 +152,16 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
         Promise.all(calcAndCacheMsgsPerSecondPromises)
           .then(() => {
             logger.log('topicsCache:', topicsCache);
-            Object.entries(topicsCache).forEach(([topicName, cachedPartitions]) => {
-              logger.log('topicName:', topicName);
+            Object.entries(topicsCache).forEach(([cachedTopicName, cachedPartitions]) => {
+              logger.log('cachedTopicName:', cachedTopicName);
               Object.values(cachedPartitions).forEach((cachedPartition) => {
                 logger.log('cachedPartition:', cachedPartition);
                 const brokerInfo = brokerResult[cachedPartition.leader];
                 logger.log('brokerInfo:', brokerInfo);
-                const topic = brokerInfo.topics[topicName];
-                topic.isLeader = true;
-                if (topic.newMessagesPerSecond === null) topic.newMessagesPerSecond = 0;
-                topic.newMessagesPerSecond += cachedPartition.newMessagesPerSecond;
+                const cachedTopic = brokerInfo.topics[cachedTopicName];
+                cachedTopic.isLeader = true;
+                if (cachedTopic.newMessagesPerSecond === null) cachedTopic.newMessagesPerSecond = 0;
+                cachedTopic.newMessagesPerSecond += cachedPartition.newMessagesPerSecond;
               });
             });
 
@@ -165,10 +169,10 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
             client.close();
             return resolve({ data: brokerResult });
           })
-          .catch((err) => {
-            logger.error('ERROR GETTING msgsPerSecond:', err);
+          .catch((error) => {
+            logger.error('ERROR GETTING msgsPerSecond:', error);
             client.close();
-            return reject({ error: err });
+            return reject({ error });
           });
       });
     });

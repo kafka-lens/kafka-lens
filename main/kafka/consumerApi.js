@@ -27,7 +27,7 @@ consumerApi.getMessagesFromTopic = (kafkaHostURI, topicName, mainWindow, partiti
   consumerGroup.connect();
   consumerGroup
     .on('message', (message) => {
-      const formatedMessage = {
+      const formattedMessage = {
         value: message.value.toString('utf8'),
         topicName: message.topic,
         partitionId: message.partition,
@@ -36,11 +36,11 @@ consumerApi.getMessagesFromTopic = (kafkaHostURI, topicName, mainWindow, partiti
         timestamp: message.timestamp || 'None',
       };
       logger.log('message:', message);
-      logger.log('formatedMessage:', formatedMessage);
+      logger.log('formattedMessage:', formattedMessage);
       hasData = Date.now();
-      logger.log(`message.partition: ${formatedMessage.partitionId}, partitionId: ${partitionId}`);
-      if (typeof partitionId !== 'number' || partitionId === formatedMessage.partitionId) {
-        buffer.queue(formatedMessage);
+      logger.log(`message.partition: ${formattedMessage.partitionId}, partitionId: ${partitionId}`);
+      if (typeof partitionId !== 'number' || partitionId === formattedMessage.partitionId) {
+        buffer.queue(formattedMessage);
       }
     });
 
@@ -51,16 +51,16 @@ consumerApi.getMessagesFromTopic = (kafkaHostURI, topicName, mainWindow, partiti
     }
   }, 50);
 
-  const shutdownConsumerGroup = () => {
-    logger.log(`shutting down consumerGroup for topic ${topicName} - memberId ${consumerGroup.memberId}`);
+  return () => {
+    logger.log(`
+      shutting down consumerGroup for topic ${topicName} - memberId ${consumerGroup.memberId}
+     `);
     clearInterval(sendBufferIntervalId);
     consumerGroup.close((err) => {
       if (err) logger.log('error closing consumerGroup connection:', err);
       else logger.log('consumerGroup connection successfully shut down');
     });
   };
-
-  return shutdownConsumerGroup;
 };
 
 module.exports = consumerApi;
