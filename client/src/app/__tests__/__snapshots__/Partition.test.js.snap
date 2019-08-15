@@ -5,6 +5,9 @@ exports[`Parition.js unit tests Should render without errors 1`] = `
   className="single-partition"
   id="5"
   onClick={[MockFunction]}
+  onKeyPress={[MockFunction]}
+  role="button"
+  tabIndex="0"
   topicname="Test"
 >
   Partition  5

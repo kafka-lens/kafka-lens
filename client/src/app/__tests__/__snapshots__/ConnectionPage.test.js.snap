@@ -9,11 +9,11 @@ exports[`Connection.js unit tests Renders without errors 1`] = `
   >
     <form>
       <div>
-        <label
+        <p
           id="label-instructions"
         >
           Enter Your Kafka Server URI
-        </label>
+        </p>
         <input
           id="uri-input"
           onChange={[MockFunction]}
@@ -33,5 +33,22 @@ exports[`Connection.js unit tests Renders without errors 1`] = `
   <div
     className="loading-bars"
   />
+  <footer
+    className="footer"
+  >
+    <img
+      alt=""
+      src={
+        Object {
+          "process": [Function],
+        }
+      }
+    />
+    <p
+      className="FooterText"
+    >
+      © Kafka Lens Version 2.0 
+    </p>
+  </footer>
 </div>
 `;

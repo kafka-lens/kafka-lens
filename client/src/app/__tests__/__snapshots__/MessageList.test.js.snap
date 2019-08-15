@@ -6,23 +6,18 @@ exports[`MessageList.js unit tests Should render without errors 1`] = `
 >
   <Message
     id={0}
-    key="0"
   />
   <Message
     id={1}
-    key="1"
   />
   <Message
     id={2}
-    key="2"
   />
   <Message
     id={3}
-    key="3"
   />
   <Message
     id={4}
-    key="4"
   />
 </div>
 `;
