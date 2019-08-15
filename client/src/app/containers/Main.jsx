@@ -1,13 +1,14 @@
 import { ipcRenderer } from 'electron';
 import React from 'react';
-
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import logger from '../../utils/logger';
+
 
 // import components here
-import Header from '../components/Header.jsx';
-import ConnectionPage from '../components/ConnectionPage.jsx';
-import TopicPage from './TopicPage.jsx';
-import Broker from './Broker.jsx';
+import Header from '../components/Header';
+import ConnectionPage from '../components/ConnectionPage';
+import TopicPage from './TopicPage';
+import Broker from './Broker';
 
 import '../css/index.scss';
 import '../css/App.scss';
@@ -71,7 +72,7 @@ class Main extends React.Component {
       isFetching: true,
     });
 
-    const uri = this.state.uri_input;
+    const { uri_input: uri } = this.state;
 
     ipcRenderer.send('topic:getTopics', uri);
   }
