@@ -1,5 +1,5 @@
 import React from 'react';
-import BrokerTopic from './BrokerTopic.jsx';
+import BrokerTopic from './BrokerTopic';
 
 const BrokerTopicsView = ({ topics }) => {
   let totalNewMessagesPerSecond = 0;

@@ -1,7 +1,7 @@
 import React from 'react';
-import BrokerTopic from './BrokerTopic.jsx';
+import BrokerTopic from './BrokerTopic';
 
-const BrokerTopicsSideView = ({ topics, brokerId }) => {
+const BrokerTopicsSideView = ({ topics }) => {
   let totalNewMessagesPerSecond = 0;
   const brokerTopics = [];
   for (let i = 0; i < topics.length; i += 1) {

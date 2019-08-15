@@ -1,5 +1,5 @@
 import React from 'react';
-import Message from './Message.jsx';
+import Message from './Message';
 import '../css/MessageList.scss';
 
 const MessageList = ({ messageArray }) => {
@@ -7,7 +7,7 @@ const MessageList = ({ messageArray }) => {
 
   messageArray.forEach((msg, i) => {
     renderMessages.push(
-      <Message key={i} id={i} message={msg.value} offset={msg.offset} />,
+      <Message key={msg.offset} id={i} message={msg.value} offset={msg.offset} />,
     );
   });
 

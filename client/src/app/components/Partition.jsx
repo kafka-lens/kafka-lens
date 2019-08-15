@@ -1,14 +1,17 @@
 import React from 'react';
 import '../css/Partition.scss';
 
-const Partition = (props) => (
+const Partition = ({ id, showMessages, topicName }) => (
   <div
+    id={id}
     className="single-partition"
-    id={props.id}
-    onClick={props.showMessages}
-    topicname={props.topicName}
+    role="button"
+    tabIndex="0"
+    onKeyPress={showMessages}
+    onClick={showMessages}
+    topicname={topicName}
   >
-    {`Partition  ${props.id}`}
+    {`Partition  ${id}`}
   </div>
 );
 

@@ -2,9 +2,11 @@ import React from 'react';
 import '../css/ConnectionPage.scss';
 import lensIcon from '../../../../assets/images/lens-icon.png';
 
-const ConnectionPage = (props) => {
+const ConnectionPage = ({
+  isFetching, connected, updateURI, validConnectionChecker,
+}) => {
   let loading;
-  if (props.isFetching === true) {
+  if (isFetching === true) {
     loading = (
       <div className="loading">
         <div className="loading-bar" />
@@ -17,7 +19,7 @@ const ConnectionPage = (props) => {
 
   // This handles connection timeouts for Kafka cluster
   let errorMsg;
-  if (props.connected === false) {
+  if (connected === false) {
     errorMsg = <p id="error-message">Connection timed out, please check your connection URI.</p>;
   }
   return (
@@ -25,14 +27,14 @@ const ConnectionPage = (props) => {
       <div className="connection-form container">
         <form>
           <div>
-            <label id="label-instructions">Enter Your Kafka Server URI</label>
-            <input id="uri-input" type="text" onChange={props.updateURI} />
+            <p id="label-instructions">Enter Your Kafka Server URI</p>
+            <input id="uri-input" type="text" onChange={updateURI} />
           </div>
           <button
             id="connect-button"
             className="btn waves-effect waves-light"
             type="submit"
-            onClick={props.validConnectionChecker}
+            onClick={validConnectionChecker}
           >
             Connect
           </button>

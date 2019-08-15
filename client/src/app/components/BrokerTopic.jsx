@@ -1,5 +1,5 @@
 import React from 'react';
-import LoadingData from './LoadingData.jsx';
+import LoadingData from './LoadingData';
 
 const BrokerTopic = ({ topicName, isLeader, newMessagesPerSecond }) => (
   <div className="broker-topic">
