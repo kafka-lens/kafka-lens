@@ -11,6 +11,7 @@ module.exports = {
     jest: true,
   },
   rules: {
+    'max-len': ['warn', { code: 100 }],
     semi: ['error', 'always'],
     camelcase: 'error',
     indent: ['error', 2],
