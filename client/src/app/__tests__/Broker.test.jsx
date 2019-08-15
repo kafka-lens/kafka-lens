@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Broker from '../containers/Broker.jsx';
+import Broker from '../containers/Broker';
 
 describe('Broker.js unit tests', () => {
   let wrapper;
