@@ -11,9 +11,11 @@ describe('Connection.js unit tests', () => {
     updateURI: jest.fn(),
     validConnectionChecker: jest.fn(),
   };
+
   beforeAll(() => {
     wrapper = shallow(<ConnectionPage {...props} />);
   });
+
   it('Renders without errors', () => {
     expect(wrapper).toMatchSnapshot();
   });

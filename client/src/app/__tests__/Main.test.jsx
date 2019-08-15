@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Main from '../containers/Main.jsx';
+import Main from '../containers/Main';
 
 describe('App.js unit tests', () => {
   let wrapper;
