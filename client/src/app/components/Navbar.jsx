@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 function Navbar({ routes, restartConnectionPage }) {
   const connectionPageLink = (
-    <li key="connection page">
+    <li key="connectionPage">
       <NavLink onClick={restartConnectionPage} style={{ color: '#f7f7f7', fontSize: 18 }} to="/connectionpage">
         Connection Page
       </NavLink>
@@ -12,7 +12,7 @@ function Navbar({ routes, restartConnectionPage }) {
 
   const navLinks = [connectionPageLink].concat(routes.map((route) => (
     <>
-      <li style={{ color: 'rgba(255, 255, 255, 0.5)', padding: '0 8px' }}> | </li>
+      <li key={`separator-${route.link}`} style={{ color: 'rgba(255, 255, 255, 0.5)', padding: '0 8px' }}> | </li>
       <li key={route.link}>
         <NavLink style={{ color: '#f7f7f7', fontSize: 18 }} to={route.link}>
           {route.text}
