@@ -29,6 +29,7 @@ module.exports = {
     ],
     'no-unused-vars': ['warn', { 'argsIgnorePattern': '^_' }],
     'no-console': 'off',
+    'no-plusplus': ["error", { "allowForLoopAfterthoughts": true }],
   },
   'settings': {
     'import/resolver': {
