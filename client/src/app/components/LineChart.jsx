@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Bar, Line } from 'react-chartjs-2';
+import React from 'react';
+import { Line } from 'react-chartjs-2';
 import logger from '../../utils/logger';
 import '../css/Sidebar.scss';
 
@@ -38,7 +38,8 @@ function createDataset(topicName, msgsPerSecondArray) {
 }
 
 const LineChart = ({ timeStamps, topicsData, brokerId }) => {
-  const datasets = Object.entries(topicsData).map(([topicName, msgsPerSecondArray]) => createDataset(topicName, msgsPerSecondArray));
+  const datasets = Object.entries(topicsData)
+    .map(([topicName, msgsPerSecondArray]) => createDataset(topicName, msgsPerSecondArray));
 
   logger.log('datasets:', datasets);
 

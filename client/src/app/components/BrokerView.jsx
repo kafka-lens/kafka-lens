@@ -1,6 +1,6 @@
 import React from 'react';
-import BrokerHeader from './BrokerHeader.jsx';
-import BrokerTopicsView from './BrokerTopicsView.jsx';
+import BrokerHeader from './BrokerHeader';
+import BrokerTopicsView from './BrokerTopicsView';
 import '../css/BrokerView.scss';
 
 const BrokerView = ({
@@ -21,6 +21,9 @@ const BrokerView = ({
   return (
     <div
       className="brokerView"
+      role="button"
+      tabIndex="0"
+      onKeyPress={() => openSideBar(brokerId, topics)}
       onClick={() => openSideBar(brokerId, topics)}
       key={brokerId}
       style={{ backgroundColor }}

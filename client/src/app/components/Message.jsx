@@ -1,11 +1,11 @@
 import React from 'react';
 import '../css/Message.scss';
 
-const Message = (props) => (
+const Message = ({ message, offset }) => (
   <span>
     <div className="single-message">
-      {props.message}
-      <p className="offset-indicator">{props.offset}</p>
+      {message}
+      <p className="offset-indicator">{offset}</p>
     </div>
   </span>
 );

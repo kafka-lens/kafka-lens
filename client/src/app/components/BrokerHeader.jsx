@@ -1,15 +1,14 @@
 import React from 'react';
 
-
-const BrokerHeader = (props) => (
+const BrokerHeader = ({ brokerID, brokerURI }) => (
   <>
     <p className="broker-header">
 Broker ID:
-      {props.brokerID}
+      {brokerID}
     </p>
     <p className="broker-header">
 URI:
-      {props.brokerURI}
+      {brokerURI}
     </p>
   </>
 );

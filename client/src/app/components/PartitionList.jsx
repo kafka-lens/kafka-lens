@@ -1,17 +1,17 @@
 import React from 'react';
-import Partition from './Partition.jsx';
+import Partition from './Partition';
 
-const PartitionList = (props) => {
+const PartitionList = ({ topicInfo, showMessages }) => {
   const partitionsArray = [];
-  const { numberOfPartitions } = props.topicInfo;
+  const { numberOfPartitions } = topicInfo;
 
   for (let i = 0; i < numberOfPartitions; i++) {
     partitionsArray.push(
       <Partition
         key={i}
         id={i}
-        showMessages={props.showMessages}
-        topicName={props.topicInfo.topicName}
+        showMessages={showMessages}
+        topicName={topicInfo.topicName}
       />,
     );
   }

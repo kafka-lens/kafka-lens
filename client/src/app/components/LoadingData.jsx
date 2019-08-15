@@ -1,7 +1,7 @@
 import React from 'react';
 import '../css/LoadingData.scss';
 
-const LoadingData = (props) => {
+const LoadingData = () => {
   const loadingMessages = (
     <div className="spinner">
       <div className="bounce1" />

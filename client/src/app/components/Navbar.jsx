@@ -10,16 +10,17 @@ function Navbar({ routes, restartConnectionPage }) {
     </li>
   );
 
-  const navLinks = [connectionPageLink].concat(routes.map((e, index) => (
+  const navLinks = [connectionPageLink].concat(routes.map((route) => (
     <>
       <li style={{ color: 'rgba(255, 255, 255, 0.5)', padding: '0 8px' }}> | </li>
-      <li key={index}>
-        <NavLink style={{ color: '#f7f7f7', fontSize: 18 }} to={e.link}>
-          {e.text}
+      <li key={route.link}>
+        <NavLink style={{ color: '#f7f7f7', fontSize: 18 }} to={route.link}>
+          {route.text}
         </NavLink>
       </li>
     </>
   )));
   return <ul style={{ margin: 0, display: 'flex', justifyContent: 'center' }}>{navLinks}</ul>;
 }
+
 export default Navbar;

@@ -1,6 +1,6 @@
 import React from 'react';
-import '../css/MessageInfo.scss';
 import logger from '../../utils/logger';
+import '../css/MessageInfo.scss';
 
 const MessageInfo = ({ lastMessage }) => {
   logger.log('lastMessage:', lastMessage);
