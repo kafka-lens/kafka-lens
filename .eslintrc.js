@@ -6,8 +6,9 @@ module.exports = {
     // 'plugin:import/react',
   ],
   env: {
-    'browser': true,
-    'node': true,
+    browser: true,
+    node: true,
+    jest: true,
   },
   rules: {
     semi: ['error', 'always'],
