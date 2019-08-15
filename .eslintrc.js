@@ -32,10 +32,18 @@ module.exports = {
     'no-console': 'off',
     'no-plusplus': ["error", { "allowForLoopAfterthoughts": true }],
   },
-  'settings': {
+  settings: {
     'import/resolver': {
-      'node': {},
-      'webpack': {},
+      node: {},
+      webpack: {},
     }
   },
+  overrides: [
+    {
+      files: ['*.test.jsx'],
+      rules: {
+        'react/jsx-props-no-spreading': 'off',
+      }
+    }
+  ]
 };
