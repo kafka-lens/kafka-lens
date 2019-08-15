@@ -1,10 +1,10 @@
 import React from 'react';
-import Topic from '../components/Topic.jsx';
-import PartitionInfo from '../components/PartitionInfo.jsx';
-import RouteBar from '../components/RouteBar.jsx';
-import MessageInfo from '../components/MessageInfo.jsx';
-import MessageList from '../components/MessageList.jsx';
-import LoadingData from '../components/LoadingData.jsx';
+import Topic from '../components/Topic';
+import PartitionInfo from '../components/PartitionInfo';
+import RouteBar from '../components/RouteBar';
+import MessageInfo from '../components/MessageInfo';
+import MessageList from '../components/MessageList';
+import LoadingData from '../components/LoadingData';
 
 import { ipcRenderer } from 'electron';
 import '../css/TopicPage.scss';
