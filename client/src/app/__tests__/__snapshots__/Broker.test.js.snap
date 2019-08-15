@@ -2,6 +2,27 @@
 
 exports[`Broker.js unit tests Should render without errors 1`] = `
 <div
-  className="broker-grid-container"
-/>
+  style={
+    Object {
+      "backgroundColor": "#143546",
+      "display": "flex",
+    }
+  }
+>
+  <div
+    className="broker-grid-container"
+    style={
+      Object {
+        "minWidth": "100vw",
+      }
+    }
+  />
+  <SideBar
+    brokerGraphData={null}
+    brokerId={null}
+    brokerTopics={Array []}
+    closeSideBar={[Function]}
+    isSideBarOpen={false}
+  />
+</div>
 `;

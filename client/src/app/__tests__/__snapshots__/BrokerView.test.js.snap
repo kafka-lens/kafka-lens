@@ -3,11 +3,15 @@
 exports[`BrokerView.js unit tests Should render without errors 1`] = `
 <div
   className="brokerView"
+  onClick={[Function]}
+  onKeyPress={[Function]}
+  role="button"
   style={
     Object {
-      "backgroundColor": "#E9573F",
+      "backgroundColor": "#DC143C",
     }
   }
+  tabIndex="0"
 >
   <BrokerHeader />
   <BrokerTopicsView />

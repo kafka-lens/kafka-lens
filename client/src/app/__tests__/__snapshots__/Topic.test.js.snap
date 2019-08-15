@@ -8,6 +8,9 @@ exports[`Topic.js unit tests Should render without errors 1`] = `
     className="topic-padding"
     id={1}
     onClick={[MockFunction]}
+    onKeyPress={[MockFunction]}
+    role="button"
+    tabIndex="0"
     topicname="test1"
   >
     test1
