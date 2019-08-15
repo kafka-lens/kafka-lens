@@ -15,7 +15,7 @@ process.env.DEBUG = false;
 
 // * Disable error dialogs by overriding
 // * FIX: https://goo.gl/YsDdsS
-dialog.showErrorBox = function (title, content) {
+dialog.showErrorBox = (title, content) => {
   logger.log(`${title}\n${content}`);
 };
 
@@ -38,8 +38,28 @@ function createWindow() {
   mainWindow.on('closed', () => app.quit());
 
   // Building menu
-  const mainMenu = Menu.buildFromTemplate(addDevToolsToMenu);
-  // Insert menu
+  const devToolsMenuTemplate = [
+    {
+      label: 'File',
+      submenu: [
+        {
+          label: 'Quit',
+          accelerator: process.platform === 'darwin' ? 'Command+Q' : 'Ctrl+Q',
+          click() {
+            app.quit();
+          },
+        },
+        {
+          label: 'DevTools',
+          accelerator: process.platform === 'darwin' ? 'Command+Shift+I' : 'Ctrl+Shift+I',
+          click() {
+            mainWindow.webContents.openDevTools();
+          },
+        },
+      ],
+    },
+  ];
+  const mainMenu = Menu.buildFromTemplate(devToolsMenuTemplate);
   Menu.setApplicationMenu(mainMenu);
 }
 
@@ -51,35 +71,13 @@ app.on('window-all-closed', () => {
   }
 });
 
-// * When window is closed but app is still running in the background, create new window upon activation
+// When the window is closed but the app is still running in the background,
+// create new window upon activation
 app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
 });
-
-// Add Chrome dev tools menu
-const addDevToolsToMenu = [
-  {
-    label: 'File',
-    submenu: [
-      {
-        label: 'Quit',
-        accelerator: process.platform === 'darwin' ? 'Command+Q' : 'Ctrl+Q',
-        click() {
-          app.quit();
-        },
-      },
-      {
-        label: 'DevTools',
-        accelerator: process.platform === 'darwin' ? 'Command+Shift+I' : 'Ctrl+Shift+I',
-        click() {
-          mainWindow.webContents.openDevTools();
-        },
-      },
-    ],
-  },
-];
 
 /*
  *
@@ -93,18 +91,23 @@ ipcMain.on('topic:getTopics', (e, kafkaHostUri) => {
     .then((result) => mainWindow.webContents.send('topic:getTopics', result))
     .catch((error) => {
       if (error === 'ignore') return logger.log('ignored getTopicData');
-      mainWindow.webContents.send('topic:getTopics', error);
+      return mainWindow.webContents.send('topic:getTopics', error);
     });
 });
 
 /**
  * @param {Object} e is event
- * @param {Object} args is an object that contains topic name, host, offset and partition are optional args
+ * @param {{topicName, kafkaHostURI, partitionId, offset}} offset and partition are optional args
  */
 ipcMain.on('partition:getMessages', (e, args) => {
   logger.log('get msg request received', args);
   if (currConsumerGroupShutdownMethod) currConsumerGroupShutdownMethod();
-  currConsumerGroupShutdownMethod = consumerApi.getMessagesFromTopic(args.kafkaHostURI, args.topicName, mainWindow, args.partitionId);
+  currConsumerGroupShutdownMethod = consumerApi.getMessagesFromTopic(
+    args.kafkaHostURI,
+    args.topicName,
+    mainWindow,
+    args.partitionId,
+  );
 });
 
 ipcMain.on('partition:getData', (e, args) => {

@@ -1,9 +1,8 @@
 class MessageBuffer {
   /**
    *
-   * @param {Number} size This is the maximum size of the buffer
-   * This buffer will store a predetermined number of items. Once that size has been reached, the buffer will start
-   * removing items from the front of the buffer
+   * @param {Number} size Maximum size of the buffer. This will store a fixed number of items.
+   * Once the limit is reached, it will start removing items from the front of the buffer
    */
   constructor(size) {
     this.maxSize = size;
@@ -17,9 +16,9 @@ class MessageBuffer {
 
   /**
    *
-   * @param {any} item Any data type to be added to the end of the queue.
+   * @param {{offset: *, partitionId: *, topicName: *, value: *, key: *, timestamp: (*|string)}} item Any data type to be added to the end of the queue.
    * This will add data to the end of the queue. If the item added causes the length of the queue to
-   * exceed the maximum size of the buffer, this will also cause the buffer to drop the oldest data in the buffer
+   * exceed the maximum size of the buffer, this will also cause the buffer to drop the oldest data.
    */
   queue(item) {
     this.hiIndex += 1;
@@ -60,7 +59,7 @@ class MessageBuffer {
 
   /**
    *
-   * @param {Electron Window} mainWindow Send the window where resulting array needs to tbe sent
+   * @param {*} mainWindow Send the window where resulting array needs to tbe sent
    * Will create an array of items needed for display to the passed Electron window.
    */
   getNextSegment(mainWindow) {

@@ -23,7 +23,7 @@ offsetApi.getEarliestOffset = (kafkaHostURI, topicName, partitionId) => {
         `result from getEarliestOffset for topic ${topicName} - partition ${partitionId}:`,
         data,
       );
-      resolve(data[topicName][partitionId]);
+      return resolve(data[topicName][partitionId]);
     });
   });
 };
