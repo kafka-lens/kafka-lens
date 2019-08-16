@@ -9,11 +9,7 @@ module.exports = {
   },
   target: 'electron-main',
   resolve: {
-    extensions: [
-      '.jsx',
-      '.js',
-      '.json',
-    ],
+    extensions: ['.jsx', '.js', '.json'],
   },
   module: {
     rules: [
