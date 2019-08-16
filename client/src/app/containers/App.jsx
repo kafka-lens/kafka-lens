@@ -21,7 +21,7 @@ const App = () => {
   return (
     <StateProvider initialState={initialState} reducer={mainReducer}>
       <Main />
-      <TopicsPage />
+      {/* <TopicsPage /> */}
     </StateProvider>
   );
 };
