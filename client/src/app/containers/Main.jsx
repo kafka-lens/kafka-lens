@@ -17,7 +17,7 @@ class Main extends React.Component {
     super(props);
     this.state = {
       connected: null,
-      uri_input: '',
+      uriInput: '',
       topics: [],
       isFetching: false,
     };
@@ -41,9 +41,10 @@ class Main extends React.Component {
           connected: false,
         });
       } else {
-        data.forEach(topic => {
+        for (let i = 0; i < data.length; i++) {
+          const topic = data[i];
           topic.showPartitions = false;
-        });
+        }
 
         this.setState({
           topics: data,
@@ -54,10 +55,10 @@ class Main extends React.Component {
   }
 
   // create function to setState connected to null
-  restartConnectionPage(event) {
+  restartConnectionPage() {
     this.setState({
       connected: false,
-      uri_input: '',
+      uriInput: '',
       topics: [],
       isFetching: false,
     });
@@ -71,37 +72,31 @@ class Main extends React.Component {
       isFetching: true,
     });
 
-    const { uri_input: uri } = this.state;
+    const { uriInput } = this.state;
 
-    ipcRenderer.send('topic:getTopics', uri);
+    ipcRenderer.send('topic:getTopics', uriInput);
   }
 
   // This function is passed to the connectionPage
   updateURI(event) {
-    const input = event.target.value;
-    this.setState({ uri_input: input });
-  }
-
-  disconnect() {
-    this.setState({ connected: null });
+    const inputValue = event.target.value;
+    this.setState({ uriInput: inputValue });
   }
 
   render() {
+    const { connected, isFetching, topics, uriInput } = this.state;
+
     return (
       <div className="main-div">
-        {this.state.connected === true ? (
+        {connected === true ? (
           <Router>
             <Header restartConnectionPage={this.restartConnectionPage} />
             <Switch>
-              <Route path="/broker" render={() => <Broker kafkaHostURI={this.state.uri_input} />} />
+              <Route path="/broker" render={() => <Broker kafkaHostURI={uriInput} />} />
               <Route
                 path="/"
                 render={() => (
-                  <TopicPage
-                    uri={this.state.uri_input}
-                    topicList={this.state.topics}
-                    isConnected={this.state.connected}
-                  />
+                  <TopicPage uri={uriInput} topicList={topics} isConnected={connected} />
                 )}
               />
               <Route path="/connectionpage" render={() => <ConnectionPage />} />
@@ -111,8 +106,8 @@ class Main extends React.Component {
           <ConnectionPage
             validConnectionChecker={this.validConnectionChecker}
             updateURI={this.updateURI}
-            connected={this.state.connected}
-            isFetching={this.state.isFetching}
+            connected={connected}
+            isFetching={isFetching}
           />
         )}
       </div>
