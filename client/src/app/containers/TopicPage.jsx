@@ -158,7 +158,7 @@ class TopicPage extends React.Component {
           <RouteBar
             partitionId={partitionId}
             topicName={currentTopicMetadata.topicName}
-            showPartitionInfo={showingPartitionMetadata}
+            showingPartitionMetadata={showingPartitionMetadata}
           />
         </div>
         <div className="logo-box">
@@ -166,7 +166,7 @@ class TopicPage extends React.Component {
         </div>
         <div className="topics-header">Topics</div>
         <div className="partition-info">
-          {loadingData === true && messages.length === 0 ? <LoadingData /> : ''}
+          {loadingData && messages.length === 0 && <LoadingData />}
           {shouldDisplayPartitionMetadata && (
             <PartitionInfo partitionInfo={currentPartitionMetadata} partitionId={partitionId} />
           )}
@@ -192,6 +192,6 @@ export default TopicPage;
 
 TopicPage.propTypes = {
   isConnected: PropTypes.bool.isRequired,
-  topicList: PropTypes.arrayOf().isRequired,
+  topicList: PropTypes.arrayOf(PropTypes.object).isRequired,
   uri: PropTypes.string.isRequired,
 };
