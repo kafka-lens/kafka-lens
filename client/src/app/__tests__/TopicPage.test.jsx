@@ -7,6 +7,8 @@ describe('TopicPage.js unit tests', () => {
   let wrapper;
   const props = {
     topicList: [],
+    isConnected: true,
+    uri: 'localhost:9092',
   };
 
   beforeAll(() => {
@@ -18,33 +20,31 @@ describe('TopicPage.js unit tests', () => {
   });
 
   it('Should render Topic components if there are topics in state', () => {
-    expect(wrapper.exists('Topic')).toBe(false);
+    expect(wrapper.exists('Topic')).toBeFalsy();
     wrapper.setProps({
-      topicList: [{ message: 'test1' }, { message: 'test2' }, { message: 'test3' }],
+      topicList: [
+        { topicName: 'topic1', showPartitions: true },
+        { topicName: 'topic2' },
+        { topicName: 'topic3' },
+      ],
     });
-    expect(wrapper.exists('Topic')).toBe(true);
+    expect(wrapper.exists('Topic')).toBeTruthy();
   });
 
-  xit('Should render loading animation if this.state.messages.length > 0', () => {
-    const instance = wrapper.instance();
-    expect(
-      wrapper.containsMatchingElement(
-        <div className="spinner">
-          <div className="bounce1" />
-          <div className="bounce2" />
-          <div className="bounce3" />
-        </div>,
-      ),
-    ).toBeFalsy();
-    instance.setState({ messages: [1, 2, 3, 4, 5] });
-    expect(
-      wrapper.containsMatchingElement(
-        <div className="spinner">
-          <div className="bounce1" />
-          <div className="bounce2" />
-          <div className="bounce3" />
-        </div>,
-      ),
-    ).toBeTruthy();
+  it('Should render loading animation if loadingData & this.state.messages.length === 0', () => {
+    wrapper.setState({ loadingData: true });
+    expect(wrapper.exists('LoadingData')).toBeTruthy();
+  });
+
+  it('Should stop loading animation if this.state.messages.lrngth > 0', () => {
+    wrapper.setState({
+      loadingData: true,
+      messages: [
+        { offset: '1', value: '1' },
+        { offset: '2', value: '2' },
+        { offset: '3', value: '3' },
+      ],
+    });
+    expect(wrapper.exists('LoadingData')).toBeFalsy();
   });
 });
