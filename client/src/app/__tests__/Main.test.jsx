@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import Main from '../containers/Main';
 
-describe('App.js unit tests', () => {
+describe('Main.js unit tests', () => {
   let wrapper;
 
   // * MOUNT MAIN COMPONENT BEFORE ALL TESTS
