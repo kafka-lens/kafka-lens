@@ -8,7 +8,12 @@ const PartitionList = ({ topicInfo, showMessages }) => {
 
   for (let i = 0; i < numberOfPartitions; i++) {
     partitionsArray.push(
-      <Partition key={i} id={i} showMessages={showMessages} topicName={topicInfo.topicName} />,
+      <Partition
+        key={`${topicInfo.topicName}-${i}`}
+        id={i.toString()}
+        showMessages={showMessages}
+        topicName={topicInfo.topicName}
+      />,
     );
   }
 
