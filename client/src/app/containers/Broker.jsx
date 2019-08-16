@@ -149,7 +149,7 @@ Broker.propTypes = {
       isAlive: PropTypes.bool.isRequired,
       brokerId: PropTypes.number.isRequired,
       brokerURI: PropTypes.string.isRequired,
-      topics: PropTypes.arrayOf().isRequired,
+      topics: PropTypes.array.isRequired,
     }),
   ).isRequired,
   kafkaHostURI: PropTypes.string.isRequired,
