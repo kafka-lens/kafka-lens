@@ -92,7 +92,10 @@ class Main extends React.Component {
           <Router>
             <Header restartConnectionPage={this.restartConnectionPage} />
             <Switch>
-              <Route path="/broker" render={() => <Broker kafkaHostURI={uriInput} />} />
+              <Route
+                path="/broker"
+                render={() => <Broker brokersSnapshots={[]} kafkaHostURI={uriInput} />}
+              />
               <Route
                 path="/"
                 render={() => (
