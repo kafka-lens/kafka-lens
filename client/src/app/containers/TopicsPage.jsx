@@ -2,13 +2,14 @@ import React from 'react';
 
 import { getState } from '../state/state';
 
-function TopicsPage(props) {
+function TopicsPage() {
   const [state, dispatch] = getState();
 
   return (
     <div>
       {console.log('hooks-based state:', state)}
       <button
+        type="button"
         onClick={() =>
           dispatch({
             type: 'SET_TOPICS',

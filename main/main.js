@@ -89,7 +89,7 @@ ipcMain.on('topic:getTopics', (e, kafkaHostUri) => {
     .then(result => mainWindow.webContents.send('topic:getTopics', result))
     .catch(error => {
       if (error === 'ignore') return logger.log('ignored getTopicData');
-      return mainWindow.webContents.send('topic:getTopics', error);
+      return mainWindow.webContents.send('topic:getTopics', { error });
     });
 });
 
@@ -132,11 +132,11 @@ ipcMain.on('broker:getBrokers', (e, args) => {
   brokerApi
     .getBrokerData(args.kafkaHostURI)
     .then(data => mainWindow.webContents.send('broker:getBrokers', data))
-    .catch(err => mainWindow.webContents.send('broker:getBrokers', err));
+    .catch(error => mainWindow.webContents.send('broker:getBrokers', { error }));
   setInterval(() => {
     brokerApi
       .getBrokerData(args.kafkaHostURI)
       .then(data => mainWindow.webContents.send('broker:getBrokers', data))
-      .catch(err => mainWindow.webContents.send('broker:getBrokers', err));
+      .catch(error => mainWindow.webContents.send('broker:getBrokers', { error }));
   }, 10000);
 });

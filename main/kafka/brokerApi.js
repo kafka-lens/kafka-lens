@@ -84,11 +84,11 @@ brokerApi.getBrokerData = kafkaHostURI => {
     const brokerResult = {};
 
     // Fetch all topics from the Kafka broker
-    admin.listTopics((err, data) => {
-      if (err) {
-        logger.error(err);
+    admin.listTopics((error, data) => {
+      if (error) {
+        logger.error(error);
         client.close();
-        return reject({ error: err });
+        return reject(error);
       }
 
       // Reassign topics with only the object containing the topic data
@@ -169,10 +169,10 @@ brokerApi.getBrokerData = kafkaHostURI => {
             client.close();
             return resolve({ data: brokerResult });
           })
-          .catch(error => {
-            logger.error('ERROR GETTING msgsPerSecond:', error);
+          .catch(err => {
+            logger.error('ERROR GETTING msgsPerSecond:', err);
             client.close();
-            return reject({ error });
+            return reject(err);
           });
       });
     });
