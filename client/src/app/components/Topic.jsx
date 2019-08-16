@@ -30,5 +30,8 @@ Topic.propTypes = {
   id: PropTypes.number.isRequired,
   showMessages: PropTypes.func.isRequired,
   showPartitions: PropTypes.func.isRequired,
-  topicInfo: PropTypes.objectOf().isRequired,
+  topicInfo: PropTypes.shape({
+    topicName: PropTypes.string.isRequired,
+    showPartitions: PropTypes.bool.isRequired,
+  }).isRequired,
 };
