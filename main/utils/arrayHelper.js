@@ -9,7 +9,7 @@ const arrayHelper = {
 
     const firstArray = arrays[0];
     const zippedArrayLength = firstArray.length;
-    if (!firstArray || !arrays.every((arr) => arr.length === zippedArrayLength)) {
+    if (!firstArray || !arrays.every(arr => arr.length === zippedArrayLength)) {
       logger.error('error zipping Arrays: All arrays should be of same length');
       return [];
     }

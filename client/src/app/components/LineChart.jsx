@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import logger from '../../utils/logger';
@@ -38,8 +39,9 @@ function createDataset(topicName, msgsPerSecondArray) {
 }
 
 const LineChart = ({ timeStamps, topicsData, brokerId }) => {
-  const datasets = Object.entries(topicsData)
-    .map(([topicName, msgsPerSecondArray]) => createDataset(topicName, msgsPerSecondArray));
+  const datasets = Object.entries(topicsData).map(([topicName, msgsPerSecondArray]) =>
+    createDataset(topicName, msgsPerSecondArray),
+  );
 
   logger.log('datasets:', datasets);
 
@@ -49,17 +51,16 @@ const LineChart = ({ timeStamps, topicsData, brokerId }) => {
   };
   return (
     <div>
-      <h1 className="brokerId">
-        {' '}
-Broker ID #
-        {brokerId}
-        {' '}
-History
-        {' '}
-      </h1>
+      <h1 className="brokerId"> Broker ID #{brokerId} History </h1>
       <Line data={data} />
     </div>
   );
 };
 
 export default LineChart;
+
+LineChart.propTypes = {
+  brokerId: PropTypes.number.isRequired,
+  timeStamps: PropTypes.arrayOf().isRequired,
+  topicsData: PropTypes.objectOf().isRequired,
+};

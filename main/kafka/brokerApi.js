@@ -17,7 +17,7 @@ brokerApi.calcAndCacheMsgsPerSecond = (kafkaHostURI, topicName, partitionId, lea
   return new Promise((resolve, reject) => {
     offsetApi
       .getLatestOffset(kafkaHostURI, topicName, partitionId)
-      .then((newOffset) => {
+      .then(newOffset => {
         const currentTime = Date.now();
         if (partition.timeStamp === undefined) {
           partition.lastOffset = newOffset;
@@ -34,7 +34,7 @@ brokerApi.calcAndCacheMsgsPerSecond = (kafkaHostURI, topicName, partitionId, lea
         partition.timeStamp = currentTime;
         return resolve(partition.newMessagesPerSecond);
       })
-      .catch((err) => reject(err));
+      .catch(err => reject(err));
   });
 };
 
@@ -74,7 +74,7 @@ brokerApi.calcAndCacheMsgsPerSecond = (kafkaHostURI, topicName, partitionId, lea
  *
  * @returns (Promise)
  */
-brokerApi.getBrokerData = (kafkaHostURI) => {
+brokerApi.getBrokerData = kafkaHostURI => {
   logger.log('attempting connection to uri', kafkaHostURI);
   return new Promise((resolve, reject) => {
     // Declares a new instance of client that will be used to make a connection
@@ -84,11 +84,11 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
     const brokerResult = {};
 
     // Fetch all topics from the Kafka broker
-    admin.listTopics((err, data) => {
-      if (err) {
-        logger.error(err);
+    admin.listTopics((error, data) => {
+      if (error) {
+        logger.error(error);
         client.close();
-        return reject({ error: err });
+        return reject(error);
       }
 
       // Reassign topics with only the object containing the topic data
@@ -114,7 +114,7 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
         // for each topic, find associated broker and add topic name to topic array in brokerResults
 
         const associatedBrokers = new Set();
-        Object.values(topic).forEach((partition) => {
+        Object.values(topic).forEach(partition => {
           logger.log('partition:', partition);
           for (let i = 0; i < partition.replicas.length; i++) {
             const partitionId = partition.replicas[i];
@@ -135,7 +135,7 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
 
         logger.log(`associated Brokers for topic ${topicName}:`, associatedBrokers);
 
-        associatedBrokers.forEach((id) => {
+        associatedBrokers.forEach(id => {
           if (!Object.hasOwnProperty.call(brokerResult, id)) {
             brokerResult[id] = {
               brokerId: id,
@@ -154,7 +154,7 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
             logger.log('topicsCache:', topicsCache);
             Object.entries(topicsCache).forEach(([cachedTopicName, cachedPartitions]) => {
               logger.log('cachedTopicName:', cachedTopicName);
-              Object.values(cachedPartitions).forEach((cachedPartition) => {
+              Object.values(cachedPartitions).forEach(cachedPartition => {
                 logger.log('cachedPartition:', cachedPartition);
                 const brokerInfo = brokerResult[cachedPartition.leader];
                 logger.log('brokerInfo:', brokerInfo);
@@ -169,10 +169,10 @@ brokerApi.getBrokerData = (kafkaHostURI) => {
             client.close();
             return resolve({ data: brokerResult });
           })
-          .catch((error) => {
-            logger.error('ERROR GETTING msgsPerSecond:', error);
+          .catch(err => {
+            logger.error('ERROR GETTING msgsPerSecond:', err);
             client.close();
-            return reject({ error });
+            return reject(err);
           });
       });
     });

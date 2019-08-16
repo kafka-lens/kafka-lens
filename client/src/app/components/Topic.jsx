@@ -1,10 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import PartitionList from './PartitionList';
 import '../css/Topic.scss';
 
-const Topic = ({
-  id, topicInfo, showPartitions, showMessages,
-}) => (
+const Topic = ({ id, topicInfo, showPartitions, showMessages }) => (
   <div className="topic-header">
     <div
       className="topic-padding"
@@ -26,3 +25,13 @@ const Topic = ({
 );
 
 export default Topic;
+
+Topic.propTypes = {
+  id: PropTypes.number.isRequired,
+  showMessages: PropTypes.func.isRequired,
+  showPartitions: PropTypes.func.isRequired,
+  topicInfo: PropTypes.shape({
+    topicName: PropTypes.string.isRequired,
+    showPartitions: PropTypes.bool,
+  }).isRequired,
+};

@@ -5,36 +5,34 @@ exports[`PartitionList unit tests Should render without errors 1`] = `
   className="partition-list"
 >
   <Partition
-    id={0}
-    key="0"
+    id="0"
+    key="first-0"
+    showMessages={[MockFunction]}
+    topicName="first"
   />
   <Partition
-    id={1}
-    key="1"
+    id="1"
+    key="first-1"
+    showMessages={[MockFunction]}
+    topicName="first"
   />
   <Partition
-    id={2}
-    key="2"
+    id="2"
+    key="first-2"
+    showMessages={[MockFunction]}
+    topicName="first"
   />
   <Partition
-    id={3}
-    key="3"
+    id="3"
+    key="first-3"
+    showMessages={[MockFunction]}
+    topicName="first"
   />
   <Partition
-    id={4}
-    key="4"
-  />
-  <Partition
-    id={5}
-    key="5"
-  />
-  <Partition
-    id={6}
-    key="6"
-  />
-  <Partition
-    id={7}
-    key="7"
+    id="4"
+    key="first-4"
+    showMessages={[MockFunction]}
+    topicName="first"
   />
 </div>
 `;

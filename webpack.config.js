@@ -2,25 +2,21 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: path.resolve(__dirname, './client/src/index.js'),
+  entry: path.resolve(__dirname, './client/src/index.jsx'),
   output: {
     path: path.resolve(__dirname, './client/dist'),
     filename: 'index_bundle.js',
   },
   target: 'electron-main',
   resolve: {
-    extensions: [
-      '.jsx',
-      '.js',
-      '.json',
-    ],
+    extensions: ['.jsx', '.js', '.json'],
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader', 'eslint-loader'],
+        use: 'babel-loader',
       },
       {
         test: /\.scss$/,

@@ -3,7 +3,6 @@ const { zipArrays } = require('../utils/arrayHelper');
 const offsetApi = require('./offsetApi');
 const logger = require('../utils/logger');
 
-
 const adminApi = {};
 
 function wrapInTimeout(
@@ -32,8 +31,8 @@ function wrapInTimeout(
       tries = Math.min(tries + 1, triesIncreaseCap);
 
       callback(...args)
-        .then((result) => resolve(result))
-        .catch((err) => reject(err));
+        .then(result => resolve(result))
+        .catch(err => reject(err));
 
       const msToTimeout = initialMsToTimeout + (tries - 1) * msIncreasePerTry;
       currentTimeoutId = setTimeout(() => {
@@ -45,11 +44,7 @@ function wrapInTimeout(
 }
 
 function getTopicData(kafkaHostURI) {
-  const topicNamesToIgnore = [
-    '__consumer_offsets',
-    'null',
-    'undefined',
-  ];
+  const topicNamesToIgnore = ['__consumer_offsets', 'null', 'undefined'];
 
   return new Promise((resolve, reject) => {
     // Declares a new instance of client that will be used to make a connection
@@ -75,20 +70,22 @@ function getTopicData(kafkaHostURI) {
         }));
 
       // for each topic, get # of partitions and storing that in topic partitions
-      const promises = topics.map(({ topicName, numberOfPartitions }) => (
-        adminApi.getTopicMsgCount(kafkaHostURI, topicName, numberOfPartitions)
-      ));
+      const promises = topics.map(({ topicName, numberOfPartitions }) =>
+        adminApi.getTopicMsgCount(kafkaHostURI, topicName, numberOfPartitions),
+      );
 
       return Promise.all(promises)
-        .then((topicMsgCounts) => {
-          const result = zipArrays(topics, topicMsgCounts)
-            .map(([topicInfo, msgCount]) => ({ msgCount, ...topicInfo }));
+        .then(topicMsgCounts => {
+          const result = zipArrays(topics, topicMsgCounts).map(([topicInfo, msgCount]) => ({
+            msgCount,
+            ...topicInfo,
+          }));
 
           logger.log('final topic Data:', result);
           client.close();
           return resolve(result);
         })
-        .catch((error) => {
+        .catch(error => {
           logger.error('Error getting all topicMsgCounts:', error);
           client.close();
           return reject(new Error(`Error getting all topicMsgCounts:${error}`));
@@ -125,11 +122,11 @@ adminApi.getTopicMsgCount = (kafkaHostURI, topicName, numberOfPartitions) => {
     }
     // Resolves when all promises from array are resolved (with a single number)
     Promise.all(promises)
-      .then((partitionMsgsCount) => {
-        const topicMsgsCount = partitionMsgsCount.reduce((total, curr) => (total + curr), 0);
+      .then(partitionMsgsCount => {
+        const topicMsgsCount = partitionMsgsCount.reduce((total, curr) => total + curr, 0);
         resolve(topicMsgsCount);
       })
-      .catch((err) => reject(err));
+      .catch(err => reject(err));
   });
 };
 
@@ -149,7 +146,7 @@ adminApi.getPartitionMsgCount = (kafkaHostURI, topicName, partitionId = 0) => {
       .then(([earliestOffset, latestOffset]) => {
         resolve(latestOffset - earliestOffset);
       })
-      .catch((error) => {
+      .catch(error => {
         reject(error);
       });
   });
@@ -176,7 +173,7 @@ adminApi.getPartitionBrokers = (kafkaHostURI, topicName, partitionId = 0) => {
       // Isolate leader broker and replica brokers array into brokerPartitionData array
       const topicsMetadata = data[1].metadata;
       const { leader } = topicsMetadata[topicName][partitionId];
-      const replicas = topicsMetadata[topicName][partitionId].replicas.filter((b) => b !== leader);
+      const replicas = topicsMetadata[topicName][partitionId].replicas.filter(b => b !== leader);
       brokerPartitionData.push(leader);
       brokerPartitionData.push(replicas);
 

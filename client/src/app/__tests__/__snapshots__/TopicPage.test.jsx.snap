@@ -14,13 +14,15 @@ exports[`TopicPage.js unit tests Should render without errors 1`] = `
   >
     <RouteBar
       partitionId=""
-      showPartitionInfo={false}
+      showingPartitionMetadata={false}
+      topicName={null}
     />
   </div>
   <div
     className="logo-box"
   >
     <img
+      alt="kakfa lens logo"
       className="lens-icon"
       src={
         Object {
@@ -55,13 +57,15 @@ exports[`TopicPage.js unit tests Should render without errors 1`] = `
     className="connection-status"
   >
     <h5
-      className="disconnected-header"
+      className="connection-header"
     >
-      Disconnected
+      Connected
     </h5>
     <div
       className="connection-uri"
-    />
+    >
+      localhost:9092
+    </div>
   </div>
 </div>
 `;

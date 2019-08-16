@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Broker.js unit tests Should render without errors 1`] = `
+exports[`Broker.jsx unit tests Should render without errors 1`] = `
 <div
   style={
     Object {

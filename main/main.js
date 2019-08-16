@@ -1,6 +1,4 @@
-const {
-  app, BrowserWindow, Menu, ipcMain, dialog,
-} = require('electron');
+const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron');
 const path = require('path');
 const url = require('url');
 
@@ -11,7 +9,6 @@ const brokerApi = require('./kafka/brokerApi');
 const logger = require('./utils/logger');
 
 process.env.DEBUG = false;
-
 
 // * Disable error dialogs by overriding
 // * FIX: https://goo.gl/YsDdsS
@@ -87,11 +84,12 @@ app.on('activate', () => {
 
 // * Listens for URI string from client connection page
 ipcMain.on('topic:getTopics', (e, kafkaHostUri) => {
-  adminApi.getTopicData(kafkaHostUri)
-    .then((result) => mainWindow.webContents.send('topic:getTopics', result))
-    .catch((error) => {
+  adminApi
+    .getTopicData(kafkaHostUri)
+    .then(result => mainWindow.webContents.send('topic:getTopics', result))
+    .catch(error => {
       if (error === 'ignore') return logger.log('ignored getTopicData');
-      return mainWindow.webContents.send('topic:getTopics', error);
+      return mainWindow.webContents.send('topic:getTopics', { error });
     });
 });
 
@@ -117,7 +115,7 @@ ipcMain.on('partition:getData', (e, args) => {
   results[2] = adminApi.getPartitionMsgCount(args.kafkaHostURI, args.topicName, args.partitionId);
   results[3] = adminApi.getPartitionBrokers(args.kafkaHostURI, args.topicName, args.partitionId);
 
-  Promise.all(results).then((result) => {
+  Promise.all(results).then(result => {
     const data = {
       highwaterOffset: result[0],
       earliestOffset: result[1],
@@ -131,12 +129,14 @@ ipcMain.on('partition:getData', (e, args) => {
 
 ipcMain.on('broker:getBrokers', (e, args) => {
   logger.log('broker:getBrokers received in main.js args:', args);
-  brokerApi.getBrokerData(args.kafkaHostURI)
-    .then((data) => mainWindow.webContents.send('broker:getBrokers', data))
-    .catch((err) => mainWindow.webContents.send('broker:getBrokers', err));
+  brokerApi
+    .getBrokerData(args.kafkaHostURI)
+    .then(data => mainWindow.webContents.send('broker:getBrokers', data))
+    .catch(error => mainWindow.webContents.send('broker:getBrokers', { error }));
   setInterval(() => {
-    brokerApi.getBrokerData(args.kafkaHostURI)
-      .then((data) => mainWindow.webContents.send('broker:getBrokers', data))
-      .catch((err) => mainWindow.webContents.send('broker:getBrokers', err));
+    brokerApi
+      .getBrokerData(args.kafkaHostURI)
+      .then(data => mainWindow.webContents.send('broker:getBrokers', data))
+      .catch(error => mainWindow.webContents.send('broker:getBrokers', { error }));
   }, 10000);
 });

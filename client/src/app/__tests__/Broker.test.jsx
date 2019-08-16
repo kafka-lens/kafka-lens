@@ -3,10 +3,11 @@ import { shallow } from 'enzyme';
 
 import Broker from '../containers/Broker';
 
-describe('Broker.js unit tests', () => {
+describe('Broker.jsx unit tests', () => {
   let wrapper;
   const props = {
     kafkaHostURI: 'localhost:9092',
+    brokersSnapshots: [{ isAlive: true, brokerId: 5, brokerURI: 'localhost:9092', topics: [] }],
   };
 
   beforeAll(() => {
@@ -17,15 +18,18 @@ describe('Broker.js unit tests', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  xit('should render <BrokerViews/>', () => {
+  it('should render <BrokerViews/>', () => {
     const instance = wrapper.instance();
     expect(instance.state.brokersSnapshots).toEqual([]);
     wrapper.setState({
-      brokersSnapshots: [{ broker: 'test1' }, { broker: 'test2' }, { broker: 'test3' }],
-    }, () => {
-      wrapper.update();
-      console.log('Broker wrapper after setting state:', wrapper.debug());
-      expect(wrapper.exists('BrokerView')).toEqual(true);
+      brokersSnapshots: [
+        [
+          { isAlive: true, brokerId: 1, brokerURI: 'localhost:9092', topics: [] },
+          { isAlive: true, brokerId: 2, brokerURI: 'localhost:9092', topics: [] },
+          { isAlive: false, brokerId: 3, brokerURI: 'localhost:9092', topics: [] },
+        ],
+      ],
     });
+    expect(wrapper.exists('BrokerView')).toEqual(true);
   });
 });

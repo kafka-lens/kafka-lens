@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Partition from './Partition';
 
@@ -8,8 +9,8 @@ const PartitionList = ({ topicInfo, showMessages }) => {
   for (let i = 0; i < numberOfPartitions; i++) {
     partitionsArray.push(
       <Partition
-        key={i}
-        id={i}
+        key={`${topicInfo.topicName}-${i}`}
+        id={i.toString()}
         showMessages={showMessages}
         topicName={topicInfo.topicName}
       />,
@@ -20,3 +21,11 @@ const PartitionList = ({ topicInfo, showMessages }) => {
 };
 
 export default PartitionList;
+
+PartitionList.propTypes = {
+  showMessages: PropTypes.func.isRequired,
+  topicInfo: PropTypes.shape({
+    numberOfPartitions: PropTypes.number,
+    topicName: PropTypes.string.isRequired,
+  }).isRequired,
+};

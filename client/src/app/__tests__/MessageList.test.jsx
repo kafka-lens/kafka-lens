@@ -12,7 +12,7 @@ describe('MessageList.js unit tests', () => {
 
   beforeAll(() => {
     for (let i = 0; i < 5; i++) {
-      props.messageArray.push({ offset: i, message: i });
+      props.messageArray.push({ offset: i.toString(), value: i.toString() });
     }
     wrapper = shallow(<MessageList {...props} />);
   });

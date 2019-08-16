@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import '../css/Partition.scss';
 
@@ -16,3 +17,9 @@ const Partition = ({ id, showMessages, topicName }) => (
 );
 
 export default Partition;
+
+Partition.propTypes = {
+  id: PropTypes.string.isRequired,
+  showMessages: PropTypes.func.isRequired,
+  topicName: PropTypes.string.isRequired,
+};

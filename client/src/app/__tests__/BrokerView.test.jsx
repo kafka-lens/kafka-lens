@@ -3,15 +3,23 @@ import { shallow } from 'enzyme';
 
 import BrokerView from '../components/BrokerView';
 
-describe('BrokerView.js unit tests', () => {
+describe('BrokerView.jsx unit tests', () => {
   let wrapper;
+
   const props = {
     isAlive: false,
-    brokerColors: {
-      Red: '#DC143C',
-      Green: '#90EE90',
-    },
+    openSideBar: jest.fn(),
+    brokerId: 1,
+    brokerURI: 'localhost:9092',
+    topics: [],
   };
+
+  const brokerColors = {
+    Red: '#DC143C',
+    Green: '#90EE90',
+  };
+
+  // { isAlive, openSideBar, brokerId, brokerURI, topics }
 
   beforeAll(() => {
     wrapper = shallow(<BrokerView {...props} />);
@@ -34,7 +42,7 @@ describe('BrokerView.js unit tests', () => {
   it('If Broker is inactive, then color should be red', () => {
     expect(wrapper.find('.brokerView').get(0).props.style).toHaveProperty(
       'backgroundColor',
-      props.brokerColors.Red,
+      brokerColors.Red,
     );
   });
 
@@ -45,7 +53,7 @@ describe('BrokerView.js unit tests', () => {
     expect(wrapper.find('.brokerView')).toHaveLength(1);
     expect(wrapper.find('.brokerView').get(0).props.style).toHaveProperty(
       'backgroundColor',
-      props.brokerColors.Green,
+      brokerColors.Green,
     );
   });
 });

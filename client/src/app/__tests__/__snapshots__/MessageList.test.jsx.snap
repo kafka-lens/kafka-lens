@@ -7,27 +7,32 @@ exports[`MessageList.js unit tests Should render without errors 1`] = `
   <Message
     id={0}
     key="first-0"
-    offset={0}
+    message="0"
+    offset="0"
   />
   <Message
     id={1}
     key="first-1"
-    offset={1}
+    message="1"
+    offset="1"
   />
   <Message
     id={2}
     key="first-2"
-    offset={2}
+    message="2"
+    offset="2"
   />
   <Message
     id={3}
     key="first-3"
-    offset={3}
+    message="3"
+    offset="3"
   />
   <Message
     id={4}
     key="first-4"
-    offset={4}
+    message="4"
+    offset="4"
   />
 </div>
 `;

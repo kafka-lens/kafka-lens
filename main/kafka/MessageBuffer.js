@@ -16,7 +16,14 @@ class MessageBuffer {
 
   /**
    *
-   * @param {{offset: *, partitionId: *, topicName: *, value: *, key: *, timestamp: (*|string)}} item Any data type to be added to the end of the queue.
+   * @param {{offset: *,
+   *  partitionId: *,
+   *  topicName: *,
+   *  value: *,
+   *  key: *,
+   *  timestamp:
+   *  (*|string)}} item
+   * Any data type to be added to the end of the queue.
    * This will add data to the end of the queue. If the item added causes the length of the queue to
    * exceed the maximum size of the buffer, this will also cause the buffer to drop the oldest data.
    */

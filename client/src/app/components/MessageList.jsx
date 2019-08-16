@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Message from './Message';
 import '../css/MessageList.scss';
@@ -15,3 +16,10 @@ const MessageList = ({ topicName, messageArray }) => {
 };
 
 export default MessageList;
+
+MessageList.propTypes = {
+  messageArray: PropTypes.arrayOf(
+    PropTypes.shape({ offset: PropTypes.string.isRequired, value: PropTypes.string.isRequired }),
+  ).isRequired,
+  topicName: PropTypes.string.isRequired,
+};
