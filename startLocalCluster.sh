@@ -11,7 +11,7 @@ BROKER2="${$4:-server-1}"
 BROKER3="${$5:-server-2}"
 
 cd "$KAFKA" || exit
-echo in folder: $(pwd)
+echo in folder: "$(pwd)"
 
 gnome-terminal --tab --title="zookeeper" --command="bash -c './bin/zookeeper-server-start.sh config/zookeeper.properties; $SHELL'" \
 --tab --title="broker 1" --command="bash -c './bin/kafka-server-start.sh config/${BROKER1}.properties; $SHELL'" \
