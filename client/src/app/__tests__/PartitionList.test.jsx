@@ -6,9 +6,11 @@ import PartitionList from '../components/PartitionList';
 describe('PartitionList unit tests', () => {
   let wrapper;
   const props = {
-    currentTopicMetadata: {
+    topicInfo: {
       numberOfPartitions: 8,
+      topicName: 'first',
     },
+    showMessages: jest.fn(),
   };
   beforeAll(() => {
     wrapper = shallow(<PartitionList {...props} />);
