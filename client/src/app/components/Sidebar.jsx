@@ -1,10 +1,17 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import '../css/Sidebar.scss';
+import nullableProp from '../../utils/nullableProp';
 import LineChart from './LineChart';
 import BrokerTopicsSideView from './BrokerTopicsSideView';
+import '../css/Sidebar.scss';
 
-const SideBar = ({ isSideBarOpen, brokerId, brokerTopics, closeSideBar, brokerGraphData }) => {
+const SideBar = ({
+  isSideBarOpen,
+  brokerId,
+  brokerTopics,
+  closeSideBar,
+  brokerGraphData = null,
+}) => {
   const sideBarRight = isSideBarOpen ? '0' : '-30vw';
 
   return (
@@ -35,9 +42,14 @@ const SideBar = ({ isSideBarOpen, brokerId, brokerTopics, closeSideBar, brokerGr
 export default SideBar;
 
 SideBar.propTypes = {
-  brokerGraphData: PropTypes.objectOf().isRequired,
-  brokerId: PropTypes.number.isRequired,
-  brokerTopics: PropTypes.arrayOf().isRequired,
+  brokerGraphData: nullableProp(
+    PropTypes.shape({
+      timeStamps: PropTypes.arrayOf(PropTypes.string),
+      topicsData: PropTypes.object,
+    }),
+  ).isRequired,
+  brokerId: nullableProp(PropTypes.number).isRequired,
+  brokerTopics: PropTypes.arrayOf(PropTypes.object).isRequired,
   closeSideBar: PropTypes.func.isRequired,
   isSideBarOpen: PropTypes.bool.isRequired,
 };

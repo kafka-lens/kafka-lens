@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../css/ConnectionPage.scss';
 import lensIcon from '../../../../assets/images/lens-icon.png';
+import nullableProp from '../../utils/nullableProp';
 
 const ConnectionPage = ({ isFetching, connected, updateURI, validConnectionChecker }) => {
   let loading;
@@ -54,7 +55,7 @@ const ConnectionPage = ({ isFetching, connected, updateURI, validConnectionCheck
 export default ConnectionPage;
 
 ConnectionPage.propTypes = {
-  connected: PropTypes.bool.isRequired,
+  connected: nullableProp(PropTypes.bool).isRequired,
   isFetching: PropTypes.bool.isRequired,
   updateURI: PropTypes.func.isRequired,
   validConnectionChecker: PropTypes.func.isRequired,
