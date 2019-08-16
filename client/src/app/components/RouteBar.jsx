@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import '../css/RouteBar.scss';
 
-const RouteBar = ({ topicName, showPartitionInfo, partitionId }) => (
+const RouteBar = ({ topicName, showingPartitionMetadata, partitionId }) => (
   <span className="route-padding">
     <h5 className="display-inline">Home &nbsp; &nbsp;</h5>
     {topicName && (
@@ -11,7 +11,7 @@ const RouteBar = ({ topicName, showPartitionInfo, partitionId }) => (
         {topicName}
       </h5>
     )}
-    {showPartitionInfo && (
+    {showingPartitionMetadata && (
       <h5 className="display-inline">
         &nbsp; &nbsp; &gt; &nbsp; &nbsp; Partition
         {partitionId}
@@ -23,7 +23,12 @@ const RouteBar = ({ topicName, showPartitionInfo, partitionId }) => (
 export default RouteBar;
 
 RouteBar.propTypes = {
-  partitionId: PropTypes.number.isRequired,
-  showPartitionInfo: PropTypes.func.isRequired,
-  topicName: PropTypes.string.isRequired,
+  partitionId: PropTypes.string,
+  showingPartitionMetadata: PropTypes.bool.isRequired,
+  topicName: PropTypes.string,
+};
+
+RouteBar.defaultProps = {
+  partitionId: null,
+  topicName: null,
 };
