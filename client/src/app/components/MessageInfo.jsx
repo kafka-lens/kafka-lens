@@ -27,11 +27,9 @@ const MessageInfo = ({ lastMessage }) => {
 export default MessageInfo;
 
 MessageInfo.propTypes = {
-  lastMessage: PropTypes.objectOf(
-    PropTypes.shape({
-      topicName: PropTypes.string.isRequired,
-      value: PropTypes.string.isRequired,
-      timestamp: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  lastMessage: PropTypes.shape({
+    topicName: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+    timestamp: PropTypes.string.isRequired,
+  }).isRequired,
 };

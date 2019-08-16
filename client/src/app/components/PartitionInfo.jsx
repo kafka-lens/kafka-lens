@@ -40,13 +40,11 @@ export default PartitionInfo;
 
 PartitionInfo.propTypes = {
   partitionId: PropTypes.string.isRequired,
-  partitionInfo: PropTypes.objectOf(
-    PropTypes.shape({
-      msgCount: PropTypes.number,
-      highWaterOffset: PropTypes.number,
-      earliestOffset: PropTypes.number,
-      replicas: PropTypes.arrayOf(PropTypes.number),
-      leader: PropTypes.number,
-    }),
-  ).isRequired,
+  partitionInfo: PropTypes.shape({
+    msgCount: PropTypes.number,
+    highwaterOffset: PropTypes.number,
+    earliestOffset: PropTypes.number,
+    replicas: PropTypes.arrayOf(PropTypes.number).isRequired,
+    leader: PropTypes.number,
+  }).isRequired,
 };

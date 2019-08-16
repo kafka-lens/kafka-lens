@@ -19,10 +19,8 @@ export default PartitionList;
 
 PartitionList.propTypes = {
   showMessages: PropTypes.func.isRequired,
-  topicInfo: PropTypes.objectOf(
-    PropTypes.shape({
-      numberOfPartitions: PropTypes.number,
-      topicName: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  topicInfo: PropTypes.shape({
+    numberOfPartitions: PropTypes.number,
+    topicName: PropTypes.string.isRequired,
+  }).isRequired,
 };
