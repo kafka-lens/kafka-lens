@@ -157,12 +157,10 @@ class TopicPage extends React.Component {
           ) : (
             ''
           )}
-          {this.state.showPartitionInfo === true
-           && Object.keys(this.state.partitionInfo).length > 1
-           && this.state.messages.length > 0 ? (
-             <PartitionInfo
-                partitionInfo={this.state.partitionInfo}
-              />
+          {this.state.showPartitionInfo === true &&
+          Object.keys(this.state.partitionInfo).length > 1 &&
+          this.state.messages.length > 0 ? (
+            <PartitionInfo partitionInfo={this.state.partitionInfo} />
             ) : (
               ''
             )}
@@ -177,10 +175,7 @@ class TopicPage extends React.Component {
         </div>
         <div className="list-display">{Topics}</div>
         <div className="message-box">
-          <MessageList
-            topicName={this.state.topicName}
-            messageArray={this.state.messages}
-          />
+          <MessageList topicName={this.state.topicName} messageArray={this.state.messages} />
         </div>
         <div className="connection-status">
           {isConnected === true ? connected : disconnected}

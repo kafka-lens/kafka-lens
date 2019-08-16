@@ -8,15 +8,15 @@ const MessageInfo = ({ lastMessage }) => {
     <div className="message-details">
       <h5>Last Message</h5>
       <p className="info-font-size">
-Topic:
+        Topic:
         {lastMessage.topicName}
       </p>
       <p className="info-font-size">
-Message:
+        Message:
         {lastMessage.value}
       </p>
       <p className="info-font-size">
-Timestamp:
+        Timestamp:
         {lastMessage.timestamp}
       </p>
     </div>

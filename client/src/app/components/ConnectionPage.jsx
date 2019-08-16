@@ -2,9 +2,7 @@ import React from 'react';
 import '../css/ConnectionPage.scss';
 import lensIcon from '../../../../assets/images/lens-icon.png';
 
-const ConnectionPage = ({
-  isFetching, connected, updateURI, validConnectionChecker,
-}) => {
+const ConnectionPage = ({ isFetching, connected, updateURI, validConnectionChecker }) => {
   let loading;
   if (isFetching === true) {
     loading = (

@@ -3,11 +3,11 @@ import React from 'react';
 const BrokerHeader = ({ brokerID, brokerURI }) => (
   <>
     <p className="broker-header">
-Broker ID:
+      Broker ID:
       {brokerID}
     </p>
     <p className="broker-header">
-URI:
+      URI:
       {brokerURI}
     </p>
   </>

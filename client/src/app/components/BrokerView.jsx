@@ -3,9 +3,7 @@ import BrokerHeader from './BrokerHeader';
 import BrokerTopicsView from './BrokerTopicsView';
 import '../css/BrokerView.scss';
 
-const BrokerView = ({
-  isAlive, openSideBar, brokerId, brokerURI, topics,
-}) => {
+const BrokerView = ({ isAlive, openSideBar, brokerId, brokerURI, topics }) => {
   const brokerColors = {
     Red: '#DC143C',
     Green: '#90EE90',
@@ -16,7 +14,6 @@ const BrokerView = ({
   } else {
     backgroundColor = brokerColors.Green;
   }
-
 
   return (
     <div

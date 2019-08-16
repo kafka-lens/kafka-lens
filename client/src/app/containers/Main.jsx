@@ -3,7 +3,6 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import logger from '../../utils/logger';
 
-
 // import components here
 import Header from '../components/Header';
 import ConnectionPage from '../components/ConnectionPage';
@@ -42,7 +41,7 @@ class Main extends React.Component {
           connected: false,
         });
       } else {
-        data.forEach((topic) => {
+        data.forEach(topic => {
           topic.showPartitions = false;
         });
 
@@ -94,14 +93,7 @@ class Main extends React.Component {
           <Router>
             <Header restartConnectionPage={this.restartConnectionPage} />
             <Switch>
-              <Route
-                path="/broker"
-                render={() => (
-                  <Broker
-                    kafkaHostURI={this.state.uri_input}
-                  />
-                )}
-              />
+              <Route path="/broker" render={() => <Broker kafkaHostURI={this.state.uri_input} />} />
               <Route
                 path="/"
                 render={() => (

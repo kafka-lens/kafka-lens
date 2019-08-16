@@ -3,9 +3,7 @@ import '../css/Sidebar.scss';
 import LineChart from './LineChart';
 import BrokerTopicsSideView from './BrokerTopicsSideView';
 
-const SideBar = ({
-  isSideBarOpen, brokerId, brokerTopics, closeSideBar, brokerGraphData,
-}) => {
+const SideBar = ({ isSideBarOpen, brokerId, brokerTopics, closeSideBar, brokerGraphData }) => {
   const sideBarRight = isSideBarOpen ? '0' : '-30vw';
 
   return (

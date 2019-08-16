@@ -8,13 +8,15 @@ function TopicsPage(props) {
   return (
     <div>
       {console.log('hooks-based state:', state)}
-      <button onClick={() => dispatch({
-        type: 'SET_TOPICS',
-        payload: [1, 2, 3],
-      })}
+      <button
+        onClick={() =>
+          dispatch({
+            type: 'SET_TOPICS',
+            payload: [1, 2, 3],
+          })}
       >
         {' '}
-Set Topics
+        Set Topics
       </button>
     </div>
   );

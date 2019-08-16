@@ -2,9 +2,7 @@ import React from 'react';
 import PartitionList from './PartitionList';
 import '../css/Topic.scss';
 
-const Topic = ({
-  id, topicInfo, showPartitions, showMessages,
-}) => (
+const Topic = ({ id, topicInfo, showPartitions, showMessages }) => (
   <div className="topic-header">
     <div
       className="topic-padding"

@@ -9,18 +9,19 @@ xdescribe('adminApi unit tests', () => {
     it('Should return a number', () => {
       adminApi
         .getPartitionMsgCount(kafkaHostURI, topicName, 2)
-        .then((num) => {
+        .then(num => {
           logger.log('Returned', num);
           expect(typeof num).toEqual('number');
         })
-        .catch((err) => expect(err).toEqual(null));
+        .catch(err => expect(err).toEqual(null));
     });
   });
 
   describe('Testing getTopicMsgCount', () => {
     it('Should return a number', () => {
-      adminApi.getTopicMsgCount(kafkaHostURI, topicName, 2)
-        .then((num) => expect(typeof num).toEqual('number'));
+      adminApi
+        .getTopicMsgCount(kafkaHostURI, topicName, 2)
+        .then(num => expect(typeof num).toEqual('number'));
     });
   });
 });

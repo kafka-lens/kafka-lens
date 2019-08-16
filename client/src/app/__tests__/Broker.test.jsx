@@ -20,12 +20,15 @@ describe('Broker.js unit tests', () => {
   xit('should render <BrokerViews/>', () => {
     const instance = wrapper.instance();
     expect(instance.state.brokersSnapshots).toEqual([]);
-    wrapper.setState({
-      brokersSnapshots: [{ broker: 'test1' }, { broker: 'test2' }, { broker: 'test3' }],
-    }, () => {
-      wrapper.update();
-      console.log('Broker wrapper after setting state:', wrapper.debug());
-      expect(wrapper.exists('BrokerView')).toEqual(true);
-    });
+    wrapper.setState(
+      {
+        brokersSnapshots: [{ broker: 'test1' }, { broker: 'test2' }, { broker: 'test3' }],
+      },
+      () => {
+        wrapper.update();
+        console.log('Broker wrapper after setting state:', wrapper.debug());
+        expect(wrapper.exists('BrokerView')).toEqual(true);
+      },
+    );
   });
 });

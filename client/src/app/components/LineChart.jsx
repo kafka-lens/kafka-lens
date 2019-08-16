@@ -38,8 +38,9 @@ function createDataset(topicName, msgsPerSecondArray) {
 }
 
 const LineChart = ({ timeStamps, topicsData, brokerId }) => {
-  const datasets = Object.entries(topicsData)
-    .map(([topicName, msgsPerSecondArray]) => createDataset(topicName, msgsPerSecondArray));
+  const datasets = Object.entries(topicsData).map(([topicName, msgsPerSecondArray]) =>
+    createDataset(topicName, msgsPerSecondArray),
+  );
 
   logger.log('datasets:', datasets);
 
@@ -50,13 +51,12 @@ const LineChart = ({ timeStamps, topicsData, brokerId }) => {
   return (
     <div>
       <h1 className="brokerId">
-        {' '}
-Broker ID #
-        {brokerId}
-        {' '}
+{' '}
+Broker ID #{brokerId}
+{' '}
 History
-        {' '}
-      </h1>
+{' '}
+</h1>
       <Line data={data} />
     </div>
   );

@@ -6,13 +6,13 @@ const RouteBar = ({ topicName, showPartitionInfo, partitionId }) => (
     <h5 className="display-inline">Home &nbsp; &nbsp;</h5>
     {topicName && (
       <h5 className="display-inline">
-          &gt; &nbsp; &nbsp;
+        &gt; &nbsp; &nbsp;
         {topicName}
       </h5>
     )}
     {showPartitionInfo && (
       <h5 className="display-inline">
-          &nbsp; &nbsp; &gt; &nbsp; &nbsp; Partition
+        &nbsp; &nbsp; &gt; &nbsp; &nbsp; Partition
         {partitionId}
       </h5>
     )}

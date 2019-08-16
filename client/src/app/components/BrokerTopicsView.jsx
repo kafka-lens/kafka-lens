@@ -20,14 +20,11 @@ const BrokerTopicsView = ({ topics }) => {
   return (
     <div className="broker-topic-view">
       <p className="broker-topic-view-bold">
-Total Messages Per Second:
+        Total Messages Per Second:
         {isNaN(totalNewMessagesPerSecond) ? 'Calculating' : totalNewMessagesPerSecond}
       </p>
       <p className="broker-topic-view-bold">Messages Per Second by Topic</p>
-      <div className="broker-topics-inner-container">
-        {brokerTopics}
-      </div>
-
+      <div className="broker-topics-inner-container">{brokerTopics}</div>
     </div>
   );
 };

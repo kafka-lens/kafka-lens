@@ -8,27 +8,27 @@ const PartitionInfo = ({ partitionInfo, partitionId }) => {
     <div className="partition-details">
       {logger.log(partitionInfo.msgCount)}
       <h5>
-Partition:
+        Partition:
         {partitionId}
       </h5>
       <p className="info-font-size">
-Message Count:
+        Message Count:
         {partitionInfo.msgCount}
       </p>
       <p className="info-font-size">
-Highwater Offset:
+        Highwater Offset:
         {partitionInfo.highwaterOffset}
       </p>
       <p className="info-font-size">
-Earliest Offset:
+        Earliest Offset:
         {partitionInfo.earliestOffset}
       </p>
       <p className="info-font-size">
-Leader Broker:
+        Leader Broker:
         {partitionInfo.leader}
       </p>
       <p className="info-font-size">
-Replica Broker(s):
+        Replica Broker(s):
         {replicasString}
       </p>
     </div>
