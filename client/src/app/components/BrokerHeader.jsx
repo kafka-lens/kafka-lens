@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const BrokerHeader = ({ brokerID, brokerURI }) => (
   <>
@@ -14,3 +15,8 @@ const BrokerHeader = ({ brokerID, brokerURI }) => (
 );
 
 export default BrokerHeader;
+
+BrokerHeader.propTypes = {
+  brokerID: PropTypes.number.isRequired,
+  brokerURI: PropTypes.string.isRequired,
+};

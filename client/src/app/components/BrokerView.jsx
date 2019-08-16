@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import BrokerHeader from './BrokerHeader';
 import BrokerTopicsView from './BrokerTopicsView';
 import '../css/BrokerView.scss';
@@ -32,3 +33,11 @@ const BrokerView = ({ isAlive, openSideBar, brokerId, brokerURI, topics }) => {
 };
 
 export default BrokerView;
+
+BrokerView.propTypes = {
+  isAlive: PropTypes.bool.isRequired,
+  openSideBar: PropTypes.func.isRequired,
+  brokerId: PropTypes.number.isRequired,
+  brokerURI: PropTypes.string.isRequired,
+  topics: PropTypes.arrayOf(PropTypes.object).isRequired,
+};

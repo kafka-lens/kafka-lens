@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import BrokerTopic from './BrokerTopic';
 
 const BrokerTopicsView = ({ topics }) => {
@@ -30,3 +31,13 @@ const BrokerTopicsView = ({ topics }) => {
 };
 
 export default BrokerTopicsView;
+
+BrokerTopicsView.propTypes = {
+  topics: PropTypes.arrayOf(
+    PropTypes.shape({
+      topicName: PropTypes.string.isRequired,
+      isLeader: PropTypes.bool.isRequired,
+      newMessagesPerSecond: PropTypes.number,
+    }),
+  ).isRequired,
+};

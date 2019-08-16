@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import LoadingData from './LoadingData';
 
 const BrokerTopic = ({ topicName, isLeader, newMessagesPerSecond }) => (
@@ -13,3 +14,9 @@ const BrokerTopic = ({ topicName, isLeader, newMessagesPerSecond }) => (
 );
 
 export default BrokerTopic;
+
+BrokerTopic.propTypes = {
+  topicName: PropTypes.string.isRequired,
+  isLeader: PropTypes.bool.isRequired,
+  newMessagesPerSecond: PropTypes.number.isRequired,
+};
