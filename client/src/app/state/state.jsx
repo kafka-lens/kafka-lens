@@ -12,7 +12,7 @@ export const StateProvider = ({ reducer, initialState, children }) => (
 export const getState = () => useContext(StateContext);
 
 StateProvider.propTypes = {
-  children: PropTypes.arrayOf().isRequired,
-  initialState: PropTypes.objectOf().isRequired,
+  children: PropTypes.node.isRequired,
+  initialState: PropTypes.objectOf(PropTypes.object).isRequired,
   reducer: PropTypes.func.isRequired,
 };
