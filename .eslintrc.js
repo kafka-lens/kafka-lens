@@ -3,8 +3,8 @@ module.exports = {
   extends: [
     'airbnb',
     'prettier',
-    "prettier/react",
-    'plugin:react/recommended'
+    'prettier/react',
+    'plugin:react/recommended',
     // 'plugin:import/react',
   ],
   plugins: ['prettier'],
@@ -36,6 +36,10 @@ module.exports = {
     'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     'no-console': 'off',
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
+    'import/no-extraneous-dependencies': [
+      'error',
+      { devDependencies: ['**/*.test.{js,jsx}', 'setupTests.js', '*.config.js'] },
+    ],
   },
   settings: {
     'import/resolver': {
