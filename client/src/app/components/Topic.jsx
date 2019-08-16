@@ -32,6 +32,6 @@ Topic.propTypes = {
   showPartitions: PropTypes.func.isRequired,
   topicInfo: PropTypes.shape({
     topicName: PropTypes.string.isRequired,
-    showPartitions: PropTypes.bool.isRequired,
+    showPartitions: PropTypes.bool,
   }).isRequired,
 };
