@@ -19,7 +19,7 @@ export default MessageList;
 
 MessageList.propTypes = {
   messageArray: PropTypes.arrayOf(
-    PropTypes.shape({ offset: PropTypes.number.isRequired, value: PropTypes.string.isRequired }),
+    PropTypes.shape({ offset: PropTypes.string.isRequired, value: PropTypes.string.isRequired }),
   ).isRequired,
   topicName: PropTypes.string.isRequired,
 };

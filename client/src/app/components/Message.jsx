@@ -15,5 +15,5 @@ export default Message;
 
 Message.propTypes = {
   message: PropTypes.string.isRequired,
-  offset: PropTypes.number.isRequired,
+  offset: PropTypes.string.isRequired,
 };

@@ -19,7 +19,7 @@ const Partition = ({ id, showMessages, topicName }) => (
 export default Partition;
 
 Partition.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   showMessages: PropTypes.func.isRequired,
   topicName: PropTypes.string.isRequired,
 };
