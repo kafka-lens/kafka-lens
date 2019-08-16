@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Partition from './Partition';
 
@@ -15,3 +16,13 @@ const PartitionList = ({ topicInfo, showMessages }) => {
 };
 
 export default PartitionList;
+
+PartitionList.propTypes = {
+  showMessages: PropTypes.func.isRequired,
+  topicInfo: PropTypes.objectOf(
+    PropTypes.shape({
+      numberOfPartitions: PropTypes.number,
+      topicName: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+};

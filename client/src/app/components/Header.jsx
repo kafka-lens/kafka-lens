@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import NavBar from './Navbar';
 import '../css/navBar.scss';
@@ -16,3 +17,7 @@ function Header({ restartConnectionPage }) {
 }
 
 export default Header;
+
+Header.propTypes = {
+  restartConnectionPage: PropTypes.func.isRequired,
+};

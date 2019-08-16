@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import '../css/ConnectionPage.scss';
 import lensIcon from '../../../../assets/images/lens-icon.png';
 
@@ -51,3 +52,10 @@ const ConnectionPage = ({ isFetching, connected, updateURI, validConnectionCheck
 };
 
 export default ConnectionPage;
+
+ConnectionPage.propTypes = {
+  connected: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  updateURI: PropTypes.func.isRequired,
+  validConnectionChecker: PropTypes.func.isRequired,
+}

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -36,3 +37,10 @@ function Navbar({ routes, restartConnectionPage }) {
 }
 
 export default Navbar;
+
+Navbar.propTypes = {
+  restartConnectionPage: PropTypes.func.isRequired,
+  routes: PropTypes.arrayOf(
+    PropTypes.shape({ link: PropTypes.string.isRequired, text: PropTypes.string.isRequired }),
+  ).isRequired,
+};

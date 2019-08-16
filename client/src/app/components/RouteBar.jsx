@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import '../css/RouteBar.scss';
 
@@ -20,3 +21,9 @@ const RouteBar = ({ topicName, showPartitionInfo, partitionId }) => (
 );
 
 export default RouteBar;
+
+RouteBar.propTypes = {
+  partitionId: PropTypes.number.isRequired,
+  showPartitionInfo: PropTypes.func.isRequired,
+  topicName: PropTypes.string.isRequired,
+};

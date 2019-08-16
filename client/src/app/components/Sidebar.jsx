@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import '../css/Sidebar.scss';
 import LineChart from './LineChart';
@@ -32,3 +33,11 @@ const SideBar = ({ isSideBarOpen, brokerId, brokerTopics, closeSideBar, brokerGr
 };
 
 export default SideBar;
+
+SideBar.propTypes = {
+  brokerGraphData: PropTypes.objectOf().isRequired,
+  brokerId: PropTypes.number.isRequired,
+  brokerTopics: PropTypes.arrayOf().isRequired,
+  closeSideBar: PropTypes.func.isRequired,
+  isSideBarOpen: PropTypes.bool.isRequired,
+};

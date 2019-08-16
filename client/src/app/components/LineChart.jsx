@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import logger from '../../utils/logger';
@@ -57,3 +58,9 @@ const LineChart = ({ timeStamps, topicsData, brokerId }) => {
 };
 
 export default LineChart;
+
+LineChart.propTypes = {
+  brokerId: PropTypes.number.isRequired,
+  timeStamps: PropTypes.arrayOf().isRequired,
+  topicsData: PropTypes.objectOf().isRequired,
+};

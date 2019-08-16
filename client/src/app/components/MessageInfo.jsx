@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import logger from '../../utils/logger';
 import '../css/MessageInfo.scss';
@@ -24,3 +25,13 @@ const MessageInfo = ({ lastMessage }) => {
 };
 
 export default MessageInfo;
+
+MessageInfo.propTypes = {
+  lastMessage: PropTypes.objectOf(
+    PropTypes.shape({
+      topicName: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+      timestamp: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+};

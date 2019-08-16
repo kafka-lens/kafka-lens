@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import logger from '../../utils/logger';
 import '../css/PartitionInfo.scss';
@@ -36,3 +37,16 @@ const PartitionInfo = ({ partitionInfo, partitionId }) => {
 };
 
 export default PartitionInfo;
+
+PartitionInfo.propTypes = {
+  partitionId: PropTypes.string.isRequired,
+  partitionInfo: PropTypes.objectOf(
+    PropTypes.shape({
+      msgCount: PropTypes.number,
+      highWaterOffset: PropTypes.number,
+      earliestOffset: PropTypes.number,
+      replicas: PropTypes.arrayOf(PropTypes.number),
+      leader: PropTypes.number,
+    }),
+  ).isRequired,
+};
