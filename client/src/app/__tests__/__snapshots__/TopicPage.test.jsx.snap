@@ -21,6 +21,7 @@ exports[`TopicPage.js unit tests Should render without errors 1`] = `
     className="logo-box"
   >
     <img
+      alt="kakfa lens logo"
       className="lens-icon"
       src={
         Object {

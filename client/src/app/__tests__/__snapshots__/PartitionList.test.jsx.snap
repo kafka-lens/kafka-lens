@@ -7,34 +7,50 @@ exports[`PartitionList unit tests Should render without errors 1`] = `
   <Partition
     id={0}
     key="0"
+    showMessages={[MockFunction]}
+    topicName="first"
   />
   <Partition
     id={1}
     key="1"
+    showMessages={[MockFunction]}
+    topicName="first"
   />
   <Partition
     id={2}
     key="2"
+    showMessages={[MockFunction]}
+    topicName="first"
   />
   <Partition
     id={3}
     key="3"
+    showMessages={[MockFunction]}
+    topicName="first"
   />
   <Partition
     id={4}
     key="4"
+    showMessages={[MockFunction]}
+    topicName="first"
   />
   <Partition
     id={5}
     key="5"
+    showMessages={[MockFunction]}
+    topicName="first"
   />
   <Partition
     id={6}
     key="6"
+    showMessages={[MockFunction]}
+    topicName="first"
   />
   <Partition
     id={7}
     key="7"
+    showMessages={[MockFunction]}
+    topicName="first"
   />
 </div>
 `;
