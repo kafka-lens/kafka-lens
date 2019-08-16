@@ -58,4 +58,4 @@ ConnectionPage.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   updateURI: PropTypes.func.isRequired,
   validConnectionChecker: PropTypes.func.isRequired,
-}
+};

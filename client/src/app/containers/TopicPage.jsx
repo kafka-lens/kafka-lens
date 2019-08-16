@@ -161,9 +161,9 @@ class TopicPage extends React.Component {
           Object.keys(this.state.partitionInfo).length > 1 &&
           this.state.messages.length > 0 ? (
             <PartitionInfo partitionInfo={this.state.partitionInfo} />
-            ) : (
-              ''
-            )}
+          ) : (
+            ''
+          )}
         </div>
         {logger.log('this.state.messages:', this.state.messages)}
         <div className="message-info">
