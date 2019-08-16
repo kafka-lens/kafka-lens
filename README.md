@@ -15,6 +15,7 @@ Kafka Lens provides a tool that lets you inspect a Kafka cluster and allows deve
 ## 5 Steps for Quick Startup
 
 **Fork** and **Clone** Repository
+
 ```
 1. cd into your 'kafka-lens' folder
 2. npm install
@@ -25,11 +26,12 @@ Kafka Lens provides a tool that lets you inspect a Kafka cluster and allows deve
 
 ### Connecting to Your Broker
 
-Enter the URI of your Kafka broker (e.g. kafka1.contoso.com:9092) then click 'Connect' to connect to your Kafka broker. Once you are connected, you are ready to start consuming messages. 
+Enter the URI of your Kafka broker (e.g. kafka1.contoso.com:9092) then click 'Connect' to connect to your Kafka broker. Once you are connected, you are ready to start consuming messages.
 
 ![](assets/images/cp-rm.gif)
 
 ## Version 2 Team
+
 [Nahuel Arjona](https://github.com/nahuelarjonadev)
 
 [Brian Kwok](https://github.com/briankwok15)
@@ -39,6 +41,7 @@ Enter the URI of your Kafka broker (e.g. kafka1.contoso.com:9092) then click 'Co
 [Samuel Ho](https://github.com/samueldaraho)
 
 ## Authors
+
 [Harmon Huynh](https://github.com/iAmHarmon)
 
 [Howard Na](https://github.com/howardNa)
