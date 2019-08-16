@@ -7,7 +7,7 @@ describe('PartitionList unit tests', () => {
   let wrapper;
   const props = {
     topicInfo: {
-      numberOfPartitions: 8,
+      numberOfPartitions: 5,
       topicName: 'first',
     },
     showMessages: jest.fn(),
