@@ -29,6 +29,15 @@ Enter the URI of your Kafka broker (e.g. kafka1.contoso.com:9092) then click 'Co
 
 ![](assets/images/cp-rm.gif)
 
+## Version 2 Team
+[Nahuel Arjona](https://github.com/nahuelarjonadev)
+
+[Brian Kwok](https://github.com/briankwok15)
+
+[Angel Vega](https://github.com/AngelEvelyn)
+
+[Samuel Ho](https://github.com/samueldaraho)
+
 ## Authors
 [Harmon Huynh](https://github.com/iAmHarmon)
 
