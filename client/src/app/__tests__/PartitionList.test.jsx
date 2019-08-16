@@ -6,7 +6,7 @@ import PartitionList from '../components/PartitionList';
 describe('PartitionList unit tests', () => {
   let wrapper;
   const props = {
-    topicInfo: {
+    currentTopicMetadata: {
       numberOfPartitions: 8,
     },
   };

@@ -8,7 +8,7 @@ describe('Topic.js unit tests', () => {
   const props = {
     id: 1,
     showPartitions: jest.fn(),
-    topicInfo: {
+    currentTopicMetadata: {
       showPartitions: false,
       topicName: 'test1',
       numberOfPartitions: 5,
@@ -16,7 +16,7 @@ describe('Topic.js unit tests', () => {
   };
 
   const partitionInfoPropWithShowPartitionsTrue = {
-    topicInfo: {
+    currentTopicMetadata: {
       showPartitions: true,
       topicName: 'test1',
       numberOfPartitions: 5,

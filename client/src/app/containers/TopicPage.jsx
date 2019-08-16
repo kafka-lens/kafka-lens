@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { ipcRenderer } from 'electron';
 import Topic from '../components/Topic';
@@ -9,7 +10,7 @@ import LoadingData from '../components/LoadingData';
 
 import '../css/TopicPage.scss';
 import '../css/PartitionList.scss';
-import lens_src from '../../../../assets/images/lens-icon.png';
+import lensIcon from '../../../../assets/images/lens-icon.png';
 import logger from '../../utils/logger';
 
 class TopicPage extends React.Component {
@@ -17,15 +18,13 @@ class TopicPage extends React.Component {
     super(props);
 
     this.state = {
-      topics: [],
-      topicInfo: {},
+      currentTopicMetadata: {},
+      currentPartitionMetadata: {},
       topicName: '',
       messages: [],
-      hover: false,
       partitionId: '',
       lastElement: '',
-      partitionInfo: {},
-      showPartitionInfo: false,
+      showingPartitionMetadata: false,
       loadingData: false,
     };
 
@@ -39,9 +38,10 @@ class TopicPage extends React.Component {
       this.setState({ messages });
     });
 
-    // This will get an object from the main process with the partition data incl. highwaterOffset, earliestOffset, messageCount, leader, and replicas
+    // This will get an object from the main process with the partition data
+    // includes: highwaterOffset, earliestOffset, messageCount, leader, and replicas
     ipcRenderer.on('partition:getData', (e, data) => {
-      this.setState({ partitionInfo: data });
+      this.setState({ currentPartitionMetadata: data });
     });
   }
 
@@ -49,41 +49,39 @@ class TopicPage extends React.Component {
   showPartitions(event) {
     const { topicList } = this.props;
     const topicName = event.target.getAttribute('topicname');
-    const topicIndex = parseInt(event.target.id);
+    const topicIndex = parseInt(event.target.id, 10);
     const topicInfo = topicList[topicIndex];
 
-    if (topicInfo.showPartitions == true) {
-      topicInfo.showPartitions = false;
-    } else {
-      topicInfo.showPartitions = true;
-    }
+    topicInfo.showPartitions = !topicInfo.showPartitions;
 
+    const { uri } = this.props;
     ipcRenderer.send('partition:getMessages', {
-      kafkaHostURI: this.props.uri,
+      kafkaHostURI: uri,
       topicName,
     });
 
     const newState = this.state;
 
-    if (this.state.showPartitionInfo === true) {
-      newState.showPartitionInfo = false;
-    }
-    newState.topicInfo = topicInfo;
+    const { showingPartitionMetadata } = this.state;
+    if (showingPartitionMetadata === true) newState.showingPartitionMetadata = false;
+
+    newState.currentTopicMetadata = topicInfo;
     newState.loadingData = true;
 
     return this.setState(newState);
   }
 
   showMessages(event) {
-    const topicName = event.target.getAttribute('topicname');
-    logger.log('topicName from the partition div:', topicName);
-    const partitionId = parseInt(event.target.id);
-    logger.log('partitionId:', partitionId);
+    const newTopicName = event.target.getAttribute('topicname');
+    logger.log('newTopicName from the partition div:', newTopicName);
+    const newPartitionId = parseInt(event.target.id, 10);
+    logger.log('newPartitionId:', newPartitionId);
 
     const element = event.target;
-    const { lastElement } = this.state;
+    const { lastElement, partitionId, topicName } = this.state;
 
-    const kafkaHostURI = this.props.uri;
+    const { uri } = this.props;
+    const kafkaHostURI = uri;
 
     if (lastElement !== element) {
       if (lastElement !== '') {
@@ -92,14 +90,14 @@ class TopicPage extends React.Component {
 
       ipcRenderer.send('partition:getMessages', {
         kafkaHostURI,
-        topicName,
+        topicName: newTopicName,
         partitionId,
       });
 
       ipcRenderer.send('partition:getData', {
         kafkaHostURI,
         partitionId,
-        topicName,
+        topicName: newTopicName,
       });
       this.setState({
         lastElement: element,
@@ -108,78 +106,82 @@ class TopicPage extends React.Component {
       element.classList.add('highlight-this');
     }
 
-    if (partitionId !== this.state.partitionId || topicName !== this.state.topicName) {
+    if (newPartitionId !== partitionId || newTopicName !== topicName) {
       this.setState({
         messages: [],
-        topicName,
-        partitionId,
-        showPartitionInfo: true,
+        topicName: newTopicName,
+        partitionId: newPartitionId,
+        showingPartitionMetadata: true,
       });
     }
   }
 
   render() {
-    const Topics = this.props.topicList.map((element, i) => (
+    const { topicList, isConnected, uri } = this.props;
+    const {
+      showingPartitionMetadata,
+      showPartitions,
+      currentPartitionMetadata,
+      partitionId,
+      currentTopicMetadata,
+      topicName,
+      messages,
+      loadingData,
+    } = this.state;
+
+    const shouldDisplayPartitionMetadata =
+      showingPartitionMetadata === true &&
+      Object.keys(currentPartitionMetadata).length &&
+      messages.length > 0;
+
+    const shouldDisplayMessageInfo = showingPartitionMetadata === true && messages.length > 0;
+
+    const Topics = topicList.map((topicInfo, i) => (
       <Topic
-        key={i}
+        key={topicInfo.topicName}
         id={i}
-        topicInfo={element}
+        topicInfo={topicInfo}
         showPartitions={this.showPartitions}
-        shouldDisplayPartitions={this.state.showPartitions}
+        shouldDisplayPartitions={showPartitions}
         showMessages={this.showMessages}
       />
     ));
 
-    const { isConnected } = this.props;
     const connected = <h5 className="connection-header">Connected</h5>;
     const disconnected = <h5 className="disconnected-header">Disconnected</h5>;
-
-    const displayURI = this.props.uri;
 
     return (
       <div className="grid-container">
         <div className="title-bar">Kafka Lens</div>
         <div className="route-bar">
-          {logger.log('topicInfo:', this.state.topicInfo)}
+          {logger.log('topicInfo:', currentTopicMetadata)}
           <RouteBar
-            partitionId={this.state.partitionId}
-            topicName={this.state.topicInfo.topicName}
-            showPartitionInfo={this.state.showPartitionInfo}
+            partitionId={partitionId}
+            topicName={currentTopicMetadata.topicName}
+            showPartitionInfo={showingPartitionMetadata}
           />
         </div>
         <div className="logo-box">
-          <img className="lens-icon" src={lens_src} />
+          <img className="lens-icon" src={lensIcon} alt="kakfa lens logo" />
         </div>
         <div className="topics-header">Topics</div>
         <div className="partition-info">
-          {this.state.loadingData === true && this.state.messages.length === 0 ? (
-            <LoadingData />
-          ) : (
-            ''
-          )}
-          {this.state.showPartitionInfo === true &&
-          Object.keys(this.state.partitionInfo).length > 1 &&
-          this.state.messages.length > 0 ? (
-            <PartitionInfo partitionInfo={this.state.partitionInfo} />
-          ) : (
-            ''
+          {loadingData === true && messages.length === 0 ? <LoadingData /> : ''}
+          {shouldDisplayPartitionMetadata && (
+            <PartitionInfo partitionInfo={currentPartitionMetadata} partitionId={partitionId} />
           )}
         </div>
-        {logger.log('this.state.messages:', this.state.messages)}
+        {logger.log('messages:', messages)}
         <div className="message-info">
-          {this.state.showPartitionInfo === true && this.state.messages.length > 0 ? (
-            <MessageInfo lastMessage={this.state.messages[0]} />
-          ) : (
-            ''
-          )}
+          {shouldDisplayMessageInfo && <MessageInfo lastMessage={messages[0]} />}
         </div>
         <div className="list-display">{Topics}</div>
         <div className="message-box">
-          <MessageList topicName={this.state.topicName} messageArray={this.state.messages} />
+          <MessageList topicName={topicName} messageArray={messages} />
         </div>
         <div className="connection-status">
           {isConnected === true ? connected : disconnected}
-          <div className="connection-uri">{displayURI}</div>
+          <div className="connection-uri">{uri}</div>
         </div>
       </div>
     );
@@ -187,3 +189,9 @@ class TopicPage extends React.Component {
 }
 
 export default TopicPage;
+
+TopicPage.propTypes = {
+  isConnected: PropTypes.bool.isRequired,
+  topicList: PropTypes.arrayOf().isRequired,
+  uri: PropTypes.string.isRequired,
+};
