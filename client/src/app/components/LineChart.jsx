@@ -50,13 +50,7 @@ const LineChart = ({ timeStamps, topicsData, brokerId }) => {
   };
   return (
     <div>
-      <h1 className="brokerId">
-{' '}
-Broker ID #{brokerId}
-{' '}
-History
-{' '}
-</h1>
+      <h1 className="brokerId"> Broker ID #{brokerId} History </h1>
       <Line data={data} />
     </div>
   );

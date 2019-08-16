@@ -22,8 +22,7 @@ function Navbar({ routes, restartConnectionPage }) {
           style={{ color: 'rgba(255, 255, 255, 0.5)', padding: '0 8px' }}
         >
           {' '}
-          |
-{' '}
+          |{' '}
         </li>
         <li key={route.link}>
           <NavLink style={{ color: '#f7f7f7', fontSize: 18 }} to={route.link}>

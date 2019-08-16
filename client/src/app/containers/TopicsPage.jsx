@@ -13,7 +13,8 @@ function TopicsPage(props) {
           dispatch({
             type: 'SET_TOPICS',
             payload: [1, 2, 3],
-          })}
+          })
+        }
       >
         {' '}
         Set Topics
