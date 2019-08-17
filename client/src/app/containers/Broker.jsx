@@ -23,7 +23,11 @@ class Broker extends Component {
 
   // create method to parse through our data from the backend and set our new state
   componentDidMount() {
-    // channel of listner to retain broker information from the backend and set state
+    const { brokersSnapshots: initialBrokerSnapshots } = this.props;
+    this.setState({
+      brokersSnapshots: initialBrokerSnapshots,
+    });
+    // channel of listener to retain broker information from the backend and set state
     ipcRenderer.on('broker:getBrokers', (e, { error, data }) => {
       if (error) {
         logger.error('getBrokers ERROR:', error);
@@ -37,7 +41,7 @@ class Broker extends Component {
         broker.topics = Object.values(broker.topics);
       }
 
-      const { brokersSnapshots } = this.props;
+      const { brokersSnapshots } = this.state;
       const newBrokersSnapshots = brokersSnapshots.slice();
       newBrokersSnapshots.push(brokersList);
 
@@ -58,7 +62,7 @@ class Broker extends Component {
     for (let i = 0; i < brokersSnapshots.length; i++) {
       const snapshot = brokersSnapshots[i];
       const brokerData = snapshot.filter(broker => broker.brokerId === brokerId)[0];
-      logger.log(`brokerData for brokerId ${brokerId}`, brokerData);
+      logger.log(`brokerData for brokerId ${brokerId} at snapshot ${i}:`, brokerData);
 
       const elapsedTime = i * 10;
       // NOT ACCURATE!! Not taking into account the asynchronicity of fetching the data
@@ -78,6 +82,8 @@ class Broker extends Component {
         topicsDataResult[topicSnapshot.topicName].push(msgsPerSecondOrNull);
       }
     }
+
+    logger.log('topicsDataResult:', topicsDataResult);
 
     return {
       timeStamps,
