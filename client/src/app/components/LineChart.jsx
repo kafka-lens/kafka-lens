@@ -61,6 +61,9 @@ export default LineChart;
 
 LineChart.propTypes = {
   brokerId: PropTypes.number.isRequired,
-  timeStamps: PropTypes.arrayOf().isRequired,
-  topicsData: PropTypes.objectOf().isRequired,
+  timeStamps: PropTypes.arrayOf(PropTypes.number).isRequired,
+  topicsData: PropTypes.shape({
+    topicName: PropTypes.string,
+    msgsPerSecondArray: PropTypes.arrayOf(PropTypes.number),
+  }).isRequired,
 };

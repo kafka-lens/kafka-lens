@@ -18,5 +18,9 @@ export default BrokerTopic;
 BrokerTopic.propTypes = {
   topicName: PropTypes.string.isRequired,
   isLeader: PropTypes.bool.isRequired,
-  newMessagesPerSecond: PropTypes.number.isRequired,
+  newMessagesPerSecond: PropTypes.number,
+};
+
+BrokerTopic.defaultProps = {
+  newMessagesPerSecond: null,
 };
