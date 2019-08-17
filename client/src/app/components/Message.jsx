@@ -14,6 +14,7 @@ const Message = ({ message, offset }) => (
 export default Message;
 
 Message.propTypes = {
-  message: PropTypes.string.isRequired,
-  offset: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  message: PropTypes.any.isRequired,
+  offset: PropTypes.number.isRequired,
 };
