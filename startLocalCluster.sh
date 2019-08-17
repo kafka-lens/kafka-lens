@@ -6,9 +6,9 @@
 
 topic=${1:-first}
 KAFKA=${2:-~/kafka_2.12-2.3.0/}
-BROKER1="${$3:-server}"
-BROKER2="${$4:-server-1}"
-BROKER3="${$5:-server-2}"
+BROKER1=${3:-server}
+BROKER2=${4:-server-1}
+BROKER3=${5:-server-2}
 
 cd "$KAFKA" || exit
 echo in folder: "$(pwd)"
