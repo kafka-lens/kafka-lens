@@ -23,7 +23,7 @@ const RouteBar = ({ topicName, showingPartitionMetadata, partitionId }) => (
 export default RouteBar;
 
 RouteBar.propTypes = {
-  partitionId: PropTypes.string,
+  partitionId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   showingPartitionMetadata: PropTypes.bool.isRequired,
   topicName: PropTypes.string,
 };
