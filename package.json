@@ -16,14 +16,8 @@
     "test": "jest",
     "test:frontend": "jest client",
     "test:backend": "jest main",
-    "coverage:backend": "jest --collectCoverageFrom=main/kafka/**.js --coverage main",
-    "package": "",
-    "build": "electron-packager . Kafka-Lens",
-    "build-win": "electron-packager . kafka-lens --platform win32 --arch x64 --out dist/",
-    "setup-win": "electron-installer-windows --src dist/kafka-lens-win32-x64/ --dest dist/installers/",
-    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=Launch-application",
-    "package-win": "electron-packager . Kafka-Lens --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=Launch-application --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Kafka Lens\"",
-    "package-linux": "electron-packager . Kafka-Lens --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/icon.png --prune=true --out=Launch-application"
+    "coverage:backend": "jest --collectCoverageFrom=main/kafka/*.{js,jsx} --coverage main",
+    "coverage:frontend": "jest --collectCoverageFrom=client/src/*.{js,jsx} --coverage client"
   },
   "build": {
     "appId": "kafka lens",
@@ -45,7 +39,6 @@
   "dependencies": {
     "chart.js": "^2.8.0",
     "electron": "^4.2.9",
-    "jest-css-modules-transform": "^2.1.1",
     "kafka-node": "^4.0.1",
     "node-sass": "^4.11.0",
     "node-zookeeper-client": "^1.0.0",
@@ -80,6 +73,7 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^24.1.0",
+    "jest-css-modules-transform": "^2.1.1",
     "prettier": "^1.18.2",
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",

@@ -39,11 +39,7 @@ describe('TopicPage.js unit tests', () => {
   it('Should stop loading animation if this.state.messages.lrngth > 0', () => {
     wrapper.setState({
       loadingData: true,
-      messages: [
-        { offset: '1', value: '1' },
-        { offset: '2', value: '2' },
-        { offset: '3', value: '3' },
-      ],
+      messages: [{ offset: 1, value: '1' }, { offset: 2, value: '2' }, { offset: 3, value: '3' }],
     });
     expect(wrapper.exists('LoadingData')).toBeFalsy();
   });
