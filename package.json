@@ -3,12 +3,6 @@
   "version": "2.0.0",
   "description": "A tool for visualizing a Kafka cluster's brokers, topics, partitions, and message flow.",
   "main": "main/main.js",
-  "babel": {
-    "presets": [
-      "@babel/preset-env",
-      "@babel/preset-react"
-    ]
-  },
   "scripts": {
     "dev": "electron . --inspect=5858",
     "start": "electron .",
