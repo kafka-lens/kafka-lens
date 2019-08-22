@@ -17,20 +17,14 @@ function Navbar({ routes, restartConnectionPage }) {
 
   const navLinks = [connectionPageLink].concat(
     routes.map(route => (
-      <>
-        <li
-          key={`separator-${route.link}`}
-          style={{ color: 'rgba(255, 255, 255, 0.5)', padding: '0 8px' }}
-        >
-          {' '}
-          |{' '}
-        </li>
-        <li key={route.link}>
+      <React.Fragment key={route.link}>
+        <li style={{ color: 'rgba(255, 255, 255, 0.5)', padding: '0 8px' }}> | </li>
+        <li>
           <NavLink style={{ color: '#f7f7f7', fontSize: 18 }} to={route.link}>
             {route.text}
           </NavLink>
         </li>
-      </>
+      </React.Fragment>
     )),
   );
   return <ul style={{ margin: 0, display: 'flex', justifyContent: 'center' }}>{navLinks}</ul>;

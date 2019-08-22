@@ -4,15 +4,12 @@ import nullableProp from '../../utils/nullableProp';
 import LineChart from './LineChart';
 import BrokerTopicsSideView from './BrokerTopicsSideView';
 import '../css/Sidebar.scss';
+import logger from '../../utils/logger';
 
-const SideBar = ({
-  isSideBarOpen,
-  brokerId,
-  brokerTopics,
-  closeSideBar,
-  brokerGraphData = null,
-}) => {
+const SideBar = ({ isSideBarOpen, brokerId, brokerTopics, closeSideBar, brokerGraphData }) => {
   const sideBarRight = isSideBarOpen ? '0' : '-30vw';
+
+  logger.log('brokerGraphData:', brokerGraphData);
 
   return (
     <div className="sidebar" style={{ right: sideBarRight }}>
@@ -44,7 +41,7 @@ export default SideBar;
 SideBar.propTypes = {
   brokerGraphData: nullableProp(
     PropTypes.shape({
-      timeStamps: PropTypes.arrayOf(PropTypes.string),
+      timeStamps: PropTypes.arrayOf(PropTypes.number),
       topicsData: PropTypes.object,
     }),
   ).isRequired,

@@ -1,13 +1,14 @@
 import React from 'react';
 
 import { getState } from '../state/state';
+import logger from '../../utils/logger';
 
 function TopicsPage() {
   const [state, dispatch] = getState();
 
   return (
     <div>
-      {console.log('hooks-based state:', state)}
+      {logger.log('hooks-based state:', state)}
       <button
         type="button"
         onClick={() =>
