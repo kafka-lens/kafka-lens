@@ -20,7 +20,9 @@ describe('Broker.jsx unit tests', () => {
 
   it('should render <BrokerViews/>', () => {
     const instance = wrapper.instance();
-    expect(instance.state.brokersSnapshots).toEqual([]);
+    expect(instance.state.brokersSnapshots).toEqual([
+      { isAlive: true, brokerId: 5, brokerURI: 'localhost:9092', topics: [] },
+    ]);
     wrapper.setState({
       brokersSnapshots: [
         [
