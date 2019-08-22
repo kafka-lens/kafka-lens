@@ -6,14 +6,15 @@ const BrokerTopicsSideView = ({ topics }) => {
   let totalNewMessagesPerSecond = 0;
   const brokerTopics = [];
   for (let i = 0; i < topics.length; i += 1) {
-    totalNewMessagesPerSecond += topics[i].newMessagesPerSecond;
+    const { newMessagesPerSecond, topicName, isLeader } = topics[i];
+    totalNewMessagesPerSecond += newMessagesPerSecond;
     brokerTopics.push(
       <BrokerTopic
-        key={i}
+        key={topicName}
         className="broker-topic"
-        topicName={topics[i].topicName}
-        newMessagesPerSecond={topics[i].newMessagesPerSecond}
-        isLeader={topics[i].isLeader}
+        topicName={topicName}
+        newMessagesPerSecond={newMessagesPerSecond}
+        isLeader={isLeader}
       />,
     );
   }
