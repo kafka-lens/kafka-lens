@@ -6,7 +6,7 @@ import Message from '../components/Message';
 describe('Message.jsx unit tests', () => {
   let wrapper;
   const props = {
-    offset: '5',
+    offset: 5,
     message: 'Test',
   };
   beforeAll(() => {
