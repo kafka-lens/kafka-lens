@@ -1,15 +1,20 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import '../css/Message.scss';
 
-const Message = props => {
-  return (
-    <span>
-      <div className="single-message">
-        {props.message}
-        <p className="offset-indicator">{props.offset}</p>
-      </div>
-    </span>
-  );
-};
+const Message = ({ message, offset }) => (
+  <span>
+    <div className="single-message">
+      {message}
+      <p className="offset-indicator">{offset}</p>
+    </div>
+  </span>
+);
 
 export default Message;
+
+Message.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  message: PropTypes.any.isRequired,
+  offset: PropTypes.number.isRequired,
+};

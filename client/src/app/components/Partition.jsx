@@ -1,17 +1,25 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import '../css/Partition.scss';
 
-const Partition = props => {
-  return (
-    <div
-      className="single-partition"
-      id={props.id}
-      onClick={props.showMessages}
-      topicname={props.topicName}
-    >
-      {`Partition  ${props.id}`}
-    </div>
-  );
-};
+const Partition = ({ id, showMessages, topicName }) => (
+  <div
+    id={id}
+    className="single-partition"
+    role="button"
+    tabIndex="0"
+    onKeyPress={showMessages}
+    onClick={showMessages}
+    topicname={topicName}
+  >
+    {`Partition  ${id}`}
+  </div>
+);
 
 export default Partition;
+
+Partition.propTypes = {
+  id: PropTypes.string.isRequired,
+  showMessages: PropTypes.func.isRequired,
+  topicName: PropTypes.string.isRequired,
+};

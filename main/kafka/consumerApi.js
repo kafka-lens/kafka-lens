@@ -1,58 +1,64 @@
 const kafka = require('kafka-node');
-const rdkafka = require('node-rdkafka');
 const MessageBuffer = require('./MessageBuffer');
+const logger = require('../utils/logger');
 
-// const client = new kafka.KafkaClient({ kafkaHost: '157.230.166.35:9092' });
-// const consumer = new kafka.Consumer(client, [{ topic: 'test1' }]);
-let testStream;
+// const client = new kafka.KafkaClient({ kafkaHost: kafkaHostURI: '157.230.166.35:9092' });
+// const Consumer = new kafka.Consumer;
 
-// Not in use
-const getLatestOffset = (kafkaHost, topic, partition) =>
-  new Promise((resolve, reject) => {
-    const client = new kafka.KafkaClient({ kafkaHost });
-    const offset = new kafka.Offset(client);
-    offset.fetchLatestOffsets([{ topic, partition }], (err, data) => {
-      if (err) reject(err);
-      console.log('result from latest offset in consumer: ', data);
-      resolve(data);
-    });
-  });
+const consumerApi = {};
 
-const getMessagesFromTopic = async (kafkaHost, topic, mainWindow) => {
+consumerApi.getMessagesFromTopic = (kafkaHostURI, topicName, mainWindow, partitionId) => {
   // Send back test data
   const buffer = new MessageBuffer(1000);
   let hasData = false;
   let lastChecked = Date.now();
-  const consumer = new rdkafka.KafkaConsumer({
-    'group.id': 'kafkalens',
-    'metadata.broker.list': kafkaHost,
+  logger.log('consumerAPI getMessagesFromTopic "topicName":', topicName);
+  const consumerGroup = new kafka.ConsumerGroup(
+    {
+      kafkaHost: kafkaHostURI,
+      groupId: 'testingLab2',
+      fromOffset: 'latest',
+      outOfRangeOffset: 'latest',
+    },
+    topicName,
+  );
+
+  consumerGroup.connect();
+  consumerGroup.on('message', message => {
+    const formattedMessage = {
+      value: message.value.toString('utf8'),
+      topicName: message.topic,
+      partitionId: message.partition,
+      key: message.key,
+      offset: message.offset,
+      timestamp: message.timestamp || 'None',
+    };
+    logger.log('message:', message);
+    logger.log('formattedMessage:', formattedMessage);
+    hasData = Date.now();
+    logger.log(`message.partition: ${formattedMessage.partitionId}, partitionId: ${partitionId}`);
+    if (typeof partitionId !== 'number' || partitionId === formattedMessage.partitionId) {
+      buffer.queue(formattedMessage);
+    }
   });
-  consumer.connect();
-  consumer
-    .on('ready', () => {
-      consumer.subscribe([topic]);
-      setInterval(() => {
-        consumer.consume(25);
-      }, 1500);
-    })
-    .on('data', data => {
-      data.value = data.value.toString('utf8');
-      // console.log('message', data);
-      // mainWindow.webContents.send('partition:getMessages', data);
-      hasData = Date.now();
-      buffer.queue(data);
-    });
-  const sendBuffer = setInterval(() => {
+
+  const sendBufferIntervalId = setInterval(() => {
     if (lastChecked < hasData) {
       lastChecked = Date.now();
       buffer.getNextSegment(mainWindow);
     }
   }, 50);
-  return { consumer, sendBuffer };
+
+  return () => {
+    logger.log(`
+      shutting down consumerGroup for topic ${topicName} - memberId ${consumerGroup.memberId}
+     `);
+    clearInterval(sendBufferIntervalId);
+    consumerGroup.close(err => {
+      if (err) logger.log('error closing consumerGroup connection:', err);
+      else logger.log('consumerGroup connection successfully shut down');
+    });
+  };
 };
 
-const stopDataFlow = () => {
-  clearInterval(testStream);
-};
-
-module.exports = { getMessagesFromTopic, stopDataFlow, getLatestOffset };
+module.exports = consumerApi;

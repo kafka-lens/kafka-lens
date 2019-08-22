@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Parition.js unit tests Should render without errors 1`] = `
+<div
+  className="single-partition"
+  id="5"
+  onClick={[MockFunction]}
+  onKeyPress={[MockFunction]}
+  role="button"
+  tabIndex="0"
+  topicname="Test"
+>
+  Partition  5
+</div>
+`;

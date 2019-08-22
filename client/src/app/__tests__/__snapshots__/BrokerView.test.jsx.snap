@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BrokerView.jsx unit tests Should render without errors 1`] = `
+<div
+  className="brokerView"
+  key="1"
+  onClick={[Function]}
+  onKeyPress={[Function]}
+  role="button"
+  style={
+    Object {
+      "backgroundColor": "#DC143C",
+    }
+  }
+  tabIndex="0"
+>
+  <BrokerHeader
+    brokerID={1}
+    brokerURI="localhost:9092"
+  />
+  <BrokerTopicsView
+    topics={Array []}
+  />
+</div>
+`;

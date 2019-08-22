@@ -1,5 +1,5 @@
 language: node_js
 node_js:
-  - '10.15.1'
+  - '10.16.2'
 scripts:
   - 'npm install'

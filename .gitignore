@@ -1,5 +1,4 @@
 index_bundle.js
-package-lock.json
 Dev-Files
 testFile.js
 Launch-application/
@@ -7,6 +6,8 @@ Launch-application/
 .vscode/
 build/
 dist/
+dist-mac/
+Kafka-Lens-linux-x64/
 
 # Logs
 logs
