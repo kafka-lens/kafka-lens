@@ -6,10 +6,10 @@
   "scripts": {
     "dev": "electron . --inspect=5858",
     "start": "electron .",
+    "start:dev": "webpack-dev-server --open",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "postinstall": "electron-builder install-app-deps",
-    "start:dev": "webpack-dev-server --open",
     "webpack": "webpack",
     "lint": "eslint '**/*.{js,jsx}'",
     "lint:fix": "eslint --fix '**/*.{js,jsx}'",
@@ -28,9 +28,9 @@
     "url": "git+https://github.com/teampandawhale/kafka-lens.git"
   },
   "keywords": [
-    "kafka"
+    "kafka", "electron", "react", "webpack", "kafka-node"
   ],
-  "author": "TEAM PANDA WHALE",
+  "author": "Kafka Lens Team",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/teampandawhale/kafka-lens/issues"
