@@ -8,7 +8,7 @@ module.exports = api => {
 
   const presets = [
     ['@babel/preset-env', { targets: { electron: electronVersion } }],
-    '@babel/preset-react',
+    ['@babel/preset-react', { development: isDevelopment }],
   ];
   const plugins = isDevelopment ? ['react-hot-loader/babel'] : [];
 
