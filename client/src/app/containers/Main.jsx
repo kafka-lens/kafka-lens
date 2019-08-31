@@ -29,7 +29,7 @@ class Main extends React.Component {
   }
 
   // Lifecycle methods
-  componentWillMount() {
+  componentDidMount() {
     // Listener will receive response from backend main process
     // If response is an error, display error to the user in connection page
     ipcRenderer.on('topic:getTopics', (e, data) => {
