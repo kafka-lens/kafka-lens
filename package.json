@@ -7,7 +7,7 @@
     "build-dll": "cross-env NODE_ENV=development webpack -r @babel/register --config ./configs/webpack.config.renderer.dev.dll.js --colors",
     "coverage:backend": "jest --collectCoverageFrom=main/kafka/*.{js,jsx} --coverage main",
     "coverage:frontend": "jest --collectCoverageFrom=client/src/*.{js,jsx} --coverage client",
-    "dev": "cross-env START_HOT=1 npm run start:renderer:dev",
+    "dev": "cross-env START_HOT=1 yarn start:renderer:dev",
     "lint": "eslint '**/*.{js,jsx}'",
     "lint:fix": "eslint --fix '**/*.{js,jsx}'",
     "package": "electron-builder",
@@ -91,6 +91,7 @@
     "webpack-bundle-analyzer": "^3.4.1",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.1.14",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "^4.2.2",
+    "yarn": "^1.17.3"
   }
 }
