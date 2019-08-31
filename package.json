@@ -4,20 +4,18 @@
   "description": "A tool for visualizing a Kafka cluster's brokers, topics, partitions, and message flow.",
   "main": "main/main.js",
   "scripts": {
+    "coverage:backend": "jest --collectCoverageFrom=main/kafka/*.{js,jsx} --coverage main",
+    "coverage:frontend": "jest --collectCoverageFrom=client/src/*.{js,jsx} --coverage client",
     "dev": "electron . --inspect=5858",
-    "start": "electron .",
-    "start:dev": "webpack-dev-server --open",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder",
-    "postinstall": "electron-builder install-app-deps",
-    "webpack": "webpack",
     "lint": "eslint '**/*.{js,jsx}'",
     "lint:fix": "eslint --fix '**/*.{js,jsx}'",
+    "package": "electron-builder",
+    "postinstall": "electron-builder install-app-deps package.json",
+    "start": "electron .",
+    "start:dev": "webpack-dev-server --open",
     "test": "jest",
     "test:frontend": "jest client",
-    "test:backend": "jest main",
-    "coverage:backend": "jest --collectCoverageFrom=main/kafka/*.{js,jsx} --coverage main",
-    "coverage:frontend": "jest --collectCoverageFrom=client/src/*.{js,jsx} --coverage client"
+    "test:backend": "jest main"
   },
   "build": {
     "appId": "kafka lens",
