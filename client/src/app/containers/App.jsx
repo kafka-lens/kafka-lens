@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Main from './Main';
-import TopicsPage from './TopicsPage';
+// import HooksPage from './HooksPage';
 
 import { StateProvider } from '../state/state';
 import { brokerReducer, initialState as brokerReducerInitialState } from '../state/brokerReducer';
@@ -21,7 +21,7 @@ const App = () => {
   return (
     <StateProvider initialState={initialState} reducer={mainReducer}>
       <Main />
-      {/* <TopicsPage /> */}
+      {/* <HooksPage /> */}
     </StateProvider>
   );
 };
