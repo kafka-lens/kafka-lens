@@ -24,8 +24,6 @@ const dll = path.join(__dirname, '..', 'dll');
 const manifest = path.resolve(dll, 'renderer.json');
 const requiredByDLLConfig = module.parent.filename.includes('webpack.config.renderer.dev.dll');
 
-console.log('started from dev');
-
 /**
  * Warn if the DLL is not built
  */
