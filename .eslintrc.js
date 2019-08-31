@@ -18,7 +18,6 @@ module.exports = {
     'max-len': ['warn', { code: 100 }],
     semi: ['error', 'always'],
     camelcase: 'error',
-    indent: ['error', 2, { SwitchCase: 1 }],
     'prefer-const': [
       'error',
       {
