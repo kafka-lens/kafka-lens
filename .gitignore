@@ -6,6 +6,7 @@ Launch-application/
 .vscode/
 build/
 dist/
+dll/
 dist-mac/
 Kafka-Lens-linux-x64/
 
