@@ -48,6 +48,7 @@
     "react": "^16.8.1",
     "react-chartjs-2": "^2.7.6",
     "react-dom": "^16.8.1",
+    "react-hot-loader": "^4.12.12",
     "react-router-dom": "^5.0.1",
     "sass-loader": "^7.1.0"
   },
