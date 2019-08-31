@@ -1,43 +1,47 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+/**
+ * Base webpack config used across other specific configs
+ */
+
+import path from 'path';
+import webpack from 'webpack';
+import { dependencies } from '../package.json';
 
 module.exports = {
-  entry: path.resolve(__dirname, './client/src/index.jsx'),
-  output: {
-    path: path.resolve(__dirname, './client/dist'),
-    filename: 'index_bundle.js',
-  },
-  target: 'electron-main',
-  resolve: {
-    extensions: ['.jsx', '.js', '.json'],
-  },
+  externals: [...Object.keys(dependencies || {})],
+
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: 'babel-loader',
-      },
-      {
-        test: /\.s?css$/,
-        exclude: /node_modules/,
-        use: [
-          'style-loader', // creates style nodes from JS strings
-          'css-loader', // translates CSS into CommonJS
-          'sass-loader', // compiles Sass to CSS, using Node Sass by default
-        ],
-      },
-      {
-        test: /\.(png|jpg)$/,
-        exclude: /node_modules/,
-        loader: 'url-loader',
+        use: {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+          },
+        },
       },
     ],
   },
-  mode: 'development',
+
+  // entry: path.resolve(__dirname, './client/src/index.jsx'),
+
+  output: {
+    path: path.resolve(__dirname, '..', 'dist'),
+    libraryTarget: 'commonjs2',
+  },
+
+  resolve: {
+    extensions: ['.jsx', '.js', '.json'],
+  },
+
+  optimization: {
+    namedModules: true,
+  },
+
   plugins: [
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'client/index.html'),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'production',
     }),
   ],
 };
