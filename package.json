@@ -28,7 +28,11 @@
     "url": "git+https://github.com/teampandawhale/kafka-lens.git"
   },
   "keywords": [
-    "kafka", "electron", "react", "webpack", "kafka-node"
+    "kafka",
+    "electron",
+    "react",
+    "webpack",
+    "kafka-node"
   ],
   "author": "Kafka Lens Team",
   "license": "MIT",
