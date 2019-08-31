@@ -4,7 +4,7 @@
   "description": "A tool for visualizing a Kafka cluster's brokers, topics, partitions, and message flow.",
   "main": "main/main.js",
   "scripts": {
-    "build-dll": "cross-env NODE_ENV=development webpack --config ./configs/webpack.config.renderer.dev.dll.js --colors",
+    "build-dll": "cross-env NODE_ENV=development webpack -r @babel/register --config ./configs/webpack.config.renderer.dev.dll.js --colors",
     "coverage:backend": "jest --collectCoverageFrom=main/kafka/*.{js,jsx} --coverage main",
     "coverage:frontend": "jest --collectCoverageFrom=client/src/*.{js,jsx} --coverage client",
     "dev": "cross-env START_HOT=1 npm run start:renderer:dev",
@@ -13,8 +13,8 @@
     "package": "electron-builder",
     "postinstall": "electron-builder install-app-deps package.json",
     "start": "electron .",
-    "start:main:dev": "cross-env HOT=1 NODE_ENV=development electron ./main/main.dev.js",
-    "start:renderer:dev": "cross-env NODE_ENV=development webpack-dev-server --config configs/webpack.config.renderer.dev.js",
+    "start:main:dev": "cross-env HOT=1 NODE_ENV=development electron -r @babel/register ./main/main.dev.js",
+    "start:renderer:dev": "cross-env NODE_ENV=development webpack-dev-server -r @babel/register --config configs/webpack.config.renderer.dev.js",
     "test": "jest",
     "test:frontend": "jest client",
     "test:backend": "jest main"
