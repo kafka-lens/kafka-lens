@@ -7,6 +7,7 @@ Launch-application/
 build/
 dist/
 dll/
+release/
 dist-mac/
 Kafka-Lens-linux-x64/
 
