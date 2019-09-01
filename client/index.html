@@ -16,6 +16,17 @@
     <!-- <link href="./src/app/css/index.css" rel="stylesheet" type="text/css" /> TODO: Verify why was this index.css non-existing file required -->
 
     <title>Kafka Lens</title>
+    <script>
+      (function() {
+        if (!process.env.HOT) {
+          const link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = '../dist/style.css';
+          // HACK: Writing the script path should be done with webpack
+          document.getElementsByTagName('head')[0].appendChild(link);
+        }
+      }());
+    </script>
   </head>
 
   <body>
