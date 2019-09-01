@@ -2,43 +2,102 @@
   "name": "kafka-lens",
   "version": "2.0.0",
   "description": "A tool for visualizing a Kafka cluster's brokers, topics, partitions, and message flow.",
-  "main": "main/main.js",
+  "main": "dist/main.prod.js",
   "scripts": {
-    "dev": "electron . --inspect=5858",
-    "start": "electron .",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder",
-    "postinstall": "electron-builder install-app-deps",
-    "start:dev": "webpack-dev-server --open",
-    "webpack": "webpack",
+    "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
+    "build-dll": "cross-env NODE_ENV=development webpack -r @babel/register --config ./configs/webpack.config.renderer.dev.dll.js --colors",
+    "build-main": "cross-env NODE_ENV=production webpack -r @babel/register --config ./configs/webpack.config.main.prod.js --colors",
+    "build-renderer": "cross-env NODE_ENV=production webpack -r @babel/register --config ./configs/webpack.config.renderer.prod.js --colors",
+    "coverage:backend": "jest --collectCoverageFrom=main/kafka/*.{js,jsx} --coverage main",
+    "coverage:frontend": "jest --collectCoverageFrom=client/src/*.{js,jsx} --coverage client",
+    "dev": "cross-env START_HOT=1 yarn start:renderer:dev",
     "lint": "eslint '**/*.{js,jsx}'",
     "lint:fix": "eslint --fix '**/*.{js,jsx}'",
+    "package": "yarn build && electron-builder build --publish never",
+    "package-all": "yarn build && electron-builder build -mwl",
+    "package-ci": "yarn postinstall && yarn build && electron-builder --publish always",
+    "package-linux": "yarn build && electron-builder build --linux",
+    "package-win": "yarn build && electron-builder build --win --x64",
+    "postinstall": "electron-builder install-app-deps package.json",
+    "prestart": "yarn build",
+    "start": "cross-env NODE_ENV=production electron ./dist/main.prod.js",
+    "start:main:dev": "cross-env HOT=1 NODE_ENV=development electron -r @babel/register ./main/main.dev.js",
+    "start:renderer:dev": "cross-env NODE_ENV=development webpack-dev-server -r @babel/register --config configs/webpack.config.renderer.dev.js",
     "test": "jest",
     "test:frontend": "jest client",
-    "test:backend": "jest main",
-    "coverage:backend": "jest --collectCoverageFrom=main/kafka/*.{js,jsx} --coverage main",
-    "coverage:frontend": "jest --collectCoverageFrom=client/src/*.{js,jsx} --coverage client"
+    "test:backend": "jest main"
   },
   "build": {
-    "appId": "kafka lens",
-    "productName": "Kafka Lens"
+    "appId": "org.nahuelarjonadev.kafkalens",
+    "productName": "Kafka Lens",
+    "files": [
+      "dist/",
+      "client/index.html",
+      "package.json"
+    ],
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "msi"
+      ]
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "rpm",
+        "snap",
+        "AppImage"
+      ],
+      "category": "Development"
+    },
+    "directories": {
+      "buildResources": "resources",
+      "output": "release"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "oslabs-beta",
+      "repo": "kafka-lens",
+      "private": false
+    }
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/teampandawhale/kafka-lens.git"
+    "url": "git+https://github.com/oslabs-beta/kafka-lens.git"
   },
   "keywords": [
-    "kafka"
+    "kafka",
+    "electron",
+    "react",
+    "webpack",
+    "kafka-node"
   ],
-  "author": "TEAM PANDA WHALE",
+  "author": {
+    "name": "Kafka Lens Team",
+    "email": "kafkalensteam@gmail.com",
+    "url": "https://kafkalens.io"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/teampandawhale/kafka-lens/issues"
+    "url": "https://github.com/oslabs-beta/kafka-lens/issues"
   },
-  "homepage": "https://github.com/teampandawhale/kafka-lens#readme",
+  "homepage": "https://github.com/oslabs-beta/kafka-lens#readme",
   "dependencies": {
     "chart.js": "^2.8.0",
-    "electron": "^4.2.9",
     "kafka-node": "^4.0.1",
     "node-sass": "^4.11.0",
     "node-zookeeper-client": "^1.0.0",
@@ -46,17 +105,24 @@
     "react": "^16.8.1",
     "react-chartjs-2": "^2.7.6",
     "react-dom": "^16.8.1",
+    "react-hot-loader": "^4.12.12",
     "react-router-dom": "^5.0.1",
-    "sass-loader": "^7.1.0"
+    "sass-loader": "^7.1.0",
+    "source-map-support": "^0.5.13"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.5.5",
     "babel-eslint": "^10.0.2",
     "babel-jest": "^24.1.0",
     "babel-loader": "^8.0.5",
+    "chalk": "^2.4.2",
+    "concurrently": "^4.1.2",
+    "cross-env": "^5.2.0",
     "css-loader": "^2.1.0",
+    "electron": "^4.2.9",
     "electron-builder": "^21.1.5",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.9.1",
@@ -74,11 +140,17 @@
     "html-webpack-plugin": "^3.2.0",
     "jest": "^24.1.0",
     "jest-css-modules-transform": "^2.1.1",
+    "mini-css-extract-plugin": "^0.8.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "prettier": "^1.18.2",
     "style-loader": "^0.23.1",
+    "terser-webpack-plugin": "^1.4.1",
     "url-loader": "^1.1.2",
     "webpack": "^4.29.3",
+    "webpack-bundle-analyzer": "^3.4.1",
     "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.1.14"
+    "webpack-dev-server": "^3.1.14",
+    "webpack-merge": "^4.2.2",
+    "yarn": "^1.17.3"
   }
 }
