@@ -32,6 +32,7 @@
     "productName": "Kafka Lens",
     "files": [
       "dist/",
+      "client/index.html",
       "package.json"
     ],
     "dmg": {
