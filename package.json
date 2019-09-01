@@ -85,7 +85,11 @@
     "webpack",
     "kafka-node"
   ],
-  "author": "Kafka Lens Team",
+  "author": {
+    "name": "Kafka Lens Team",
+    "email": "kafkalensteam@gmail.com",
+    "url": "https://kafkalens.io"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/oslabs-beta/kafka-lens/issues"
