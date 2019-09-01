@@ -24,12 +24,12 @@
     "test:backend": "jest main"
   },
   "build": {
-    "appId": "kafka lens",
+    "appId": "org.nahuelarjonadev.kafkalens",
     "productName": "Kafka Lens"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/teampandawhale/kafka-lens.git"
+    "url": "git+https://github.com/oslabs-beta/kafka-lens.git"
   },
   "keywords": [
     "kafka",
@@ -41,9 +41,9 @@
   "author": "Kafka Lens Team",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/teampandawhale/kafka-lens/issues"
+    "url": "https://github.com/oslabs-beta/kafka-lens/issues"
   },
-  "homepage": "https://github.com/teampandawhale/kafka-lens#readme",
+  "homepage": "https://github.com/oslabs-beta/kafka-lens#readme",
   "dependencies": {
     "chart.js": "^2.8.0",
     "electron": "^4.2.9",
