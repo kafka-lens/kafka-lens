@@ -2,7 +2,7 @@
   "name": "kafka-lens",
   "version": "2.0.0",
   "description": "A tool for visualizing a Kafka cluster's brokers, topics, partitions, and message flow.",
-  "main": "main/main.js",
+  "main": "dist/main.prod.js",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
     "build-dll": "cross-env NODE_ENV=development webpack -r @babel/register --config ./configs/webpack.config.renderer.dev.dll.js --colors",
