@@ -126,7 +126,7 @@ export default merge.smart(baseConfig, {
           {
             loader: 'css-loader',
             options: {
-              modules: true,
+              // modules: true,   // We are not using css modules, and this breaks our sass styles
               sourceMap: true,
               importLoaders: 1,
               localIdentName: '[name]__[local]__[hash:base64:5]',
