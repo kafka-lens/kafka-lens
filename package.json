@@ -25,7 +25,50 @@
   },
   "build": {
     "appId": "org.nahuelarjonadev.kafkalens",
-    "productName": "Kafka Lens"
+    "productName": "Kafka Lens",
+    "files": [
+      "dist/",
+      "package.json"
+    ],
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "msi"
+      ]
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "rpm",
+        "snap",
+        "AppImage"
+      ],
+      "category": "Development"
+    },
+    "directories": {
+      "buildResources": "resources",
+      "output": "release"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "oslabs-beta",
+      "repo": "kafka-lens",
+      "private": false
+    }
   },
   "repository": {
     "type": "git",
