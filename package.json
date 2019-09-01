@@ -97,7 +97,6 @@
   "homepage": "https://github.com/oslabs-beta/kafka-lens#readme",
   "dependencies": {
     "chart.js": "^2.8.0",
-    "electron": "^4.2.9",
     "kafka-node": "^4.0.1",
     "node-sass": "^4.11.0",
     "node-zookeeper-client": "^1.0.0",
@@ -122,6 +121,7 @@
     "concurrently": "^4.1.2",
     "cross-env": "^5.2.0",
     "css-loader": "^2.1.0",
+    "electron": "^4.2.9",
     "electron-builder": "^21.1.5",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.9.1",
