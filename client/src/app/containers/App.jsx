@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { hot } from 'react-hot-loader';
 import Main from './Main';
 // import HooksPage from './HooksPage';
 
@@ -26,4 +26,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default hot(module)(App);
