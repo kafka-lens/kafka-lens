@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron');
 const path = require('path');
 const url = require('url');
@@ -27,7 +28,7 @@ function createWindow() {
   mainWindow.show();
   mainWindow.loadURL(
     url.format({
-      pathname: path.join(__dirname, '../client/dist/index.html'),
+      pathname: path.join(__dirname, '..', 'client', 'index.html'),
       protocol: 'file',
       slashes: true,
     }),

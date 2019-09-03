@@ -18,7 +18,6 @@ module.exports = {
     'max-len': ['warn', { code: 100 }],
     semi: ['error', 'always'],
     camelcase: 'error',
-    indent: ['error', 2, { SwitchCase: 1 }],
     'prefer-const': [
       'error',
       {
@@ -33,12 +32,12 @@ module.exports = {
         classes: true,
       },
     ],
-    'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    'no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
     'no-console': 'off',
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
     'import/no-extraneous-dependencies': [
       'error',
-      { devDependencies: ['**/*.test.{js,jsx}', 'setupTests.js', '*.config.js'] },
+      { devDependencies: ['**/*.test.{js,jsx}', 'setupTests.js', '*.config.js', 'configs/**', 'internals/**'] },
     ],
   },
   settings: {
