@@ -25,10 +25,15 @@ const ConnectionPage = ({ isFetching, connected, updateURI, validConnectionCheck
   return (
     <div className="connection-box">
       <div className="connection-form container">
+        <div className="logo-container">
+          <img className="logo" src={lensIcon} alt="" />
+        </div>
         <form>
           <div>
-            <p id="label-instructions">Enter Your Kafka Server URI</p>
-            <input id="uri-input" type="text" onChange={updateURI} />
+            <label htmlFor="uri-input" id="label-instructions">
+              Enter Your Kafka Server URI
+              <input id="uri-input" type="text" placeholder="localhost:9092" onChange={updateURI} />
+            </label>
           </div>
           <button
             id="connect-button"
@@ -45,7 +50,6 @@ const ConnectionPage = ({ isFetching, connected, updateURI, validConnectionCheck
       {/* Loading bars here */}
       <div className="loading-bars">{loading}</div>
       <footer className="footer">
-        <img src={lensIcon} alt="" />
         <p className="FooterText">© Kafka Lens Version 2.0 </p>
       </footer>
     </div>
