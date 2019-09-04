@@ -235,6 +235,12 @@ export default merge.smart(baseConfig, {
     __filename: false,
   },
 
+  resolve: {
+    alias: {
+      'react-dom': '@hot-loader/react-dom',
+    },
+  },
+
   devServer: {
     port,
     publicPath,
