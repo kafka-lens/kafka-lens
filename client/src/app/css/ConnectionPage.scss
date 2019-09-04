@@ -10,21 +10,38 @@
   background-color: $second-bg-color;
 }
 
+.logo-container {
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+.logo {
+  height: 175px;
+  width: 175px;
+  vertical-align: middle;
+  position: relative;
+}
+
 .connection-form {
-  width: 34%;
+  width: 40%;
 }
 
 #label-instructions {
   font-size: 16px;
   color: $base-font-color;
   vertical-align: middle;
-  position: absolute;
+  text-align: center;
+  // position: absolute;
 }
 
 #uri-input {
   color: $off-white-color;
   font-size: 33px;
-  padding-top: 40px;
+  padding-top: 20px;
+}
+
+#uri-input::placeholder {
+  color: rgba(250, 235, 215, 0.3);
 }
 
 #connect-button {
@@ -39,10 +56,7 @@
 }
 
 .loading {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: 100px;
+  margin-top: 50px;
 }
 .loading-bar {
   display: inline-block;
@@ -85,12 +99,4 @@
   bottom: 0;
   right: 25px;
   color: antiquewhite;
-}
-
-img {
-  // top: 0;
-  height: 175px;
-  width: 175px;
-  vertical-align: middle;
-  position: relative;
 }
