@@ -22,7 +22,7 @@
     "prestart": "yarn build",
     "start": "cross-env NODE_ENV=production electron ./dist/main.prod.js",
     "start:main:dev": "cross-env HOT=1 NODE_ENV=development electron -r @babel/register ./main/main.dev.js",
-    "start:renderer:dev": "cross-env NODE_ENV=development webpack-dev-server -r @babel/register --config configs/webpack.config.renderer.dev.js",
+    "start:renderer:dev": "cross-env NODE_ENV=development webpack-dev-server -r @babel/register --no-inline --config configs/webpack.config.renderer.dev.js",
     "test": "jest",
     "test:frontend": "jest client",
     "test:backend": "jest main"
@@ -115,6 +115,7 @@
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.5.5",
+    "@hot-loader/react-dom": "^16.9.0",
     "babel-eslint": "^10.0.2",
     "babel-jest": "^24.1.0",
     "babel-loader": "^8.0.5",

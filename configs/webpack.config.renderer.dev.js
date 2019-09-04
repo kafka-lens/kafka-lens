@@ -33,7 +33,7 @@ if (!requiredByDLLConfig && !(fs.existsSync(dll) && fs.existsSync(manifest))) {
       'The DLL files are missing. Sit back while we build them for you with "npm run build-dll"',
     ),
   );
-  execSync('npm run build-dll');
+  execSync('yarn build-dll', { stdio: 'inherit' });
 }
 
 export default merge.smart(baseConfig, {
@@ -235,6 +235,12 @@ export default merge.smart(baseConfig, {
     __filename: false,
   },
 
+  resolve: {
+    alias: {
+      'react-dom': '@hot-loader/react-dom',
+    },
+  },
+
   devServer: {
     port,
     publicPath,
@@ -258,7 +264,7 @@ export default merge.smart(baseConfig, {
     before() {
       if (process.env.START_HOT) {
         console.log('Starting Main Process...');
-        spawn('npm', ['run', 'start:main:dev'], {
+        spawn('yarn', ['start:main:dev'], {
           shell: true,
           env: process.env,
           stdio: 'inherit',
