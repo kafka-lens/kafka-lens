@@ -35,12 +35,10 @@ const ConnectionPage = ({
           <img className="logo" src={lensIcon} alt="" />
         </div>
         <form>
-          <div>
-            <label htmlFor="uri-input" id="label-instructions">
-              Enter Your Kafka Server URI
-              <input id="uri-input" type="text" placeholder={defaultURI} onChange={updateURI} />
-            </label>
-          </div>
+          <label htmlFor="uri-input" id="label-instructions">
+            <p>Enter Your Kafka Server URI</p>
+            <input id="uri-input" type="text" placeholder={defaultURI} onChange={updateURI} />
+          </label>
           <button
             id="connect-button"
             className="btn waves-effect waves-light"
@@ -50,9 +48,8 @@ const ConnectionPage = ({
             Connect
           </button>
         </form>
-        {/* Error message displays here */}
-        {errorMsg}
       </div>
+      {errorMsg}
       {/* Loading bars here */}
       <div className="loading-bars">{loading}</div>
       <footer className="footer">

@@ -23,7 +23,7 @@
 }
 
 .connection-form {
-  width: 40%;
+  width: 45%;
 }
 
 #label-instructions {
@@ -34,10 +34,15 @@
   // position: absolute;
 }
 
+#label-instructions p {
+  font-size: 16px;
+  margin: 0;
+}
+
 #uri-input {
   color: $off-white-color;
   font-size: 33px;
-  padding-top: 20px;
+  padding-top: 10px;
 }
 
 #uri-input::placeholder {
@@ -46,12 +51,10 @@
 
 #connect-button {
   float: right;
-  margin-top: 12px;
 }
 
 #error-message {
   color: #db4646;
-  width: 374px;
   padding-top: 5px;
 }
 
