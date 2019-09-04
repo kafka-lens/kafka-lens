@@ -90,7 +90,8 @@ ipcMain.on('topic:getTopics', (e, kafkaHostUri) => {
     .then(result => mainWindow.webContents.send('topic:getTopics', result))
     .catch(error => {
       if (error === 'ignore') return logger.log('ignored getTopicData');
-      return mainWindow.webContents.send('topic:getTopics', { error });
+      logger.error(error);
+      return mainWindow.webContents.send('topic:getTopics', { error: error.message });
     });
 });
 
