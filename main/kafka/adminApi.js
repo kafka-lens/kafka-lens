@@ -100,7 +100,7 @@ function getTopicData(kafkaHostURI) {
  * Makes a connection to Kafka server to fetch a list of topics
  * Transforms the data coming back from the Kafka broker into pertinent data to send back to client
  */
-adminApi.getTopicData = wrapInTimeout(getTopicData, 100000, 5000, 10);
+adminApi.getTopicData = wrapInTimeout(getTopicData, 20000, 5000, 10);
 
 /**
  * @param {String} kafkaHostURI URI of Kafka broker(s)
