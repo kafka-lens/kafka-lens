@@ -9,8 +9,6 @@ const consumerApi = require('./kafka/consumerApi');
 const brokerApi = require('./kafka/brokerApi');
 const logger = require('./utils/logger');
 
-process.env.DEBUG = false;
-
 // * Disable error dialogs by overriding
 // * FIX: https://goo.gl/YsDdsS
 dialog.showErrorBox = (title, content) => {
