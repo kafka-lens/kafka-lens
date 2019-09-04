@@ -4,13 +4,13 @@ import Main from './Main';
 // import HooksPage from './HooksPage';
 
 // import { StateProvider } from '../state/state';
-// import { brokerReducer, initialState as brokerReducerInitialState } from '../state/brokerReducer';
-// import { topicReducer, initialState as topicReducerInitialState } from '../state/topicReducer';
+// import { brokerReducer, initialState as brokerInitialState } from '../state/brokerReducer';
+// import { topicReducer, initialState as topicInitialState } from '../state/topicReducer';
 
 const App = () => {
   // const initialState = {
-  //   topics: topicReducerInitialState,
-  //   brokers: brokerReducerInitialState,
+  //   topics: topicInitialState,
+  //   brokers: brokerInitialState,
   // };
 
   // const mainReducer = ({ topics, brokers }, action) => ({
