@@ -4,7 +4,13 @@ import '../css/ConnectionPage.scss';
 import lensIcon from '../../../../assets/images/lens-icon.png';
 import nullableProp from '../../utils/nullableProp';
 
-const ConnectionPage = ({ isFetching, connected, updateURI, validConnectionChecker }) => {
+const ConnectionPage = ({
+  isFetching,
+  connected,
+  defaultURI,
+  updateURI,
+  validConnectionChecker,
+}) => {
   let loading;
   if (isFetching === true) {
     loading = (
@@ -32,7 +38,7 @@ const ConnectionPage = ({ isFetching, connected, updateURI, validConnectionCheck
           <div>
             <label htmlFor="uri-input" id="label-instructions">
               Enter Your Kafka Server URI
-              <input id="uri-input" type="text" placeholder="localhost:9092" onChange={updateURI} />
+              <input id="uri-input" type="text" placeholder={defaultURI} onChange={updateURI} />
             </label>
           </div>
           <button
@@ -61,6 +67,7 @@ export default ConnectionPage;
 ConnectionPage.propTypes = {
   connected: nullableProp(PropTypes.bool).isRequired,
   isFetching: PropTypes.bool.isRequired,
+  defaultURI: PropTypes.string.isRequired,
   updateURI: PropTypes.func.isRequired,
   validConnectionChecker: PropTypes.func.isRequired,
 };

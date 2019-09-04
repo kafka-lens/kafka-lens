@@ -18,6 +18,7 @@ class Main extends React.Component {
     this.state = {
       connected: null,
       uriInput: '',
+      defaultURI: 'localhost:9092',
       topics: [],
       isFetching: false,
     };
@@ -72,9 +73,9 @@ class Main extends React.Component {
       isFetching: true,
     });
 
-    const { uriInput } = this.state;
+    const { uriInput, defaultURI } = this.state;
 
-    ipcRenderer.send('topic:getTopics', uriInput);
+    ipcRenderer.send('topic:getTopics', uriInput || defaultURI);
   }
 
   // This function is passed to the connectionPage
@@ -84,7 +85,7 @@ class Main extends React.Component {
   }
 
   render() {
-    const { connected, isFetching, topics, uriInput } = this.state;
+    const { connected, isFetching, topics, uriInput, defaultURI } = this.state;
 
     return (
       <div className="main-div">
@@ -108,6 +109,7 @@ class Main extends React.Component {
         ) : (
           <ConnectionPage
             validConnectionChecker={this.validConnectionChecker}
+            defaultURI={defaultURI}
             updateURI={this.updateURI}
             connected={connected}
             isFetching={isFetching}
