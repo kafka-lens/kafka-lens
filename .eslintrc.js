@@ -37,7 +37,7 @@ module.exports = {
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
     'import/no-extraneous-dependencies': [
       'error',
-      { devDependencies: ['**/*.test.{js,jsx}', 'setupTests.js', '*.config.js', 'configs/**', 'internals/**'] },
+      { devDependencies: true },
     ],
   },
   settings: {

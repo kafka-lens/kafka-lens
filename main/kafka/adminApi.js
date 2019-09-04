@@ -37,7 +37,7 @@ function wrapInTimeout(
       const msToTimeout = initialMsToTimeout + (tries - 1) * msIncreasePerTry;
       currentTimeoutId = setTimeout(() => {
         currentTimeoutId = null;
-        return reject(new Error(`Error: ${callback.name} timed out after ${msToTimeout}ms`));
+        return reject(new Error(`${callback.name} timed out after ${msToTimeout}ms`));
       }, msToTimeout);
     });
   };
@@ -54,7 +54,7 @@ function getTopicData(kafkaHostURI) {
 
     // Fetch all topics from the Kafka broker
     admin.listTopics((err, data) => {
-      if (err) return reject(new Error(`Error getting list of Topics:${err}`));
+      if (err) return reject(new Error(`getting list of Topics:${err}`));
 
       // Reassign topics with only the object containing the topic data
       logger.log('Result of admin.listTopics API call:', data);
@@ -86,9 +86,8 @@ function getTopicData(kafkaHostURI) {
           return resolve(result);
         })
         .catch(error => {
-          logger.error('Error getting all topicMsgCounts:', error);
           client.close();
-          return reject(new Error(`Error getting all topicMsgCounts:${error}`));
+          return reject(new Error(`getting all topicMsgCounts:${error}`));
         });
     });
   });
@@ -101,7 +100,7 @@ function getTopicData(kafkaHostURI) {
  * Makes a connection to Kafka server to fetch a list of topics
  * Transforms the data coming back from the Kafka broker into pertinent data to send back to client
  */
-adminApi.getTopicData = wrapInTimeout(getTopicData, 100000, 5000, 10);
+adminApi.getTopicData = wrapInTimeout(getTopicData, 20000, 5000, 10);
 
 /**
  * @param {String} kafkaHostURI URI of Kafka broker(s)

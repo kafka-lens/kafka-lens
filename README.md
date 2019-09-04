@@ -12,17 +12,30 @@ Kafka Lens provides a tool that lets you inspect a Kafka cluster and allows deve
 
 ![Screen Capture](assets/images/kl-g.gif)
 
-## 5 Steps for Quick Startup
+***
 
-**Fork** and **Clone** Repository
+## Scripts break-down
 
+**Run in development environment**
 ```
-1. cd into your 'kafka-lens' folder
-2. npm install
-3. npm run webpack
-4. run this script in your command line: './node_modules/.bin/electron-rebuild'
-5. npm start
+yarn dev
 ```
+**Run in production environment**
+```
+yarn start
+```
+
+**Build package for linux, windows, or mac *(based on host OS)***
+```
+yarn package
+```
+
+**Lint project**
+```
+yarn lint
+```
+
+***
 
 ### Connecting to Your Broker
 

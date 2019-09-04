@@ -9,8 +9,6 @@ const consumerApi = require('./kafka/consumerApi');
 const brokerApi = require('./kafka/brokerApi');
 const logger = require('./utils/logger');
 
-process.env.DEBUG = false;
-
 // * Disable error dialogs by overriding
 // * FIX: https://goo.gl/YsDdsS
 dialog.showErrorBox = (title, content) => {
@@ -90,7 +88,8 @@ ipcMain.on('topic:getTopics', (e, kafkaHostUri) => {
     .then(result => mainWindow.webContents.send('topic:getTopics', result))
     .catch(error => {
       if (error === 'ignore') return logger.log('ignored getTopicData');
-      return mainWindow.webContents.send('topic:getTopics', { error });
+      logger.error('getTopicData:', error);
+      return mainWindow.webContents.send('topic:getTopics', { error: error.message });
     });
 });
 

@@ -10,40 +10,58 @@
   background-color: $second-bg-color;
 }
 
+.logo-container {
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+.logo {
+  height: 175px;
+  width: 175px;
+  vertical-align: middle;
+  position: relative;
+}
+
 .connection-form {
-  width: 34%;
+  width: 45%;
 }
 
 #label-instructions {
   font-size: 16px;
   color: $base-font-color;
   vertical-align: middle;
-  position: absolute;
+  text-align: center;
+  // position: absolute;
+}
+
+#label-instructions p {
+  font-size: 16px;
+  margin: 0;
 }
 
 #uri-input {
   color: $off-white-color;
   font-size: 33px;
-  padding-top: 40px;
+  padding-top: 10px;
+}
+
+#uri-input::placeholder {
+  color: rgba(250, 235, 215, 0.3);
 }
 
 #connect-button {
   float: right;
-  margin-top: 12px;
 }
 
 #error-message {
   color: #db4646;
-  width: 374px;
   padding-top: 5px;
 }
 
 .loading {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: 100px;
+  margin-top: 50px;
 }
+
 .loading-bar {
   display: inline-block;
   width: 5px;
@@ -51,18 +69,28 @@
   border-radius: 4px;
   animation: loading 1s ease-in-out infinite;
 }
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .loading-bar {
+    animation: none;
+  }
+}
+
 .loading-bar:nth-child(1) {
   background-color: #3498db;
   animation-delay: 0;
 }
+
 .loading-bar:nth-child(2) {
   background-color: #c0392b;
   animation-delay: 0.09s;
 }
+
 .loading-bar:nth-child(3) {
   background-color: #f1c40f;
   animation-delay: 0.18s;
 }
+
 .loading-bar:nth-child(4) {
   background-color: #27ae60;
   animation-delay: 0.27s;
@@ -85,12 +113,4 @@
   bottom: 0;
   right: 25px;
   color: antiquewhite;
-}
-
-img {
-  // top: 0;
-  height: 175px;
-  width: 175px;
-  vertical-align: middle;
-  position: relative;
 }
