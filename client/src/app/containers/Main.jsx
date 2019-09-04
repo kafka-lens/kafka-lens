@@ -35,7 +35,7 @@ class Main extends React.Component {
     ipcRenderer.on('topic:getTopics', (e, data) => {
       this.setState({ isFetching: false });
 
-      if (typeof data === 'string' && data.startsWith('Error')) {
+      if (data.error) {
         logger.error('getTopics Error:', data);
         this.setState({
           connected: false,
