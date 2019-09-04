@@ -61,6 +61,7 @@
 .loading {
   margin-top: 50px;
 }
+
 .loading-bar {
   display: inline-block;
   width: 5px;
@@ -68,18 +69,28 @@
   border-radius: 4px;
   animation: loading 1s ease-in-out infinite;
 }
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .loading-bar {
+    animation: none;
+  }
+}
+
 .loading-bar:nth-child(1) {
   background-color: #3498db;
   animation-delay: 0;
 }
+
 .loading-bar:nth-child(2) {
   background-color: #c0392b;
   animation-delay: 0.09s;
 }
+
 .loading-bar:nth-child(3) {
   background-color: #f1c40f;
   animation-delay: 0.18s;
 }
+
 .loading-bar:nth-child(4) {
   background-color: #27ae60;
   animation-delay: 0.27s;
