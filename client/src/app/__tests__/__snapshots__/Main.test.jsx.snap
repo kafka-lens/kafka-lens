@@ -6,6 +6,7 @@ exports[`Main.js unit tests should render without errors 1`] = `
 >
   <ConnectionPage
     connected={null}
+    defaultURI="localhost:9092"
     isFetching={false}
     updateURI={[Function]}
     validConnectionChecker={[Function]}
