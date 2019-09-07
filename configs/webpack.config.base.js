@@ -8,12 +8,10 @@ import { dependencies } from '../package.json';
 
 let dependenciesList = [...Object.keys(dependencies || {})];
 
-if (process.env.NODE_ENV === 'development') {
-  // remove react-hot-loader as it ends up loading in production mode
-  // remove react-dom because it needs to be aliased to @hot-loader/react-dom
-  const dependenciesToExcludeFromExternals = ['react-hot-loader', 'react-dom'];
-  dependenciesList = dependenciesList.filter(d => !dependenciesToExcludeFromExternals.includes(d));
-}
+// remove react-hot-loader as it ends up loading in production mode
+// remove react-dom because it needs to be aliased to @hot-loader/react-dom
+const dependenciesToExcludeFromExternals = ['react-hot-loader', 'react-dom'];
+dependenciesList = dependenciesList.filter(d => !dependenciesToExcludeFromExternals.includes(d));
 
 module.exports = {
   externals: dependenciesList,
@@ -32,8 +30,6 @@ module.exports = {
       },
     ],
   },
-
-  // entry: path.resolve(__dirname, './client/src/index.jsx'),
 
   output: {
     path: path.resolve(__dirname, '..', 'dist'),
