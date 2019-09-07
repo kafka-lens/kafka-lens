@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ConnectionPageFooter from './ConnectionPageFooter';
 import '../css/ConnectionPage.scss';
 import lensIcon from '../../../../assets/images/lens-icon.png';
 import nullableProp from '../../utils/nullableProp';
@@ -52,9 +53,7 @@ const ConnectionPage = ({
       {errorMsg}
       {/* Loading bars here */}
       <div className="loading-bars">{loading}</div>
-      <footer className="footer">
-        <p className="FooterText">© Kafka Lens Version 2.0 </p>
-      </footer>
+      <ConnectionPageFooter />
     </div>
   );
 };

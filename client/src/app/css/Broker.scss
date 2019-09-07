@@ -1,7 +1,7 @@
 @import 'theme';
 
 .broker-grid-container {
-  min-height: 100vh;
+  min-height: calc(100vh - #{$header-height});
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 350px));
   column-gap: 0.5em;

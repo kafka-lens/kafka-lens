@@ -16,7 +16,7 @@ const Topic = ({ id, topicInfo, showPartitions, showMessages }) => (
     >
       {topicInfo.topicName}
     </div>
-    {topicInfo.showPartitions === true ? (
+    {topicInfo.showPartitions ? (
       <PartitionList showMessages={showMessages} topicInfo={topicInfo} />
     ) : (
       ''

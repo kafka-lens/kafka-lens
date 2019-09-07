@@ -20,7 +20,6 @@ const SideBar = ({ isSideBarOpen, brokerId, brokerTopics, closeSideBar, brokerGr
         tabIndex="0"
         onKeyPress={closeSideBar}
         onClick={closeSideBar}
-        style={{ color: '#51b3b5' }}
       >
         Close
       </div>

@@ -10,13 +10,7 @@
     font-size: 16px;
 }
 
-.single-partition:hover {
+.single-partition:hover, .single-partition:focus {
     background-color: $highlight-bar-color;
-    color: white;
     cursor: pointer;
 }
-
-.single-partition:focus {
-    background-color: black;
-}
-
