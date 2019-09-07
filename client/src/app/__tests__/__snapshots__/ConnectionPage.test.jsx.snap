@@ -48,14 +48,6 @@ exports[`Connection.js unit tests Renders without errors 1`] = `
   <div
     className="loading-bars"
   />
-  <footer
-    className="footer"
-  >
-    <p
-      className="FooterText"
-    >
-      © Kafka Lens Version 2.0 
-    </p>
-  </footer>
+  <ConnectionPageFooter />
 </div>
 `;
