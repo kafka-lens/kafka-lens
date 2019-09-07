@@ -16,7 +16,7 @@
     "lint:fix": "yarn lint --fix",
     "lint:css": "stylelint --ignore-path .gitignore '**/*.*(css|scss)' --syntax scss",
     "lint:css:fix": "yarn lint:css --fix",
-    "package": "yarn build && electron-builder build --publish never",
+    "package": "cross-env NODE_ENV=production yarn build && cross-env NODE_ENV=production electron-builder build --publish never",
     "package-all": "yarn build && electron-builder build -mwl",
     "package-ci": "yarn postinstall && yarn build && electron-builder --publish always",
     "package-linux": "yarn build && electron-builder build --linux",
@@ -49,7 +49,6 @@
       ]
     },
     "linux": {
-      "icon": "icon.png",
       "target": [
         "deb",
         "rpm",
