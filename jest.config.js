@@ -9,5 +9,5 @@ module.exports = {
   },
   moduleDirectories: ['node_modules'],
   modulePaths: ['<rootDir>'],
-  testPathIgnorePatterns: ['<rootDir>/release/', '<rootDir>/node_modules/'],
+  // testPathIgnorePatterns: ['<rootDir>/release/', '<rootDir>/node_modules/'],
 };
