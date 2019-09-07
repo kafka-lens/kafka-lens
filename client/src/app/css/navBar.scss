@@ -1,7 +1,10 @@
+@import 'theme';
+
 #header {
   font-size: 18px;
   text-align: center;
   background-color: rgba(3, 21, 52, 0.94);
   margin-block-end: 0;
   margin-block-start: 0;
+  height: $header-height;
 }
