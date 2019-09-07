@@ -42,12 +42,14 @@
       "icon": "icon.png"
     },
     "win": {
+      "icon": "icon.ico",
       "target": [
         "nsis",
         "msi"
       ]
     },
     "linux": {
+      "icon": "icon.png",
       "target": [
         "deb",
         "rpm",

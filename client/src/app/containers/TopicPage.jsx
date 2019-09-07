@@ -47,12 +47,22 @@ class TopicPage extends React.Component {
 
   // Called when topic is clicked in order to show partitions
   showPartitions(event) {
+    const element = event.target;
+    const { lastElement } = this.state;
     const { topicList } = this.props;
-    const topicName = event.target.getAttribute('topicname');
-    const topicIndex = parseInt(event.target.id, 10);
+    const topicName = element.getAttribute('topicname');
+    const topicIndex = element.id;
     const topicInfo = topicList[topicIndex];
-
     topicInfo.showPartitions = !topicInfo.showPartitions;
+
+    if (lastElement === element) {
+      logger.log('clicked same element');
+      this.setState({ currentPartitionMetadata: topicInfo });
+      return;
+    }
+
+    if (lastElement) lastElement.classList.remove('highlight-this');
+    element.classList.add('highlight-this');
 
     const { uri: kafkaHostURI } = this.props;
     ipcRenderer.send('partition:getMessages', {
@@ -62,32 +72,29 @@ class TopicPage extends React.Component {
 
     const newState = this.state;
 
-    const { showingPartitionMetadata } = this.state;
-    if (showingPartitionMetadata === true) newState.showingPartitionMetadata = false;
-
+    newState.showingPartitionMetadata = false;
     newState.currentTopicMetadata = topicInfo;
     newState.loadingData = true;
+    newState.lastElement = element;
 
-    return this.setState(newState);
+    this.setState(newState);
   }
 
   showMessages(event) {
     const element = event.target;
     const newTopicName = element.getAttribute('topicname');
     const newPartitionId = element.id;
+    const { lastElement } = this.state;
 
     logger.log('newTopicName from the partition div:', newTopicName);
     logger.log('newPartitionId:', newPartitionId);
 
-    const { lastElement, partitionId, topicName } = this.state;
-    const { uri: kafkaHostURI } = this.props;
-
-    if (newPartitionId === partitionId && newTopicName === topicName && lastElement === element)
-      return;
+    if (lastElement === element) return;
 
     if (lastElement) lastElement.classList.remove('highlight-this');
-
     element.classList.add('highlight-this');
+
+    const { uri: kafkaHostURI } = this.props;
 
     this.setState(
       {
@@ -126,11 +133,11 @@ class TopicPage extends React.Component {
     } = this.state;
 
     const shouldDisplayPartitionMetadata =
-      showingPartitionMetadata === true &&
+      showingPartitionMetadata &&
       Object.keys(currentPartitionMetadata).length &&
       messages.length > 0;
 
-    const shouldDisplayMessageInfo = showingPartitionMetadata === true && messages.length > 0;
+    const shouldDisplayMessageInfo = showingPartitionMetadata && messages.length > 0;
 
     const Topics = topicList.map((topicInfo, i) => (
       <Topic

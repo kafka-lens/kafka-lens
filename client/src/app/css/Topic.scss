@@ -8,3 +8,8 @@
 .topic-padding {
     padding-left: 56px;
 }
+
+.topic-padding:hover, .topic-padding:focus {
+    background-color: $highlight-bar-color;
+    cursor: pointer;
+}
