@@ -1,4 +1,6 @@
-const DEBUG = false;
+import { remote } from 'electron';
+
+const { DEBUG } = remote.getGlobal('process').env;
 
 export default {
   log(...args) {
