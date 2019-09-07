@@ -1,3 +1,5 @@
+@import 'theme';
+
 .sidebar {
   width: 30vw;
   position: relative;
@@ -16,10 +18,16 @@
 
 .sidebar .closebtn {
   position: absolute;
+  color: $soft-green;
   top: 0;
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
+}
+
+.sidebar .closebtn:hover, .sidebar .closebtn:focus {
+  cursor: pointer;
+  color: $green;
 }
 
 .brokerId {
