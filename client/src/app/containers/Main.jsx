@@ -17,7 +17,7 @@ class Main extends React.Component {
     super(props);
     this.state = {
       connected: null,
-      uriInput: '',
+      uriInput: 'localhost:9092',
       defaultURI: 'localhost:9092',
       topics: [],
       isFetching: false,
@@ -75,12 +75,19 @@ class Main extends React.Component {
 
     const { uriInput, defaultURI } = this.state;
 
-    ipcRenderer.send('topic:getTopics', uriInput || defaultURI);
+    if (!uriInput) {
+      this.setState({ uriInput: defaultURI }, () => {
+        ipcRenderer.send('topic:getTopics', uriInput);
+      });
+    } else {
+      ipcRenderer.send('topic:getTopics', uriInput);
+    }
   }
 
   // This function is passed to the connectionPage
   updateURI(event) {
-    const inputValue = event.target.value;
+    const { defaultURI } = this.state;
+    const inputValue = event.target.value ? event.target.value : defaultURI;
     this.setState({ uriInput: inputValue });
   }
 

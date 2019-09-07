@@ -157,8 +157,8 @@ adminApi.getPartitionMsgCount = (kafkaHostURI, topicName, partitionId = 0) => {
  * @param {Number} partitionId Topic partition number. Defaults to 0
  *
  * This function returns data to the renderer process.
- * Calls getLatestOffset and getCurrentMsgCount, then sends back the result
- * as an object containing highwaterOffset and messageCount as properties.
+ * Calls listTopics, then sends back the result as an object containing
+ * which broker is the leader and which ones contain replicas
  */
 adminApi.getPartitionBrokers = (kafkaHostURI, topicName, partitionId = 0) => {
   const client = new kafka.KafkaClient({ kafkaHost: kafkaHostURI });
@@ -167,7 +167,7 @@ adminApi.getPartitionBrokers = (kafkaHostURI, topicName, partitionId = 0) => {
 
   return new Promise((resolve, reject) => {
     admin.listTopics((err, data) => {
-      if (err) reject(err); // TODO: Handle listTopics error properly
+      if (err) return reject(err); // TODO: Handle listTopics error properly
       // Reassign topics with only the object containing the topic info
       // Isolate leader broker and replica brokers array into brokerPartitionData array
       const topicsMetadata = data[1].metadata;
@@ -177,7 +177,7 @@ adminApi.getPartitionBrokers = (kafkaHostURI, topicName, partitionId = 0) => {
       brokerPartitionData.push(replicas);
 
       client.close();
-      resolve(brokerPartitionData);
+      return resolve(brokerPartitionData);
     });
   });
 };

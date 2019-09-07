@@ -60,3 +60,7 @@ Enter the URI of your Kafka broker (e.g. kafka1.contoso.com:9092) then click 'Co
 [Howard Na](https://github.com/howardNa)
 
 [Jordan Betzer](https://github.com/jordanzobean)
+
+## License
+
+Kafka Lens is [GNU General Public License v3.0](https://github.com/nahuelarjonadev/kafka-lens/blob/master/LICENSE) licensed.

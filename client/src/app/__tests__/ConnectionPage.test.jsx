@@ -8,6 +8,7 @@ describe('Connection.js unit tests', () => {
   const props = {
     connected: null,
     isFetching: false,
+    defaultURI: 'localhost:9092',
     updateURI: jest.fn(),
     validConnectionChecker: jest.fn(),
   };
