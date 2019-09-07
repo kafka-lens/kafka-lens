@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import '../css/ConnectionPage.scss';
 import lensIcon from '../../../../assets/images/lens-icon.png';
 import nullableProp from '../../utils/nullableProp';
+import { version } from '../../../../package.json';
 
 const ConnectionPage = ({
   isFetching,
@@ -53,7 +54,7 @@ const ConnectionPage = ({
       {/* Loading bars here */}
       <div className="loading-bars">{loading}</div>
       <footer className="footer">
-        <p className="FooterText">© Kafka Lens Version 2.0 </p>
+        <p className="FooterText">© Kafka Lens Version {version} </p>
       </footer>
     </div>
   );
