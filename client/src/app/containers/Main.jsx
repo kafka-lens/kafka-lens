@@ -12,16 +12,18 @@ import Broker from './Broker';
 import '../css/index.scss';
 import '../css/App.scss';
 
+const defaultState = {
+  connected: null,
+  uriInput: 'localhost:9092',
+  defaultURI: 'localhost:9092',
+  topics: [],
+  isFetching: false,
+};
+
 class Main extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      connected: null,
-      uriInput: 'localhost:9092',
-      defaultURI: 'localhost:9092',
-      topics: [],
-      isFetching: false,
-    };
+    this.state = defaultState;
 
     // bind methods here
     this.validConnectionChecker = this.validConnectionChecker.bind(this);
@@ -57,12 +59,7 @@ class Main extends React.Component {
 
   // create function to setState connected to null
   restartConnectionPage() {
-    this.setState({
-      connected: false,
-      uriInput: '',
-      topics: [],
-      isFetching: false,
-    });
+    this.setState(defaultState);
   }
 
   // This function is passed to the connection page to send the connection
