@@ -49,17 +49,20 @@ class TopicPage extends React.Component {
   showPartitions(event) {
     const element = event.target;
     const { lastElement } = this.state;
-    if (lastElement === element) return;
+    const { topicList } = this.props;
+    const topicName = element.getAttribute('topicname');
+    const topicIndex = element.id;
+    const topicInfo = topicList[topicIndex];
+    topicInfo.showPartitions = !topicInfo.showPartitions;
+
+    if (lastElement === element) {
+      logger.log('clicked same element');
+      this.setState({ currentPartitionMetadata: topicInfo });
+      return;
+    }
 
     if (lastElement) lastElement.classList.remove('highlight-this');
     element.classList.add('highlight-this');
-
-    const topicName = element.getAttribute('topicname');
-    const topicIndex = element.id;
-    const { topicList } = this.props;
-    const topicInfo = topicList[topicIndex];
-
-    topicInfo.showPartitions = !topicInfo.showPartitions;
 
     const { uri: kafkaHostURI } = this.props;
     ipcRenderer.send('partition:getMessages', {
