@@ -5,7 +5,11 @@ exports[`Message.jsx unit tests Should render without errors 1`] = `
   <div
     className="single-message"
   >
-    Test
+    <p
+      className="message-content"
+    >
+      Test
+    </p>
     <p
       className="offset-indicator"
     >

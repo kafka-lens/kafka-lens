@@ -23,7 +23,7 @@ class TopicPage extends React.Component {
       topicName: '',
       messages: [],
       partitionId: '',
-      lastElement: '',
+      lastElement: null,
       showingPartitionMetadata: false,
       loadingData: false,
     };
@@ -54,9 +54,9 @@ class TopicPage extends React.Component {
 
     topicInfo.showPartitions = !topicInfo.showPartitions;
 
-    const { uri } = this.props;
+    const { uri: kafkaHostURI } = this.props;
     ipcRenderer.send('partition:getMessages', {
-      kafkaHostURI: uri,
+      kafkaHostURI,
       topicName,
     });
 
@@ -72,55 +72,51 @@ class TopicPage extends React.Component {
   }
 
   showMessages(event) {
-    const newTopicName = event.target.getAttribute('topicname');
+    const element = event.target;
+    const newTopicName = element.getAttribute('topicname');
+    const newPartitionId = element.id;
+
     logger.log('newTopicName from the partition div:', newTopicName);
-    const newPartitionId = parseInt(event.target.id, 10);
     logger.log('newPartitionId:', newPartitionId);
 
-    const element = event.target;
     const { lastElement, partitionId, topicName } = this.state;
+    const { uri: kafkaHostURI } = this.props;
 
-    const { uri } = this.props;
-    const kafkaHostURI = uri;
+    if (newPartitionId === partitionId && newTopicName === topicName && lastElement === element)
+      return;
 
-    if (lastElement !== element) {
-      if (lastElement !== '') {
-        lastElement.classList.remove('highlight-this');
-      }
+    if (lastElement) lastElement.classList.remove('highlight-this');
 
-      ipcRenderer.send('partition:getMessages', {
-        kafkaHostURI,
-        topicName: newTopicName,
-        partitionId,
-      });
+    element.classList.add('highlight-this');
 
-      ipcRenderer.send('partition:getData', {
-        kafkaHostURI,
-        partitionId,
-        topicName: newTopicName,
-      });
-      this.setState({
-        lastElement: element,
-      });
-
-      element.classList.add('highlight-this');
-    }
-
-    if (newPartitionId !== partitionId || newTopicName !== topicName) {
-      this.setState({
+    this.setState(
+      {
         messages: [],
         topicName: newTopicName,
         partitionId: newPartitionId,
+        lastElement: element,
         showingPartitionMetadata: true,
-      });
-    }
+      },
+      () => {
+        ipcRenderer.send('partition:getMessages', {
+          kafkaHostURI,
+          partitionId: newPartitionId,
+          topicName: newTopicName,
+        });
+
+        ipcRenderer.send('partition:getData', {
+          kafkaHostURI,
+          partitionId: newPartitionId,
+          topicName: newTopicName,
+        });
+      },
+    );
   }
 
   render() {
     const { topicList, isConnected, uri } = this.props;
     const {
       showingPartitionMetadata,
-      showPartitions,
       currentPartitionMetadata,
       partitionId,
       currentTopicMetadata,
@@ -142,7 +138,6 @@ class TopicPage extends React.Component {
         id={i}
         topicInfo={topicInfo}
         showPartitions={this.showPartitions}
-        shouldDisplayPartitions={showPartitions}
         showMessages={this.showMessages}
       />
     ));

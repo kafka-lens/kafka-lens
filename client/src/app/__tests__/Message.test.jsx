@@ -17,11 +17,15 @@ describe('Message.jsx unit tests', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('Should render a div tag with inner text', () => {
-    expect(wrapper.find('div').text()).toEqual('Test5');
+  it('Should render two p tags', () => {
+    expect(wrapper.find('p')).toHaveLength(2);
   });
 
-  it('Should render a p tag with inner text', () => {
-    expect(wrapper.find('p').text()).toEqual('5');
+  it('Should render message-content with inner text "Test"', () => {
+    expect(wrapper.find('.message-content').text()).toBe('Test');
+  });
+
+  it('Should render message-content with inner text "Test"', () => {
+    expect(wrapper.find('.offset-indicator').text()).toBe('5');
   });
 });

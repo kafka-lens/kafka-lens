@@ -10,7 +10,8 @@
     "build-renderer": "cross-env NODE_ENV=production webpack -r @babel/register --config ./configs/webpack.config.renderer.prod.js --colors",
     "coverage:backend": "jest --collectCoverageFrom=main/kafka/*.{js,jsx} --coverage main",
     "coverage:frontend": "jest --collectCoverageFrom=client/src/*.{js,jsx} --coverage client",
-    "dev": "cross-env START_HOT=1 yarn start:renderer:dev",
+    "dev": "cross-env START_HOT=1 DEBUG=true yarn start:renderer:dev",
+    "dev:nolog": "cross-env START_HOT=1 yarn start:renderer:dev",
     "lint": "eslint --ignore-path .gitignore --cache '**/*.{js,jsx}'",
     "lint:fix": "yarn lint --fix",
     "lint:css": "stylelint --ignore-path .gitignore '**/*.*(css|scss)' --syntax scss",
@@ -25,9 +26,9 @@
     "start": "cross-env NODE_ENV=production electron ./dist/main.prod.js",
     "start:main:dev": "cross-env HOT=1 NODE_ENV=development electron -r @babel/register ./main/main.dev.js",
     "start:renderer:dev": "cross-env NODE_ENV=development webpack-dev-server -r @babel/register --no-inline --config configs/webpack.config.renderer.dev.js",
-    "test": "jest",
-    "test:frontend": "jest client",
-    "test:backend": "jest main"
+    "test": "concurrently \"yarn test:renderer\" \"yarn test:main\"",
+    "test:renderer": "jest client",
+    "test:main": "jest main"
   },
   "build": {
     "appId": "org.nahuelarjonadev.kafkalens",

@@ -5,7 +5,7 @@ import '../css/Message.scss';
 const Message = ({ message, offset }) => (
   <span>
     <div className="single-message">
-      {message}
+      <p className="message-content">{message}</p>
       <p className="offset-indicator">{offset}</p>
     </div>
   </span>
