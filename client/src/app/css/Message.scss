@@ -1,12 +1,21 @@
 @import 'theme';
 
 .single-message {
-    padding-top: 7px;
-    padding-bottom: 11px;
-    padding-left: 48px;
+    // padding-top: 7px;
+    // padding-bottom: 11px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 20px;
     padding-right: 8px;
+    min-height: 40px;
+    line-height: 34px;
     color: lighten(#544d4d, 10%);
     border-bottom: 1px solid lighten($message-border-color, 2%);
+}
+
+.single-message p {
+    margin: 0 3px;
 }
 
 .single-message:hover, .single-message:focus {
@@ -20,12 +29,9 @@
 .offset-indicator {
     color: $off-white-color;
     background-color: darken($highlight-bar-color, 10%);
-    float: right;
-    margin: 0;
-    padding-left: 8px;
-    padding-right: 7px;
-    padding-top: 3px;
-    padding-bottom: 3px;
+    padding: 0 3px;
+    // height: 100%;
+    border-radius: 3px;
 }
 
 h6 {
