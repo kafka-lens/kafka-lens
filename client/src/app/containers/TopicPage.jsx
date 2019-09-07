@@ -74,7 +74,7 @@ class TopicPage extends React.Component {
   showMessages(event) {
     const element = event.target;
     const newTopicName = element.getAttribute('topicname');
-    const newPartitionId = parseInt(element.id, 10);
+    const newPartitionId = element.id;
 
     logger.log('newTopicName from the partition div:', newTopicName);
     logger.log('newPartitionId:', newPartitionId);
