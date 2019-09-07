@@ -72,12 +72,12 @@ class TopicPage extends React.Component {
   }
 
   showMessages(event) {
-    const newTopicName = event.target.getAttribute('topicname');
+    const element = event.target;
+    const newTopicName = element.getAttribute('topicname');
     logger.log('newTopicName from the partition div:', newTopicName);
-    const newPartitionId = parseInt(event.target.id, 10);
+    const newPartitionId = parseInt(element.id, 10);
     logger.log('newPartitionId:', newPartitionId);
 
-    const element = event.target;
     const { lastElement, partitionId, topicName } = this.state;
 
     const { uri } = this.props;
@@ -90,8 +90,8 @@ class TopicPage extends React.Component {
 
       ipcRenderer.send('partition:getMessages', {
         kafkaHostURI,
-        topicName: newTopicName,
         partitionId,
+        topicName: newTopicName,
       });
 
       ipcRenderer.send('partition:getData', {
@@ -99,6 +99,7 @@ class TopicPage extends React.Component {
         partitionId,
         topicName: newTopicName,
       });
+
       this.setState({
         lastElement: element,
       });
@@ -120,7 +121,6 @@ class TopicPage extends React.Component {
     const { topicList, isConnected, uri } = this.props;
     const {
       showingPartitionMetadata,
-      showPartitions,
       currentPartitionMetadata,
       partitionId,
       currentTopicMetadata,
@@ -142,7 +142,6 @@ class TopicPage extends React.Component {
         id={i}
         topicInfo={topicInfo}
         showPartitions={this.showPartitions}
-        shouldDisplayPartitions={showPartitions}
         showMessages={this.showMessages}
       />
     ));
