@@ -12,7 +12,7 @@
                        "list-display message-info message-box message-box"
                        "connection-status message-info message-box message-box";
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - #{$header-height});
 }
 
 .title-bar { 
