@@ -90,7 +90,7 @@
   },
   "homepage": "https://github.com/oslabs-beta/kafka-lens#readme",
   "dependencies": {
-    "chart.js": "^2.8.0",
+    "chart.js": "^2.9.4",
     "kafka-node": "^4.0.1",
     "node-sass": "^4.11.0",
     "node-zookeeper-client": "^1.0.0",
